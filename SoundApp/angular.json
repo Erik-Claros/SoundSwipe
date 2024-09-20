@@ -29,7 +29,16 @@
             "styles": [
               "src/styles.css"
             ],
+<<<<<<< HEAD
             "scripts": []
+=======
+            "scripts": [],
+            "server": "src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "server.ts"
+            }
+>>>>>>> 0b095f1 (chore: Add initial project files and configurations)
           },
           "configurations": {
             "production": {
@@ -92,8 +101,11 @@
         }
       }
     }
+<<<<<<< HEAD
   },
   "cli": {
     "analytics": false
+=======
+>>>>>>> 0b095f1 (chore: Add initial project files and configurations)
   }
 }
