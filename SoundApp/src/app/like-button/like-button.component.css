@@ -1,0 +1,28 @@
+.primary {
+    /*border: 0px;
+    display: inline-block;
+    position: relative;*/
+    z-index: 1;
+    border: 0px solid #000000;
+    /*background-color: transparent;
+    font-family: Futura, Tahoma, sans-serif;
+    padding: 25px;
+    margin-left: 20px;*/
+  }
+/*.primary::after {
+    content: "'";
+    color: transparent;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+    /*border-radius: 100px;
+    background-color: #cc0323;
+    transform: skew(-30deg);
+  -webkit-transform: skew(-30deg);
+  -o-transform: skew(-30deg);
+  -moz-transform: skew(-30deg);
+  -ms-transform: skew(-30deg);
+}*/
