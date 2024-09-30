@@ -1,0 +1,16 @@
+{
+    "songs": [
+      {
+        "title": "title",
+        "artist": "artist",
+        "album": "album",
+        "album cover": "album_cover",
+        "release_year": 1000,
+        "genre": ["genre"],
+        "duration": "0:00",
+        "lyrics": "none",
+        "rating": 0.0
+      }
+    ]
+  }
+  
