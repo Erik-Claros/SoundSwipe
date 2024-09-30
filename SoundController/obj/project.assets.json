@@ -460,19 +460,19 @@
     ]
   },
   "packageFolders": {
-    "/home/oleo/.nuget/packages/": {}
+    "C:\\Users\\banic\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/oleo/Documents/Projects/SoundSwipe/SoundSwipe/SoundController/SoundController.csproj",
+      "projectUniqueName": "C:\\Users\\banic\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\SoundController.csproj",
       "projectName": "SoundController",
-      "projectPath": "/home/oleo/Documents/Projects/SoundSwipe/SoundSwipe/SoundController/SoundController.csproj",
-      "packagesPath": "/home/oleo/.nuget/packages/",
-      "outputPath": "/home/oleo/Documents/Projects/SoundSwipe/SoundSwipe/SoundController/obj/",
+      "projectPath": "C:\\Users\\banic\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\SoundController.csproj",
+      "packagesPath": "C:\\Users\\banic\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\banic\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/oleo/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\banic\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -490,6 +490,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -516,12 +521,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[8.0.8, 8.0.8]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -530,7 +529,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.108/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.402/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
