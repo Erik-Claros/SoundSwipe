@@ -1,20 +1,28 @@
+/* html and body take up full viewport */
 body, html {
     height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
+    /* Ensure padding don't affect the width and height */
+    box-sizing: border-box;
 }
+/* Background image and settings to cover entire viewport */
 body {
     background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfrvl5GJfleFJD52tcjHndJKm4ipw5U7fZQA&s') no-repeat center center fixed;
+    /* Covers the background */
     background-size: cover;
 }
+/* Create a blurred overlay */
 .blurred-frame {
-    /* Create a blurred overlay */
     position: relative;
     height: 100vh;
     width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
+    /* no overflow on the content */
+    overflow: hidden;
 }
 .blurred-frame::before {
     content: '';
@@ -23,37 +31,34 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfrvl5GJfleFJD52tcjHndJKm4ipw5U7fZQA&s') no-repeat center center fixed;
+    background: inherit;
     background-size: cover;
-    backdrop-filter: blur(1000px);   /* Apply the blur effect */
+    /* Apply the blur effect */
+    backdrop-filter: blur(1000px);
+    /* First layer of the page */ 
     z-index: 1;
 }
 /* Image container and centering */
 .centered-content {
     position: relative;
+    /* Second layer of the page (on top of index 1) */
     z-index: 2;
+    /* Center the content */
     text-align: center;
     display: flex;
+    /* image and button group are stacked vertically */
     flex-direction: column;
+    /* Center the content horizontally */
     align-items: center;
 }
 .centered-content img {
     max-width: 100%;
     height: auto;
-    border-radius: 30px;
+    border-radius: 50px;
 }
-
-/* Button styling */
+/* Button grouping*/
 .button-group {
     display: flex;
+    margin-top: 10px;
     gap: 20px;
-    margin-top: 20px;
-}
-
-app-dislike, app-like-button, app-playlist-button, app-share-button {
-    border: none;
-    border-radius: 50%;
-    width: 64px;
-    height: 64px;
-    background-color: transparent;
 }
