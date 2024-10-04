@@ -1,0 +1,59 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body {
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfrvl5GJfleFJD52tcjHndJKm4ipw5U7fZQA&s') no-repeat center center fixed;
+    background-size: cover;
+}
+.blurred-frame {
+    /* Create a blurred overlay */
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.blurred-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfrvl5GJfleFJD52tcjHndJKm4ipw5U7fZQA&s') no-repeat center center fixed;
+    background-size: cover;
+    backdrop-filter: blur(1000px);   /* Apply the blur effect */
+    z-index: 1;
+}
+/* Image container and centering */
+.centered-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.centered-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 30px;
+}
+
+/* Button styling */
+.button-group {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+app-dislike, app-like-button, app-playlist-button, app-share-button {
+    border: none;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    background-color: transparent;
+}
