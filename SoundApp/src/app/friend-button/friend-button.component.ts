@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FriendsService } from '../assets/friends.service';
+import { FriendsService } from '../friends.service';
 
 @Component({
   selector: 'app-friend-button',
@@ -10,8 +10,6 @@ import { FriendsService } from '../assets/friends.service';
   styleUrl: './friend-button.component.css'
 })
 export class FriendButtonComponent implements OnInit{
-  
-  data: any[] = [];
 
   isDropdownVisible = false;
   options: any[] = []; // Array to hold the fetched data
@@ -19,9 +17,7 @@ export class FriendButtonComponent implements OnInit{
   constructor(private friendsService: FriendsService) {}
 
   ngOnInit() {
-    this.friendsService.getData().subscribe((response) => {
-      this.data = response; // Assign the fetched data
-    });
+    this.options = this.friendsService.getData();
   }
 
   toggleDropdown() {
