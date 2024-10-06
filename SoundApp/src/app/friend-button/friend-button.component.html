@@ -1,7 +1,9 @@
-<section>
-    <a>
-        <button class="primary" type="button"(click)="dropdownAction()">
-            <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Ffavpng.com%2Fpng_view%2Fperson-outline-people-png%2FhkcbyCby&psig=AOvVaw0suz4KKpcb8Q_CZA3xzl60&ust=1727983585613000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLjmt9C28IgDFQAAAAAdAAAAABAQ" width="128px" height="128px">
-        </button>
-    </a>
-</section>
+<div class="dropdown" (click)="toggleDropdown()">
+    <img src="https://static.vecteezy.com/system/resources/previews/009/664/234/non_2x/people-user-team-transparent-free-png.png" alt="Click me" width="100px" height="100px" />
+    <div class="dropdown-content" *ngIf="isDropdownVisible">
+         <p *ngFor="let option of options" (click)="selectOption(option)">
+            {{ option.name }}
+        </p>
+    </div>
+  </div>
+
