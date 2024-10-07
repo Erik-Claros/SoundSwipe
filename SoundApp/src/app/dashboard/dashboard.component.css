@@ -9,15 +9,15 @@ body, html {
 }
 /* Background image and settings to cover entire viewport */
 body {
-    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfrvl5GJfleFJD52tcjHndJKm4ipw5U7fZQA&s') no-repeat center center fixed;
+    background: url('/assets/albums/igor.jpg') no-repeat center center fixed;
     /* Covers the background */
     background-size: cover;
 }
 /* Create a blurred overlay */
 .blurred-frame {
     position: relative;
-    height: 100vh;
-    width: 100vw;
+    height: 98vh;
+    width: 95vw;
     display: flex;
     justify-content: center;
     align-items: center;

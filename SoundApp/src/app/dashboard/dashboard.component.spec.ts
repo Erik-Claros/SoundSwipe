@@ -11,4 +11,6 @@ import { ShareButtonComponent } from "../share-button/share-button.component";
   styleUrls: ['./dashboard.component.css'],
   imports: [DislikeComponent, LikeButtonComponent, PlaylistButtonComponent, ShareButtonComponent]
 })
-export class DashboardComponent {}
+export class DashboardComponent {
+  dislikeClicked() {}
+}

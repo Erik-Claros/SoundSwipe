@@ -12,5 +12,7 @@ import { ShareButtonComponent } from '../share-button/share-button.component';
   styleUrls: ['./dashboard.component.css']  // Correct the typo here
 })
 export class DashboardComponent {
-
+  dislikeClicked() {
+    console.log('Dislike button clicked!!');
+  }
 }
