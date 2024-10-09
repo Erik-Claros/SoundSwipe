@@ -22,4 +22,8 @@ export class LoginComponent {
     this.router.navigate(['/dashboard']);// After clicking on the submit button it navigates to the dashboard page
   }
 
+  onSingin(){
+    console.log('Signing in with spotify');
+  }
+
 }

@@ -1,6 +1,8 @@
-.primary {
+button{
+    background-color: none;
+    background: transparent;
     border-radius: 50%;
     border: none;
-    background-color: white;
-  }
-
+    width: 64px; 
+    height: 64px;
+}

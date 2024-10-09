@@ -1,0 +1,64 @@
+/* html and body take up full viewport */
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    /* Ensure padding don't affect the width and height */
+    box-sizing: border-box;
+}
+/* Background image and settings to cover entire viewport */
+body {
+    background: url('/assets/albums/igor.jpg') no-repeat center center fixed;
+    /* Covers the background */
+    background-size: cover;
+}
+/* Create a blurred overlay */
+.blurred-frame {
+    position: relative;
+    height: 98vh;
+    width: 95vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* no overflow on the content */
+    overflow: hidden;
+}
+.blurred-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    background-size: cover;
+    /* Apply the blur effect */
+    backdrop-filter: blur(1000px);
+    /* First layer of the page */ 
+    z-index: 1;
+}
+/* Image container and centering */
+.centered-content {
+    position: relative;
+    /* Second layer of the page (on top of index 1) */
+    z-index: 2;
+    /* Center the content */
+    text-align: center;
+    display: flex;
+    /* image and button group are stacked vertically */
+    flex-direction: column;
+    /* Center the content horizontally */
+    align-items: center;
+}
+.centered-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 50px;
+}
+/* Button grouping*/
+.button-group {
+    display: flex;
+    margin-top: 10px;
+    gap: 20px;
+}
