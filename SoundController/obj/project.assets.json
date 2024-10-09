@@ -460,24 +460,32 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\banic\\.nuget\\packages\\": {}
+    "C:\\Users\\dipes\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\banic\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\SoundController.csproj",
+      "projectUniqueName": "C:\\Users\\dipes\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\SoundController.csproj",
       "projectName": "SoundController",
-      "projectPath": "C:\\Users\\banic\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\SoundController.csproj",
-      "packagesPath": "C:\\Users\\banic\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\banic\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\obj\\",
+      "projectPath": "C:\\Users\\dipes\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\SoundController.csproj",
+      "packagesPath": "C:\\Users\\dipes\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\dipes\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\banic\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\dipes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
