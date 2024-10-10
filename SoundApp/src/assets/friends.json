@@ -1,19 +1,19 @@
-
-    [
-      {
-        "name": "Braden Nickel",
-        "tag": "000000001"
-      },
-      {
-        "name": "Dipesh Shah",
-        "tag": "000000002"
-      },
-      {
-        "name": "Erik Carlos",
-        "tag": "000000003"
-      },
-      {
-        "name": "Ethan Ennis",
-        "tag": "000000004"
-      }
-    ]
+{"Friend":
+[   
+  {
+    "name": "Braden Nickel",
+    "tag": "000000001"
+  },
+  {
+    "name": "Dipesh Shah",
+    "tag": "000000002"
+  },
+  {
+    "name": "Erik Carlos",
+    "tag": "000000003"
+  },
+  {
+    "name": "Ethan Ennis",
+    "tag": "000000004"
+  }
+]}

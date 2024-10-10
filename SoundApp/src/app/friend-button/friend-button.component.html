@@ -1,8 +1,8 @@
 <div class="dropdown" (click)="toggleDropdown()">
     <img src="https://static.vecteezy.com/system/resources/previews/009/664/234/non_2x/people-user-team-transparent-free-png.png" alt="Click me" width="100px" height="100px" />
     <div class="dropdown-content" *ngIf="isDropdownVisible">
-         <p *ngFor="let option of options" (click)="selectOption(option)">
-            {{ option.name }}
+         <p *ngFor="let friend of friends">
+            Name: {{ friend.name }}, Tag: {{ friend.tag }}
         </p>
     </div>
   </div>

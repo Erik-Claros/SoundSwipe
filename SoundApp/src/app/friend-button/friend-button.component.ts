@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FriendsService } from '../friends.service';
+import { CommonModule, KeyValuePipe } from '@angular/common';
+import { FriendsService } from '../Services/friends.service';
+import { FriendsAttributes } from '../Models/FriendsModel';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-friend-button',
@@ -9,15 +11,23 @@ import { FriendsService } from '../friends.service';
   templateUrl: './friend-button.component.html',
   styleUrl: './friend-button.component.css'
 })
+
 export class FriendButtonComponent implements OnInit{
 
   isDropdownVisible = false;
-  options: any[] = []; // Array to hold the fetched data
+  friends: FriendsAttributes[] = [];
 
-  constructor(private friendsService: FriendsService) {}
+  constructor(private friendsService: FriendsService, private http: HttpClient) {}
 
-  ngOnInit() {
-    this.options = this.friendsService.getData();
+  ngOnInit(){
+    this.http.get<FriendsAttributes[]>('http://localhost:3000/Friend').subscribe(data => {
+      this.friends = data;
+      console.log(this.friends);
+    })
+    //this.friends = this.friendsService.getData(); 
+    /*this.friends.forEach(friend => {
+      console.log(`Name: ${friend.name}, Tag: ${friend.tag}`);
+    }); */
   }
 
   toggleDropdown() {
@@ -28,4 +38,6 @@ export class FriendButtonComponent implements OnInit{
     console.log('Selected:', option);
     this.isDropdownVisible = false; // Close the dropdown after selection
   }
+
+  keepOrder = () => 0;
 }
