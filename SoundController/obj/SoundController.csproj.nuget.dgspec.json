@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Erik\\Documents\\SoundSwipe\\SoundSwipe\\SoundController\\SoundController.csproj": {}
+    "/home/oleo/Documents/Projects/SoundSwipe/SoundSwipe/SoundController/SoundController.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Erik\\Documents\\SoundSwipe\\SoundSwipe\\SoundController\\SoundController.csproj": {
+    "/home/oleo/Documents/Projects/SoundSwipe/SoundSwipe/SoundController/SoundController.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Erik\\Documents\\SoundSwipe\\SoundSwipe\\SoundController\\SoundController.csproj",
+        "projectUniqueName": "/home/oleo/Documents/Projects/SoundSwipe/SoundSwipe/SoundController/SoundController.csproj",
         "projectName": "SoundController",
-        "projectPath": "C:\\Users\\Erik\\Documents\\SoundSwipe\\SoundSwipe\\SoundController\\SoundController.csproj",
-        "packagesPath": "C:\\Users\\Erik\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Erik\\Documents\\SoundSwipe\\SoundSwipe\\SoundController\\obj\\",
+        "projectPath": "/home/oleo/Documents/Projects/SoundSwipe/SoundSwipe/SoundController/SoundController.csproj",
+        "packagesPath": "/home/oleo/.nuget/packages/",
+        "outputPath": "/home/oleo/Documents/Projects/SoundSwipe/SoundSwipe/SoundController/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Erik\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/oleo/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -32,11 +32,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -67,6 +62,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.8, 8.0.8]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -75,7 +76,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.108/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
