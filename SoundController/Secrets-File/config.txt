@@ -1,6 +1,0 @@
------------------------
-PURPOSE FOR CONFIG.JSON
------------------------
-
-The purpose of the config.json file is to store Erik's personal Spotify information that will allow access 
-to Spotify's Open API.
