@@ -1,23 +1,21 @@
-<p> 
-    This is the Dashboard
-    <app-playlist-button></app-playlist-button>
-</p>
-
-<p> This is the Dashboard</p>
-<app-dislike> </app-dislike>
-
-<p> 
-    This is dashboard.component.html and I go second
-    <app-share-button></app-share-button>
-</p>
-
-
-<p>
-    This is dashboard.component.html and I go third
-    <app-like-button></app-like-button>
-</p>
-
-<p>
-    This is dashboard.component.html and I go third
-    <app-friend-button></app-friend-button>
-</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blurred Frame</title>
+</head>
+<body>
+    <div class="blurred-frame">
+        <div class="centered-content">
+            <img src="/assets/albums/igor.jpg" alt="Album Cover" width="512" height="512">
+            <div class="button-group">
+                <app-dislike (click)="dislikeClicked()"></app-dislike>
+                <app-share-button></app-share-button>
+                <app-like-button></app-like-button>
+                <app-playlist-button></app-playlist-button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

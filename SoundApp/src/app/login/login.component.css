@@ -1,0 +1,82 @@
+.login-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .login-left{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  .login-left {
+    flex-direction: column;
+    background-color: #f5f5f5;
+  }
+  
+  .login-left h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .login-left p {
+    margin-bottom: 1rem;
+  }
+  
+  .login-left form {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-left form label {
+    margin-top: 1rem;
+  }
+  
+  .login-left form input {
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .login-left .btn {
+    padding: 0.75rem;
+    margin-top: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  
+  .login-left .btn-spotify {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1db954;
+    color: black;
+  }
+  
+  .login-left .spotify-logo{
+    width:20px;
+    height: 20px;
+    margin-right: 8px;
+  }
+  .login-left .btn-signin {
+    background-color: #4a90e2;
+    color: white;
+  }
+  
+  .spotify-logo{
+    width: 100px;
+    height: auto;
+
+  }
+  .app-logo{
+    width: 100px;
+    height: auto;
+    border-radius: 50%;
+  }

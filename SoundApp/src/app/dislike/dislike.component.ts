@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-dislike',
@@ -7,10 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./dislike.component.css']
 })
 export class DislikeComponent {
-  message: string = '';
-  dislike(){
-  console.log('Dislike button clicked!!');
-  this.message = 'You disliked this song!';
+  @Output() click = new EventEmitter<void>();
 
+  dislikeClicked() {
+    this.click.emit();
   }
 }

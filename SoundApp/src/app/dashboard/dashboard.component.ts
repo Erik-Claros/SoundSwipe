@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { DislikeComponent } from "../dislike/dislike.component";
 import { LikeButtonComponent } from '../like-button/like-button.component';
-import { DislikeComponent } from '../dislike/dislike.component';
 import { PlaylistButtonComponent } from '../playlist-button/playlist-button.component';
 import { ShareButtonComponent } from '../share-button/share-button.component';
 import { FriendButtonComponent } from "../friend-button/friend-button.component";
@@ -14,5 +14,7 @@ import { FriendButtonComponent } from "../friend-button/friend-button.component"
 
 })
 export class DashboardComponent {
-
+  dislikeClicked() {
+    console.log('Dislike button clicked!!');
+  }
 }
