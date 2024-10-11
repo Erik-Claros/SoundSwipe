@@ -10,7 +10,7 @@ import { FriendButtonComponent } from "../friend-button/friend-button.component"
   standalone: true,
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
-  imports: [PlaylistButtonComponent, ShareButtonComponent, DislikeComponent, LikeButtonComponent]
+  imports: [PlaylistButtonComponent, ShareButtonComponent, DislikeComponent, LikeButtonComponent, FriendButtonComponent]
 })
 export class DashboardComponent {
   dislikeClicked() {}
