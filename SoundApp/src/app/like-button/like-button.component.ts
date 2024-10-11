@@ -7,8 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./like-button.component.css']
 })
 export class LikeButtonComponent {
-  
-  buttonAction() {
+  likeClicked() {
     console.log("Like button has been clicked");
   }
 }
