@@ -14,13 +14,19 @@
         <img src="/assets/albums/tylerthecreator.jpg" alt="blur-background">
     </div>
     <div class="centered-content" >
-        <img src="/assets/albums/tylerthecreator.jpg" alt="album-cover">
+        <mat-card class="album card">
+            <mat-card-header>
+                <div mat-card-avatar class="album-cover"></div>
+                <mat-card-title class="card-title">Juno</mat-card-title>
+                <mat-card-subtitle class="card-subtitle">Sabrina Carpenter</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="/assets/albums/tylerthecreator.jpg" alt="album-cover">
+        </mat-card>
         <div class="button-group">
-            <app-dislike (click)="dislikeClicked()"></app-dislike>
             <app-share-button></app-share-button>
+            <app-dislike (click)="dislikeClicked()"></app-dislike>
             <app-like-button></app-like-button>
             <app-playlist-button></app-playlist-button>
-            <app-friend-button></app-friend-button>
         </div>
     </div>
 </body>

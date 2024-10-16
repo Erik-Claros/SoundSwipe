@@ -44,3 +44,22 @@ html {
     margin-top: 10px;
     gap: 20px;
 }
+
+.album-cover {
+    border-radius: 20px;
+    background-image: url("/assets/albums/tylerthecreator.jpg")
+}
+
+.mat-mdc-card-header {
+    background-color: rgb(110, 110, 255);
+}
+
+.card-title {
+    color: white;
+    text-align: left;
+}
+
+.card-subtitle {
+    color: black;
+    text-align: left;
+}

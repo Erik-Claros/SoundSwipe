@@ -5,6 +5,8 @@ import { PlaylistButtonComponent } from '../playlist-button/playlist-button.comp
 import { ShareButtonComponent } from '../share-button/share-button.component';
 import { FriendButtonComponent } from "../friend-button/friend-button.component";
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +17,9 @@ import { NavBarComponent } from '../nav-bar/nav-bar.component';
     DislikeComponent, 
     LikeButtonComponent, 
     FriendButtonComponent, 
-    NavBarComponent 
+    NavBarComponent,
+    MatCardModule,
+    MatButtonModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
