@@ -1,0 +1,33 @@
+<mat-toolbar>
+  <img src="/assets/SoundLogo.png" alt="App Logo" class="app-logo">
+  <span class="spacer"></span>
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-icon" aria-label="menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>account_circle</mat-icon>
+      <span>Account</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>groups</mat-icon>
+      <span>Friends</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>favorite</mat-icon>
+      <span>Liked Songs</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>thumb_down</mat-icon>
+      <span>Disliked Songs</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>history</mat-icon>
+      <span>Song History</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>settings</mat-icon>
+      <span>Settings</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
