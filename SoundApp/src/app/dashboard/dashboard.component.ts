@@ -29,4 +29,5 @@ export class DashboardComponent {
   dislikeClicked() {
     console.log('Dislike button clicked!!');
   }
+
 }

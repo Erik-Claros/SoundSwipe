@@ -14,13 +14,22 @@
         <img src="/assets/albums/tylerthecreator.jpg" alt="blur-background">
     </div>
     <div class="centered-content" >
-        <mat-card class="album card">
-            <mat-card-header>
+        <mat-card class="album-card">
+            <mat-card-header class="card-header">
                 <div mat-card-avatar class="album-cover"></div>
                 <mat-card-title class="card-title">Juno</mat-card-title>
                 <mat-card-subtitle class="card-subtitle">Sabrina Carpenter</mat-card-subtitle>
             </mat-card-header>
-            <img mat-card-image src="/assets/albums/tylerthecreator.jpg" alt="album-cover">
+            <div class="flip-box">
+                <div class="flip-box-inner">
+                  <div class="flip-box-front">
+                    <img mat-card-image src="/assets/albums/tylerthecreator.jpg" alt="album-cover">
+                </div>
+                  <div class="flip-box-back">
+                    <h2>Backside of the album</h2>
+                  </div>
+                </div>
+              </div>
         </mat-card>
         <div class="button-group">
             <app-share-button></app-share-button>
