@@ -1,12 +1,7 @@
-using System;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using SoundController.Models;
-
+using Newtonsoft.Json.Linq;  
 public class SpotifyClient
 {
     // Client Information. This is the project dash boards information
@@ -96,6 +91,42 @@ public class SpotifyClient
 
             var trackData = await response.Content.ReadAsStringAsync();
             return trackData;
+        }
+    }
+
+    public static async Task<string> GetTrackPreview(string trackId)
+    {
+        string token = await GetSpotifyAccessToken();
+
+        using (var client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var trackUrl = $"{baseUrl}tracks/{trackId}"; 
+            Console.WriteLine($"Request URL: {trackUrl}");
+
+            var response = await client.GetAsync(trackUrl);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Error Content: {errorContent}"); 
+                throw new Exception($"Error fetching track details: {response.StatusCode}, {errorContent}"); 
+            }
+
+            var trackData = await response.Content.ReadAsStringAsync();
+
+            // Parse the JSON response to extract the preview_url
+            var jsonResponse = JObject.Parse(trackData);
+            var previewUrl = jsonResponse["preview_url"]?.ToString();
+
+            if (string.IsNullOrEmpty(previewUrl))
+            {
+                Console.WriteLine("No preview available for this track.");
+                return "No preview available.";
+            }
+
+            return previewUrl;  // Return the preview URL if available
         }
     }
 }
