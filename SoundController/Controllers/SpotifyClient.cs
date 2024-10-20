@@ -126,7 +126,61 @@ public class SpotifyClient
                 return "No preview available.";
             }
 
-            return previewUrl;  // Return the preview URL if available
+            return previewUrl;  
         }
     }
+
+   public static async Task<List<string>> GetAllTracksWithPreview()
+    {
+        var tracksWithPreview = new List<string>();
+        string token = await GetSpotifyAccessToken();
+        string? searchUrl = null; // Initialize search URL
+
+        using (var client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            // Define a list of keywords or genres to search for
+            var searchKeywords = new List<string>
+            {
+                "pop", "hip-hop", "indie"
+            };
+
+            foreach (var keyword in searchKeywords)
+            {
+                searchUrl = $"{baseUrl}search?q={Uri.EscapeDataString(keyword)}&type=track&limit=50";
+
+                while (!string.IsNullOrEmpty(searchUrl))
+                {
+                    var response = await client.GetAsync(searchUrl);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        var errorContent = await response.Content.ReadAsStringAsync();
+                        throw new Exception($"Error fetching tracks: {response.StatusCode}, {errorContent}");
+                    }
+
+                    var searchResultsJson = await response.Content.ReadAsStringAsync();
+                    var jsonResponse = JObject.Parse(searchResultsJson);
+                    var tracks = jsonResponse["tracks"]?["items"];
+
+                    foreach (var track in tracks)
+                    {
+                        var previewUrl = track["preview_url"]?.ToString();
+                        if (!string.IsNullOrEmpty(previewUrl))
+                        {
+                            tracksWithPreview.Add(track["id"]?.ToString()); 
+                        }
+                    }
+
+                    // Check if there's a next page
+                    searchUrl = jsonResponse["tracks"]?["next"]?.ToString(); 
+                }
+            }
+        }
+
+        return tracksWithPreview;
+    }
+
+
 }

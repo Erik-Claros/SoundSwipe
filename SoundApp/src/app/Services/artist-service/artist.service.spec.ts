@@ -7,8 +7,7 @@ import { Artist } from '../../Models/artistModel';
   providedIn: 'root',
 })
 export class ArtistService {
-  private apiUrl = 'https://api.spotify.com/v1/search';  // Replace with your actual API URL
-
+  private apiUrl = 'http://localhost:5062/api/Spotify/artist/';  
   constructor(private http: HttpClient) {}
 
   // Method to get artist by name

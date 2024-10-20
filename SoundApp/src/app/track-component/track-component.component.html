@@ -1,0 +1,29 @@
+<div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading tracks, please wait...</p>
+</div>
+
+<div *ngIf="!isLoading">
+    <mat-card *ngIf="track">
+        <mat-card-header>
+          <mat-card-title>{{ track.name }}</mat-card-title>
+          <mat-card-subtitle>
+            <ng-container *ngFor="let artist of track.artists; let last = last">
+              {{ artist.name }}<span *ngIf="!last">, </span>
+            </ng-container>
+            - {{ track.album.name }}
+          </mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="track.album.images[0]?.url" alt="{{ track.name }} image">
+        <mat-card-content>
+          <p>
+            <strong>Album:</strong> {{ track.album.name }}<br>
+            <strong>Release Date:</strong> {{ track.album.release_date }}<br>
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button (click)="playPreview()">Listen Preview</button>
+          <button mat-button (click)="goToNextTrack()">Next Track</button> 
+        </mat-card-actions>
+    </mat-card>
+</div>
