@@ -6,3 +6,11 @@ export class FriendsAttributes {
 
     }*/
   }
+
+export interface User {
+    uid: number;
+    phone: string;
+    firstName: string;
+    lastName: string;
+    spotifyLink?: string; // Optional property
+  }
