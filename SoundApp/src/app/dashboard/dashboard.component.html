@@ -1,42 +1,8 @@
-<!DOCTYPE html>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blurred Frame</title>
-</head>
-<body>
-    <div class="nav-bar">
-        <app-nav-bar></app-nav-bar>
-    </div>
-    <div class="blurred-frame">
-        <img src="/assets/albums/tylerthecreator.jpg" alt="blur-background">
-    </div>
-    <div class="centered-content" >
-        <mat-card class="album-card">
-            <mat-card-header class="card-header">
-                <div mat-card-avatar class="album-cover"></div>
-                <mat-card-title class="card-title">Juno</mat-card-title>
-                <mat-card-subtitle class="card-subtitle">Sabrina Carpenter</mat-card-subtitle>
-            </mat-card-header>
-            <div class="flip-box">
-                <div class="flip-box-inner">
-                  <div class="flip-box-front">
-                    <img mat-card-image src="/assets/albums/tylerthecreator.jpg" alt="album-cover">
-                </div>
-                  <div class="flip-box-back">
-                    <h2>Backside of the album</h2>
-                  </div>
-                </div>
-              </div>
-        </mat-card>
-        <div class="button-group">
-            <app-share-button></app-share-button>
-            <app-dislike (click)="dislikeClicked()"></app-dislike>
-            <app-like-button></app-like-button>
-            <app-playlist-button></app-playlist-button>
-        </div>
-    </div>
-</body>
-</html>
+<div class="nav-bar">
+    <app-nav-bar></app-nav-bar>
+</div>
+<div class="blurred-frame" [ngStyle]="{ 'background-image': 'url(' + backgroundImageUrl + ')' }">
+</div>
+<div class="centered-content">
+    <app-track (backgroundImageUrl)="onBackgroundImageUrlReceived($event)"></app-track>
+</div>

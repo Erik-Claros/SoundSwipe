@@ -42,6 +42,41 @@ namespace SoundController.Controllers
             }
         }
 
-    }
+        [HttpGet("previewTrack/{id}")]
+        public async Task<IActionResult> GetPreview(string id){
+            try{
+                var previewTrack = await SpotifyClient.GetTrackPreview(id);
+                if (previewTrack == null)
+                {
+                    return NotFound($"Track with ID {id} not found.");
+                }
 
+                return Ok(previewTrack); 
+
+            }
+            catch (Exception ex){
+                return BadRequest($"Error fetching track: {ex.Message}");
+            }
+        }
+
+       [HttpGet("GetAllPreviewTracks")]
+        public async Task<IActionResult> GetAllTracksWithPreviewUrl()
+        {
+            try
+            {
+                var tracksWithPreview = await SpotifyClient.GetAllTracksWithPreview();
+
+                if (tracksWithPreview == null || tracksWithPreview.Count == 0)
+                {
+                    return NotFound("No tracks with preview URLs found.");
+                }
+
+                return Ok(tracksWithPreview);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error fetching tracks with previews: {ex.Message}");
+            }
+        }
+    }
 }

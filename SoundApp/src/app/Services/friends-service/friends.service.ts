@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import * as friendData from '../../assets/friends.json'
-import { FriendsAttributes } from '../Models/FriendsModel';
 //import { Converters } from '../Models/FriendsModel';
 
 

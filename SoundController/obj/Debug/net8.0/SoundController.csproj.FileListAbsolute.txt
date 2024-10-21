@@ -103,3 +103,4 @@ C:\Users\Erik\Documents\SoundSwipe\SoundSwipe\SoundController\obj\Debug\net8.0\r
 C:\Users\Erik\Documents\SoundSwipe\SoundSwipe\SoundController\obj\Debug\net8.0\SoundController.pdb
 C:\Users\Erik\Documents\SoundSwipe\SoundSwipe\SoundController\obj\Debug\net8.0\SoundController.genruntimeconfig.cache
 C:\Users\Erik\Documents\SoundSwipe\SoundSwipe\SoundController\obj\Debug\net8.0\ref\SoundController.dll
+C:\Users\Erik\Documents\SoundSwipe\SoundSwipe\SoundController\bin\Debug\net8.0\Newtonsoft.Json.dll
