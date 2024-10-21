@@ -4,23 +4,29 @@ import { TrackService } from '../Services/track-service/track-service.service';
 import { Track } from '../Models/track.model';
 import { PreviewTrack } from '../Models/preview-track.model';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-track',
   templateUrl: './track-component.component.html',
   styleUrls: ['./track-component.component.css'],
-  standalone: true,  
-  imports: [CommonModule, MatCardModule]  
+  standalone: true,
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule]
 })
 export class TrackComponent implements OnInit {
   track!: Track;
   previewTrack!: PreviewTrack;
   songIds: string[] = [];
+  isLoading: boolean = true;
+  data: any;
+  isPlaying: boolean = false;
+  isFlipped: boolean = false;
+  private audio: HTMLAudioElement | null = null;
+  
   @Output() backgroundImageUrl = new EventEmitter<string>();
-  isLoading: boolean = true; 
-  data: any; 
-  private audio: HTMLAudioElement | null = null; 
-
+  
   constructor(private trackService: TrackService) { }
 
   ngOnInit(): void {
@@ -68,29 +74,49 @@ export class TrackComponent implements OnInit {
       next: (data: string) => {
         this.previewTrack = { previewUrl: data };
         console.log('Preview URL:', data);
-        this.playPreview(); 
+        this.playPreview();
       },
       error: (error) => console.error('Error fetching preview track:', error)
     });
   }
 
   playPreview(): void {
-    if (this.previewTrack) {
-      this.audio = new Audio(this.previewTrack.previewUrl); 
-      this.audio.play();
+    if (this.previewTrack) {  
+      if (this.audio) {
+        this.audio.pause(); 
+        this.audio.currentTime = 0;  
+      }
+  
+      // Create a new audio instance and play it
+      this.audio = new Audio(this.previewTrack.previewUrl);
+      this.audio.play().then(() => {
+        this.isPlaying = true;  
+      }).catch((error) => {
+        console.error('Error playing audio:', error);  
+      });
+  
+      // Reset the flag when the audio ends
+      this.audio.onended = () => {
+        this.isPlaying = false;
+      };
     }
   }
 
   goToNextTrack(): void {
-    this.stopPreview(); 
+    this.stopPreview();
     this.selectRandomSongId();
   }
 
   stopPreview(): void {
     if (this.audio) {
-      this.audio.pause(); 
+      this.audio.pause();
       this.audio.currentTime = 0;
-      this.audio = null; 
+      this.audio = null;
+      this.isPlaying = false;
     }
+  }
+
+  flipCard(): void {
+    this.isFlipped = !this.isFlipped; 
   }
 }
