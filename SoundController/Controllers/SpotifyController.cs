@@ -64,21 +64,17 @@ namespace SoundController.Controllers
         {
             try
             {
-                // Call the method to get all tracks with preview URLs
                 var tracksWithPreview = await SpotifyClient.GetAllTracksWithPreview();
 
-                // Check if any tracks were found
                 if (tracksWithPreview == null || tracksWithPreview.Count == 0)
                 {
                     return NotFound("No tracks with preview URLs found.");
                 }
 
-                // Return the list of track IDs
                 return Ok(tracksWithPreview);
             }
             catch (Exception ex)
             {
-                // Handle any exceptions and return a BadRequest response
                 return BadRequest($"Error fetching tracks with previews: {ex.Message}");
             }
         }

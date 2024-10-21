@@ -2,7 +2,6 @@
     <app-nav-bar></app-nav-bar>
 </div>
 <div class="blurred-frame" [ngStyle]="{ 'background-image': 'url(' + backgroundImageUrl + ')' }">
-    <!-- This div can be empty or you can add content here -->
 </div>
 <div class="centered-content">
     <app-track (backgroundImageUrl)="onBackgroundImageUrlReceived($event)"></app-track>

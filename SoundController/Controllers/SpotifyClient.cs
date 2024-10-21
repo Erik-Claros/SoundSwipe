@@ -41,7 +41,7 @@ public class SpotifyClient
     public static async Task<string> GetArtist(string artistName)
     {
         string token = await GetSpotifyAccessToken(); // Get access token
-        token = token.Trim(); // Trim any whitespace
+        token = token.Trim(); 
 
         using (var client = new HttpClient())
         {
