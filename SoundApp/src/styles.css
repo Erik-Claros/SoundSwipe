@@ -1,7 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+html, body { 
+    height: 100%; 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Custom Spotify Green Angular Material Theme */
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css'; 
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Define Spotify green variables */
+:root {
+    --spotify-green: #1DB954; 
+    --spotify-accent: #FFC107;
+    --spotify-warn: #F44336; 
+}
+
+.mat-card {
+    background-color: #1DB954; 
+    color: white; 
+}
+
+.mat-button, .mat-fab {
+    background-color: var(--spotify-green);
+    color: white; 
+}
+
+.mat-icon {
+    color: white; 
+}
+
+/* Ensure font consistency */
+body, button {
+    font-family: 'Roboto', sans-serif;
+}

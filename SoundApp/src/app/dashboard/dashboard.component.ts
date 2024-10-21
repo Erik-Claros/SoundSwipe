@@ -1,33 +1,28 @@
-import { Component } from '@angular/core';
-import { DislikeComponent } from "../dislike/dislike.component";
-import { LikeButtonComponent } from '../like-button/like-button.component';
-import { PlaylistButtonComponent } from '../playlist-button/playlist-button.component';
-import { ShareButtonComponent } from '../share-button/share-button.component';
-import { FriendButtonComponent } from "../friend-button/friend-button.component";
+import { Component, AfterViewInit } from '@angular/core';
+import { CommonModule } from '@angular/common'; 
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
-import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { TrackComponent } from '../track-component/track-component.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-    PlaylistButtonComponent, 
-    ShareButtonComponent, 
-    DislikeComponent, 
-    LikeButtonComponent, 
-    FriendButtonComponent, 
+    CommonModule, 
     NavBarComponent,
-    MatCardModule,
-    MatButtonModule
+    MatButtonModule, 
+    TrackComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
-
 })
-export class DashboardComponent {
-  dislikeClicked() {
-    console.log('Dislike button clicked!!');
+export class DashboardComponent implements AfterViewInit {
+  backgroundImageUrl: string = '';
+
+  onBackgroundImageUrlReceived(url: string) {
+    this.backgroundImageUrl = url;
   }
 
+  ngAfterViewInit(): void {
+  }
 }

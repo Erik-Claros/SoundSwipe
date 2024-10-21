@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, KeyValuePipe } from '@angular/common';
-import { FriendsService } from '../Services/friends.service';
+import { FriendsService } from '../Services/friends-service/friends.service';
 import { FriendsAttributes } from '../Models/FriendsModel';
 import { HttpClient } from '@angular/common/http';
 
