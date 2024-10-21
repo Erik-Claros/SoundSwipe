@@ -1,0 +1,96 @@
+<div class="signup-container card shadow-lg p-4">
+    <img src="/assets/SoundLogo.png" alt="App Logo" class="app-logo">
+    <h6 class="text-center">SignUp</h6>
+    <form (ngSubmit)="onSignup()" #signupForm="ngForm" class="form-container">
+
+        <!-- First Name Input -->
+        <div class="form-group mb-3">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" [(ngModel)]="firstName" name="firstName" 
+                   class="form-control" placeholder="First Name"
+                   required #firstNameInput="ngModel" 
+                   [class.is-invalid]="firstNameInput.invalid && firstNameInput.touched"
+                   [class.is-valid]="firstNameInput.valid && firstNameInput.touched" />
+            <div class="text-danger">
+                <small *ngIf="firstNameInput.errors?.['required'] && firstNameInput.touched">
+                    First Name is required.
+                </small>
+            </div>
+        </div>
+
+        <!-- Last Name Input -->
+        <div class="form-group mb-3">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" [(ngModel)]="lastName" name="lastName" 
+                   class="form-control" placeholder="Last Name"
+                   required #lastNameInput="ngModel" 
+                   [class.is-invalid]="lastNameInput.invalid && lastNameInput.touched"
+                   [class.is-valid]="lastNameInput.valid && lastNameInput.touched" />
+            <div class="text-danger">
+                <small *ngIf="lastNameInput.errors?.['required'] && lastNameInput.touched">
+                    Last Name is required.
+                </small>
+            </div>
+        </div>
+
+        <!-- Date of Birth Input -->
+        <div class="form-group mb-3">
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" [(ngModel)]="dob" name="dob" 
+                   class="form-control" placeholder="YYYY-MM-DD"
+                   required #dobInput="ngModel" 
+                   [class.is-invalid]="dobInput.invalid && dobInput.touched"
+                   [class.is-valid]="dobInput.valid && dobInput.touched" />
+            <div class="text-danger">
+                <small *ngIf="dobInput.errors?.['required'] && dobInput.touched">
+                    Date of Birth is required.
+                </small>
+            </div>
+        </div>
+
+        <!-- Email Input -->
+        <div class="form-group mb-3">
+            <label for="email">Email</label>
+            <input type="email" id="email" [(ngModel)]="email" name="email" 
+                   class="form-control" placeholder="Email"
+                   required email #emailInput="ngModel" 
+                   [class.is-invalid]="emailInput.invalid && emailInput.touched"
+                   [class.is-valid]="emailInput.valid && emailInput.touched" />
+            <div class="text-danger">
+                <small *ngIf="emailInput.errors?.['required'] && emailInput.touched">
+                    Email is required.
+                </small>
+                <small *ngIf="emailInput.errors?.['email'] && emailInput.touched">
+                    Please enter a valid email address.
+                </small>
+            </div>
+        </div>
+
+        <!-- Password Input -->
+        <div class="form-group mb-3">
+            <label for="password">Password</label>
+            <input type="password" id="password" [(ngModel)]="password" name="password" 
+                   class="form-control" placeholder="********" 
+                   required minlength="8" #passwordInput="ngModel" 
+                   [class.is-invalid]="passwordInput.invalid && passwordInput.touched"
+                   [class.is-valid]="passwordInput.valid && passwordInput.touched" />
+            <div class="text-danger">
+                <small *ngIf="passwordInput.errors?.['required'] && passwordInput.touched">
+                    Password is required.
+                </small>
+                <small *ngIf="passwordInput.errors?.['minlength'] && passwordInput.touched">
+                    Password must be at least 8 characters long.
+                </small>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-success w-100" 
+                [disabled]="signupForm.invalid">Sign Up</button>
+    </form>
+
+    <!-- Login Redirect -->
+    <p class="text-center mt-3">Already have an account? 
+        <a href="/login" class="text-decoration-none">Login Now</a>
+    </p>
+</div>
