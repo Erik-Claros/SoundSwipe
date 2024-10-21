@@ -5,27 +5,27 @@
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item>
+    <button mat-menu-item (click)="accountClicked()">
       <mat-icon>account_circle</mat-icon>
       <span>Account</span>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item (click)="friendClicked()">
       <mat-icon>groups</mat-icon>
       <span>Friends</span>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item (click)="likedSongClicked()">
       <mat-icon>favorite</mat-icon>
       <span>Liked Songs</span>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item (click)="dislikedSongClicked()">
       <mat-icon>thumb_down</mat-icon>
       <span>Disliked Songs</span>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item (click)="historyClicked()">
       <mat-icon>history</mat-icon>
       <span>Song History</span>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item (click)="settingClicked()">
       <mat-icon>settings</mat-icon>
       <span>Settings</span>
     </button>
