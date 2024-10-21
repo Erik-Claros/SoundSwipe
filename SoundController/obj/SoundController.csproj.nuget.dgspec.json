@@ -1,26 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Erik\\Documents\\SoundSwipe\\SoundSwipe\\SoundController\\SoundController.csproj": {}
+    "C:\\Users\\ethan\\Documents\\Software-Design-Projects\\SoundSwipe\\SoundController\\SoundController.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Erik\\Documents\\SoundSwipe\\SoundSwipe\\SoundController\\SoundController.csproj": {
+    "C:\\Users\\ethan\\Documents\\Software-Design-Projects\\SoundSwipe\\SoundController\\SoundController.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Erik\\Documents\\SoundSwipe\\SoundSwipe\\SoundController\\SoundController.csproj",
+        "projectUniqueName": "C:\\Users\\ethan\\Documents\\Software-Design-Projects\\SoundSwipe\\SoundController\\SoundController.csproj",
         "projectName": "SoundController",
-        "projectPath": "C:\\Users\\Erik\\Documents\\SoundSwipe\\SoundSwipe\\SoundController\\SoundController.csproj",
-        "packagesPath": "C:\\Users\\Erik\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Erik\\Documents\\SoundSwipe\\SoundSwipe\\SoundController\\obj\\",
+        "projectPath": "C:\\Users\\ethan\\Documents\\Software-Design-Projects\\SoundSwipe\\SoundController\\SoundController.csproj",
+        "packagesPath": "C:\\Users\\ethan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ethan\\Documents\\Software-Design-Projects\\SoundSwipe\\SoundController\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Erik\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\ethan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {}
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
         },
         "frameworks": {
           "net8.0": {
@@ -79,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
