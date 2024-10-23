@@ -35,7 +35,9 @@ public class SpotifyClient
             var tokenResponseJson = await response.Content.ReadAsStringAsync();
             var tokenResponse = JsonSerializer.Deserialize<SpotifyTokenResponse>(tokenResponseJson);
 
-            return tokenResponse.AccessToken; 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            return tokenResponse.AccessToken;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
     }
     public static async Task<string> GetArtist(string artistName)

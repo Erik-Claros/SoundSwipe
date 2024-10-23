@@ -15,7 +15,7 @@
                     - {{ track.album.name }}
                 </mat-card-subtitle>
             </mat-card-header>
-            <img mat-card-image [src]="track.album.images[0]?.url" alt="{{ track.name }} image" (click)="flipCard()">
+            <img mat-card-image [src]="track.album.images[0].url" alt="{{ track.name }} image" (click)="flipCard()">
             <mat-card-content>
             </mat-card-content>
             <mat-card-actions class="buttons">
@@ -35,7 +35,7 @@
             <mat-card-header>
                 <mat-card-title>Album Details</mat-card-title>
             </mat-card-header>
-            <img mat-card-image [src]="track.album.images[0]?.url" alt="{{ track.name }} image" (click)="flipCard()">
+            <img mat-card-image [src]="track.album.images[0].url" alt="{{ track.name }} image" (click)="flipCard()">
             <mat-card-content>
                 <p>
                     <strong>Album:</strong> {{ track.album.name }}<br>

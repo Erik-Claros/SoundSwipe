@@ -5,14 +5,19 @@ import { PlaylistButtonComponent } from "../playlist-button/playlist-button.comp
 import { ShareButtonComponent } from "../share-button/share-button.component";
 import { FriendButtonComponent } from "../friend-button/friend-button.component";
 import { NavBarComponent } from "../nav-bar/nav-bar.component";
+import { TrackComponent } from "../track-component/track-component.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
-  imports: [PlaylistButtonComponent, ShareButtonComponent, DislikeComponent, LikeButtonComponent, FriendButtonComponent, NavBarComponent]
+  imports: [PlaylistButtonComponent, ShareButtonComponent, DislikeComponent, LikeButtonComponent, FriendButtonComponent, NavBarComponent, TrackComponent]
 })
 export class DashboardComponent {
+backgroundImageUrl: any;
+onBackgroundImageUrlReceived($event: Event) {
+throw new Error('Method not implemented.');
+}
   dislikeClicked() {}
 }
