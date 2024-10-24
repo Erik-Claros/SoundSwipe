@@ -15,7 +15,7 @@ public class DatabaseController : ControllerBase
     [HttpGet("data")]
     public IActionResult GetData()
      {
-        var users = _applicationDbContext.GetDatabaseName();
+        var users = _applicationDbContext.GetData();
         return Ok(users);
     }
 

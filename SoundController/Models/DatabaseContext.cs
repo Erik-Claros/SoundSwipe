@@ -1,51 +1,84 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Database.Models {
     public class Users
     {
-        public int UID { get; set; } // Primary Key
-
-        public string Phone { get; set; } // Phone number
-
-        public string FirstName { get; set; } // First name
-        public string LastName { get; set; } // Last name
-
-        public string SpotifyLink { get; set; } // Spotify link (optional)
-
-        public string Pfp { get; set; } // Profile picture (optional)
+        [Key] // This attribute specifies that uID is the primary key
+        public int uID { get; set; }
+        
+        public string? phone { get; set; }
+        public string first_name { get; set; }
+        public string last_name { get; set; }
+        public string? spotify_link { get; set; }
+        public string? pfp { get; set; }
     }
 
     public class Song
     {
-        public required int SID { get; set; }  // sID
-        public required string SongName { get; set; }
-        public required string AlbumName { get; set; }
-        public required string AlbumCover { get; set; }
-        public required string ArtistName { get; set; }
-        public string? Genre { get; set; }
-        public int? Length { get; set; }  // in seconds
+        [Key]
+        public int sID { get; set; }  // sID
+        public string song_name { get; set; }
+        public string album_name { get; set; }
+        public string album_cover { get; set; }
+        public string artist_name { get; set; }
+        public string? genre { get; set; }
+        public int? length { get; set; }  // in seconds
     }
 
     public class UserFriend
     {
-        public required int UserId { get; set; }      // user_id
-        public required int FriendId { get; set; }     // friend_id
+        [Key]
+        public int Id { get; set; } // Primary key for the UserFriend table
+
+        [ForeignKey("User")] // This specifies the relationship with Users
+        public int UserId { get; set; }      // user_id
+        public Users User { get; set; }       // Navigation property
+
+        [ForeignKey("Friend")] // This specifies the relationship with Users
+        public int FriendId { get; set; }     // friend_id
+        public Users Friend { get; set; }      // Navigation property
     }
 
     public class UserHistory
     {
-        public required int UserId { get; set; }       // user_id
-        public required int SongId { get; set; }        // song_id
+        [Key]
+        public int Id { get; set; } // Primary key for UserHistory table
+
+        [ForeignKey("User")] // This specifies the relationship with Users
+        public int UserId { get; set; }       // user_id
+        public Users User { get; set; }        // Navigation property
+
+        [ForeignKey("Song")] // This specifies the relationship with Song
+        public int SongId { get; set; }        // song_id
+        public Song Song { get; set; }          // Navigation property
     }
 
     public class UserLikedSong
     {
-        public required int UserId { get; set; }       // user_id
-        public required int SongId { get; set; }        // song_id
+        [Key]
+        public int Id { get; set; } // Primary key for UserLikedSong table
+
+        [ForeignKey("User")] // This specifies the relationship with Users
+        public int UserId { get; set; }       // user_id
+        public Users User { get; set; }        // Navigation property
+
+        [ForeignKey("Song")] // This specifies the relationship with Song
+        public int SongId { get; set; }        // song_id
+        public Song Song { get; set; }          // Navigation property
     }
 
     public class UserSavedSong
     {
-        public required int UserId { get; set; }       // user_id
-        public required int SongId { get; set; }        // song_id
-    }
+        [Key]
+        public int Id { get; set; } // Primary key for UserSavedSong table
 
+        [ForeignKey("User")] // This specifies the relationship with Users
+        public int UserId { get; set; }       // user_id
+        public Users User { get; set; }        // Navigation property
+
+        [ForeignKey("Song")] // This specifies the relationship with Song
+        public int SongId { get; set; }        // song_id
+        public Song Song { get; set; }          // Navigation property
+    }
 }
