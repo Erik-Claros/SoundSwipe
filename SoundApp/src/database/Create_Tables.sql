@@ -1,6 +1,6 @@
 -- Create Users table
 CREATE TABLE Users (
-    uID INTEGER PRIMARY KEY,
+    email INTEGER PRIMARY KEY,
     phone TEXT NOT NULL,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,

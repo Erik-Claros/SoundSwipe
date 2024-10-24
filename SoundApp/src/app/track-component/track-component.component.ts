@@ -7,6 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
+import { DatabaseService } from '../Services/database-service/database-service.service';
 
 @Component({
   selector: 'app-track',
@@ -119,4 +120,9 @@ export class TrackComponent implements OnInit {
   flipCard(): void {
     this.isFlipped = !this.isFlipped; 
   }
+
+  nextSong(): void {
+
+  }
+
 }

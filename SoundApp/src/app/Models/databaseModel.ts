@@ -1,39 +1,48 @@
-// model.ts
-
-export interface User {
-    uID: number;                // Primary key
-    phone: string;              // User's phone number
-    firstName: string;          // User's first name
-    lastName: string;           // User's last name
-    spotifyLink?: string;       // Optional Spotify link
+// models.ts
+export interface Users {
+    uID: number;
+    phone?: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    spotify_link?: string;
+    pfp?: string;
 }
 
-export interface Song {
-    sID: number;                // Primary key
-    songName: string;           // Name of the song
-    albumName: string;          // Name of the album
-    albumCover?: string;        // Optional URL to album cover
-    artistName: string;         // Name of the artist
-    genre?: string;             // Optional genre
-    length?: number;            // Optional length of the song in seconds
+export interface Songs {
+    sID: number;
+    song_name: string;
+    album_name: string;
+    album_cover: string;
+    artist_name: string;
+    genre?: string;
 }
 
-export interface UserFriend {
-    userId: number;             // User ID (foreign key)
-    friendId: number;           // Friend ID (foreign key)
+export interface UserFriends {
+    user_id: number;
+    friend_id: number;
+    User?: Users; // Optional, for navigation property
+    Friend?: Users; // Optional, for navigation property
 }
 
 export interface UserHistory {
-    userId: number;             // User ID (foreign key)
-    songId: number;             // Song ID (foreign key)
+    user_id: number;
+    song_id: number;
+    timestamp: string;
+    User?: Users; // Optional, for navigation property
+    Song?: Songs; // Optional, for navigation property
 }
 
-export interface UserLikedSong {
-    userId: number;             // User ID (foreign key)
-    songId: number;             // Song ID (foreign key)
+export interface UserLikedSongs {
+    user_id: number;
+    song_id: number;
+    User?: Users; // Optional, for navigation property
+    Song?: Songs; // Optional, for navigation property
 }
 
-export interface UserSavedSong {
-    userId: number;             // User ID (foreign key)
-    songId: number;             // Song ID (foreign key)
+export interface UserSavedSongs {
+    user_id: number;
+    song_id: number;
+    User?: Users; // Optional, for navigation property
+    Song?: Songs; // Optional, for navigation property
 }

@@ -6,17 +6,46 @@ using System.IO;
 
 public class ApplicationDbContext : DbContext
 {
-    public DbSet<Users> User { get; set; }
-    public DbSet<Users> User { get; set; }
+    public DbSet<Users> Users { get; set; }
+    public DbSet<Songs> Songs { get; set; }
+    public DbSet<UserFriends> UserFriends { get; set; }
+    public DbSet<UserHistory> UserHistory { get; set; }
+    public DbSet<UserLikedSongs> UserLikedSongs { get; set; }
+    public DbSet<UserSavedSongs> UserSavedSongs { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }
 
-    public List<Users> GetData()
+    public List<Users> GetUser()
     {
-        return User.FromSqlRaw("SELECT * FROM Users").ToList(); 
+        return Users.FromSqlRaw("SELECT * FROM Users").ToList(); 
+    }
+
+    public List<Songs> GetSongs()
+    {
+        return Songs.FromSqlRaw("SELECT * FROM Songs").ToList(); 
+    }
+
+    public List<UserFriends> GetFriend()
+    {
+        return UserFriends.FromSqlRaw("SELECT * FROM UserFriends").ToList(); 
+    }
+
+    public List<UserHistory> GetHistory()
+    {
+        return UserHistory.FromSqlRaw("SELECT * FROM UserHistory").ToList(); 
+    }
+
+    public List<UserLikedSongs> GetLikedSongs()
+    {
+        return UserLikedSongs.FromSqlRaw("SELECT * FROM UserLikedSongs").ToList(); 
+    }
+
+    public List<UserSavedSongs> GetSavedSongs()
+    {
+        return UserSavedSongs.FromSqlRaw("SELECT * FROM UserSavedSongs").ToList(); 
     }
 
     public List<string> GetAllTables()
