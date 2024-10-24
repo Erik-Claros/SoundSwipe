@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-//import { User } from '../../Models/databaseModel';
+import { User } from '../../Models/databaseModel';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,7 @@ export class DatabaseService {
 
   // Method to get user by name
   getData(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+    const url = `${this.apiUrl}/data`;
+    return this.http.get<any>(url);
   }
 }

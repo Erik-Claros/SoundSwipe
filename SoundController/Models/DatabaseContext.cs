@@ -1,11 +1,16 @@
-namespace Database.model {
-    public class User
+namespace Database.Models {
+    public class Users
     {
-        public int UID { get; set; }  // uID
-        public string? Phone { get; set; }
-        public required string FirstName { get; set; }
-        public required string LastName { get; set; }
-        public string? SpotifyLink { get; set; }
+        public int UID { get; set; } // Primary Key
+
+        public string Phone { get; set; } // Phone number
+
+        public string FirstName { get; set; } // First name
+        public string LastName { get; set; } // Last name
+
+        public string SpotifyLink { get; set; } // Spotify link (optional)
+
+        public string Pfp { get; set; } // Profile picture (optional)
     }
 
     public class Song
