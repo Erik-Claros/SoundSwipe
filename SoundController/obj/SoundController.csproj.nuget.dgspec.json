@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Erik\\Documents\\SoundSwipe\\SoundSwipe\\SoundController\\SoundController.csproj": {}
+    "C:\\Users\\banic\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\SoundController.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Erik\\Documents\\SoundSwipe\\SoundSwipe\\SoundController\\SoundController.csproj": {
+    "C:\\Users\\banic\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\SoundController.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Erik\\Documents\\SoundSwipe\\SoundSwipe\\SoundController\\SoundController.csproj",
+        "projectUniqueName": "C:\\Users\\banic\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\SoundController.csproj",
         "projectName": "SoundController",
-        "projectPath": "C:\\Users\\Erik\\Documents\\SoundSwipe\\SoundSwipe\\SoundController\\SoundController.csproj",
-        "packagesPath": "C:\\Users\\Erik\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Erik\\Documents\\SoundSwipe\\SoundSwipe\\SoundController\\obj\\",
+        "projectPath": "C:\\Users\\banic\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\SoundController.csproj",
+        "packagesPath": "C:\\Users\\banic\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\banic\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Erik\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\banic\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -79,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.402/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
