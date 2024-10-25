@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { MatButtonModule } from '@angular/material/button';
 import { TrackComponent } from '../track-component/track-component.component';
-
+import { Auth } from '@angular/fire/auth';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -18,7 +18,32 @@ import { TrackComponent } from '../track-component/track-component.component';
 })
 export class DashboardComponent implements AfterViewInit {
   backgroundImageUrl: string = '';
+  userName: string | null = '';  
+  userEmail: string | null = '';  
+  userUID: string | null = '';
+  constructor(private auth: Auth) {}
 
+  // Method to retrieve user info
+  getUserInfo() {
+    const user = this.auth.currentUser;
+
+    if (user) {
+      this.userName = user.displayName;
+      this.userEmail = user.email;
+      this.userUID = user.uid;
+
+      console.log('User UID:', this.userUID);
+      console.log('User Name:', this.userName);
+      console.log('User Email:', this.userEmail);
+    } else {
+      console.log('No user is logged in.');
+    }
+  }
+
+  ngOnInit(): void {
+    // Retrieve user info when the dashboard is initialized
+    this.getUserInfo();
+  }
   onBackgroundImageUrlReceived(url: string) {
     this.backgroundImageUrl = url;
   }
@@ -26,3 +51,5 @@ export class DashboardComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
 }
+
+
