@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import * as bootstrap from 'bootstrap';
 import { CommonModule } from '@angular/common';
+import { updateProfile } from 'firebase/auth';
 
 
 @Component({
@@ -30,25 +31,31 @@ export class SignupComponent {
       return;
     }
     createUserWithEmailAndPassword(this.auth, this.email, this.password)
-      .then(() => {
-        console.log('User data:', {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          dob: this.dob,
-          email: this.email,
-        });
+    .then((userCredential) => {
+      const user = userCredential.user;
+
+      // Update the user's profile to include first name and last name
+      updateProfile(user, {
+        displayName: `${this.firstName} ${this.lastName}`  // Combine first and last name
+      }).then(() => {
+        console.log('User profile updated with name:', `${this.firstName} ${this.lastName}`);
+        
         // Redirect to dashboard or login after successful signup
-        this.router.navigate(['/dashboard']);  // Or redirect to login page
-      })
-      .catch((error) => {
-        if (error.code === 'auth/email-already-in-use') {
-          this.errorMessage = 'This email is already in use. Please use a different email or login.';
-        } else {
-          this.errorMessage = 'Error: ' + error.message;
-        }
-         this.showErrorModal();
+        this.router.navigate(['/dashboard']);
+      }).catch((error) => {
+        console.error('Error updating user profile:', error);
       });
-  }
+
+    }).catch((error) => {
+      if (error.code === 'auth/email-already-in-use') {
+        this.errorMessage = 'This email is already in use. Please use a different email or login.';
+      } else {
+        this.errorMessage = 'Error: ' + error.message;
+      }
+      this.showErrorModal();
+    });
+}
+
 
   showErrorModal() {
     const errorModalElement = document.getElementById('errorModal') as HTMLElement | null;

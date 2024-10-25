@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {FormsModule} from '@angular/forms'; //to use ngModel i needed to import FormsModule
+
 import { Router } from '@angular/router';
 import {Auth, signInWithEmailAndPassword} from '@angular/fire/auth';
 import { CommonModule } from '@angular/common';
@@ -10,7 +11,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   email: string = '';
@@ -39,6 +40,9 @@ export class LoginComponent {
         } else {
           alert('Error: ' + error.message);
         }
-      });
-    }
+      });  
+   }
+   
   }
+
+  

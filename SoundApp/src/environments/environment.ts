@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
-    firebase: {
+    firebaseConfig: {
         apiKey: "AIzaSyDisVmlqQfqL--39qyxEe5uuGVktI-MLeE",
         authDomain: "soundapp-4cc6a.firebaseapp.com",
         projectId: "soundapp-4cc6a",
