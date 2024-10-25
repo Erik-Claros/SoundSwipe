@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';  // path to DashboardComponent
 import { LoginComponent } from './login/login.component';  // path to LoginComponent
+import { SignupComponent } from './signup/signup.component';
+
 import { AccountComponent } from './account/account.component';  // path to AccountComponent
 import { FriendsComponent } from './friends/friends.component';  // path to FriendComponent
 import { LikedSongsComponent } from './liked-songs/liked-songs.component';  // path to LikedSongsComponent
@@ -10,6 +12,7 @@ import { SettingsComponent } from './settings/settings.component';  // path to S
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },  // Route for login
+  {path: 'signup', component: SignupComponent},
   { path: 'dashboard', component: DashboardComponent },  // Route for dashboard
   { path: 'account', component: AccountComponent },  // Route for account
   { path: 'friend', component: FriendsComponent },  // Route for friends
