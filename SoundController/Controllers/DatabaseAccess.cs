@@ -48,6 +48,13 @@ public class ApplicationDbContext : DbContext
         return UserSavedSongs.FromSqlRaw("SELECT * FROM UserSavedSongs").ToList(); 
     }
 
+    // Method to add a song
+    public async Task AddSongAsync(Songs newSong)
+    {
+        await Songs.AddAsync(newSong); // Adds the new song entity to the context
+        await SaveChangesAsync();       // Saves the changes to the database
+    }
+
     public List<string> GetAllTables()
     {
         var tables = new List<string>();

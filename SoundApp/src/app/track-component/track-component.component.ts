@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TrackService } from '../Services/track-service/track-service.service';
 import { Track } from '../Models/track.model';
 import { PreviewTrack } from '../Models/preview-track.model';
+import { Songs } from '../Models/databaseModel';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -20,6 +21,7 @@ export class TrackComponent implements OnInit {
   track!: Track;
   previewTrack!: PreviewTrack;
   songIds: string[] = [];
+  currentSong: string = "";
   isLoading: boolean = true;
   data: any;
   isPlaying: boolean = false;
@@ -28,7 +30,7 @@ export class TrackComponent implements OnInit {
   
   @Output() backgroundImageUrl = new EventEmitter<string>();
   
-  constructor(private trackService: TrackService) { }
+  constructor(private trackService: TrackService, private databaseService: DatabaseService) { }
 
   ngOnInit(): void {
     this.loadSongIds();
@@ -51,6 +53,7 @@ export class TrackComponent implements OnInit {
     if (this.songIds.length > 0) {
       const randomIndex = Math.floor(Math.random() * this.songIds.length);
       const randomSongId = this.songIds[randomIndex];
+      this.currentSong = this.songIds[randomIndex];
       this.getTrackDetails(randomSongId);
       this.getTrackPreview(randomSongId);
     }
@@ -121,8 +124,14 @@ export class TrackComponent implements OnInit {
     this.isFlipped = !this.isFlipped; 
   }
 
-  nextSong(): void {
+  addSongToDB(): void {
+    const songToAdd: Songs = {
+      sId: this.currentSong
+    }
 
+    this.databaseService.AddSong(songToAdd).subscribe({
+      error: (error) => console.error('Error adding song:', error)
+    });
   }
 
 }

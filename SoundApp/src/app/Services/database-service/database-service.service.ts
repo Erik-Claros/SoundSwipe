@@ -1,6 +1,6 @@
 // api.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Users, Songs, UserFriends, UserHistory, UserLikedSongs, UserSavedSongs } from '../../Models/databaseModel';
 
@@ -42,9 +42,14 @@ export class DatabaseService {
         return this.http.get<UserSavedSongs[]>(`${this.baseUrl}/users/${userId}/saved-songs`);
     }
 
+    AddSong(song: Songs): Observable<Songs> {
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      return this.http.post<Songs>(`${this.baseUrl}/songs`, JSON.stringify(song), { headers });
+    }
+
     // Method to create a new user
-    createUser(newUser: Users): Observable<Users> {
-        return this.http.post<Users>(`${this.baseUrl}/users`, newUser);
+    listenedSong(newSong: string): Observable<string> {
+        return this.http.post<string>(`${this.baseUrl}/songs`, newSong);
     }
 
 }

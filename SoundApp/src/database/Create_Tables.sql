@@ -1,55 +1,41 @@
--- Create Users table
 CREATE TABLE Users (
-    email INTEGER PRIMARY KEY,
-    phone TEXT NOT NULL,
+    uId TEXT PRIMARY KEY,
+    phone TEXT,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
-    spotify_link TEXT
+    email TEXT NOT NULL UNIQUE,
+    spotify_link TEXT,
+    pfp TEXT
 );
-
--- Create Songs table
 CREATE TABLE Songs (
-    sID INTEGER PRIMARY KEY,
-    song_name TEXT NOT NULL,
-    album_name TEXT NOT NULL,
-    album_cover TEXT,
-    artist_name TEXT NOT NULL,
-    genre TEXT,
-    length INTEGER
+    sId TEXT PRIMARY KEY
 );
-
--- Create Friends table (multivalue attribute for User)
 CREATE TABLE UserFriends (
-    user_id INTEGER,
-    friend_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES Users(uID),
-    FOREIGN KEY (friend_id) REFERENCES Users(uID),
-    PRIMARY KEY (user_id, friend_id)
+    Id TEXT PRIMARY KEY,
+    UserId TEXT NOT NULL,
+    FriendId TEXT NOT NULL,
+    FOREIGN KEY (UserId) REFERENCES Users(uId),
+    FOREIGN KEY (FriendId) REFERENCES Users(uId)
 );
-
--- Create UserHistory table (multivalue attribute for User)
 CREATE TABLE UserHistory (
-    user_id INTEGER,
-    song_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES Users(uID),
-    FOREIGN KEY (song_id) REFERENCES Songs(sID),
-    PRIMARY KEY (user_id, song_id)
+    Id TEXT PRIMARY KEY,
+    timestamp TEXT NOT NULL,
+    UserId TEXT NOT NULL,
+    SongId TEXT NOT NULL,
+    FOREIGN KEY (UserId) REFERENCES Users(uId),
+    FOREIGN KEY (SongId) REFERENCES Songs(sId)
 );
-
--- Create LikedSongs table (multivalue attribute for User)
 CREATE TABLE UserLikedSongs (
-    user_id INTEGER,
-    song_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES Users(uID),
-    FOREIGN KEY (song_id) REFERENCES Songs(sID),
-    PRIMARY KEY (user_id, song_id)
+    Id TEXT PRIMARY KEY,
+    UserId TEXT NOT NULL,
+    SongId TEXT NOT NULL,
+    FOREIGN KEY (UserId) REFERENCES Users(uId),
+    FOREIGN KEY (SongId) REFERENCES Songs(sId)
 );
-
--- Create SavedSongs table (multivalue attribute for User)
 CREATE TABLE UserSavedSongs (
-    user_id INTEGER,
-    song_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES Users(uID),
-    FOREIGN KEY (song_id) REFERENCES Songs(sID),
-    PRIMARY KEY (user_id, song_id)
+    Id TEXT PRIMARY KEY,
+    UserId TEXT NOT NULL,
+    SongId TEXT NOT NULL,
+    FOREIGN KEY (UserId) REFERENCES Users(uId),
+    FOREIGN KEY (SongId) REFERENCES Songs(sId)
 );

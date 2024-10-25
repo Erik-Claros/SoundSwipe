@@ -35,7 +35,7 @@ public class DatabaseController : ControllerBase
 
     // GET api/users/{userId}/friends
     [HttpGet("users/{userId}/friends")]
-    public async Task<ActionResult<IEnumerable<UserFriends>>> GetUserFriends(int userId)
+    public async Task<ActionResult<IEnumerable<UserFriends>>> GetUserFriends(string userId)
     {
         var friends = await _applicationDbContext.UserFriends
             .Where(uf => uf.UserId == userId)
@@ -51,7 +51,7 @@ public class DatabaseController : ControllerBase
 
     // GET api/users/{userId}/history
     [HttpGet("users/{userId}/history")]
-    public async Task<ActionResult<IEnumerable<UserHistory>>> GetUserHistory(int userId)
+    public async Task<ActionResult<IEnumerable<UserHistory>>> GetUserHistory(string userId)
     {
         var history = await _applicationDbContext.UserHistory
             .Where(uh => uh.UserId == userId)
@@ -67,7 +67,7 @@ public class DatabaseController : ControllerBase
 
     // GET api/users/{userId}/liked-songs
     [HttpGet("users/{userId}/liked-songs")]
-    public async Task<ActionResult<IEnumerable<UserLikedSongs>>> GetUserLikedSongs(int userId)
+    public async Task<ActionResult<IEnumerable<UserLikedSongs>>> GetUserLikedSongs(string userId)
     {
         var likedSongs = await _applicationDbContext.UserLikedSongs
             .Where(uls => uls.UserId == userId)
@@ -81,22 +81,41 @@ public class DatabaseController : ControllerBase
         return Ok(likedSongs);
     }
 
-    // POST api/users
-    //[HttpPost("users")]
-    // public async Task<ActionResult<Users>> CreateUser([FromBody] Users newUser)
-    // {
-    //     if (newUser == null)
-    //     {
-    //         return BadRequest("User data is null.");
-    //     }
+    // GET api/tracks/{id}
+    [HttpGet("tracks/{id}")]
+    public async Task<ActionResult<Songs>> GetSongById(string id)
+    {
+        var song = await _applicationDbContext.Songs.FindAsync(id);
+        if (song == null)
+        {
+            return NotFound();
+        }
+        return Ok(song);
+    }
 
-    //     // Optionally, validate the newUser object here
+    // POST api/tracks
+    [HttpPost("songs")]
+    public async Task<ActionResult<Songs>> CreateSong([FromBody] Songs newSong)
+    {
+        if (newSong == null)
+        {
+            return BadRequest("Song data is null.");
+        }
 
-    //     _applicationDbContext.Users.Add(newUser);
-    //     await _applicationDbContext.SaveChangesAsync();
+        // Check if the song already exists based on its ID
+        var existingSong = await _applicationDbContext.Songs
+            .FirstOrDefaultAsync(t => t.sId == newSong.sId);
 
-    //     return CreatedAtAction(nameof(GetUserById), new { id = newUser.uID }, newUser);
-    // }
+        if (existingSong != null)
+        {
+            return Conflict("Song with the same ID already exists.");
+        }
 
-    // Add any additional methods you need here
+        // Insert the new track into the database
+        _applicationDbContext.Songs.Add(newSong);
+        await _applicationDbContext.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetSongById), new { id = newSong.sId }, newSong);
+    }
+
 }

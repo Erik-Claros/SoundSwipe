@@ -1,6 +1,6 @@
 // models.ts
 export interface Users {
-    uID: number;
+    uId: string;
     phone?: string;
     first_name: string;
     last_name: string;
@@ -10,39 +10,34 @@ export interface Users {
 }
 
 export interface Songs {
-    sID: number;
-    song_name: string;
-    album_name: string;
-    album_cover: string;
-    artist_name: string;
-    genre?: string;
+    sId: string;
 }
 
 export interface UserFriends {
-    user_id: number;
-    friend_id: number;
+    UserId: string;
+    FriendId: string;
     User?: Users; // Optional, for navigation property
     Friend?: Users; // Optional, for navigation property
 }
 
 export interface UserHistory {
-    user_id: number;
-    song_id: number;
+    UserId: string;
+    SongId: string;
     timestamp: string;
     User?: Users; // Optional, for navigation property
     Song?: Songs; // Optional, for navigation property
 }
 
 export interface UserLikedSongs {
-    user_id: number;
-    song_id: number;
+    UserId: string;
+    SongId: string;
     User?: Users; // Optional, for navigation property
     Song?: Songs; // Optional, for navigation property
 }
 
 export interface UserSavedSongs {
-    user_id: number;
-    song_id: number;
+    UserId: string;
+    SongId: string;
     User?: Users; // Optional, for navigation property
     Song?: Songs; // Optional, for navigation property
 }
