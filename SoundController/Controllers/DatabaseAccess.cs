@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Database.Models;
 using System.Collections.Generic;
 using System.IO;
+using System.ComponentModel.DataAnnotations;
 
 public class ApplicationDbContext : DbContext
 {
@@ -16,6 +17,21 @@ public class ApplicationDbContext : DbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<UserFriends>()
+            .HasKey(uf => new { uf.userId, uf.friendId });
+
+        modelBuilder.Entity<UserHistory>()
+            .HasKey(uh => new { uh.userId, uh.songId, uh.timestamp });
+
+        modelBuilder.Entity<UserLikedSongs>()
+            .HasKey(uls => new { uls.userId, uls.songId });
+
+        modelBuilder.Entity<UserSavedSongs>()
+            .HasKey(uss => new { uss.userId, uss.songId });
     }
 
     public List<Users> GetUser()
@@ -52,6 +68,13 @@ public class ApplicationDbContext : DbContext
     public async Task AddSongAsync(Songs newSong)
     {
         await Songs.AddAsync(newSong); // Adds the new song entity to the context
+        await SaveChangesAsync();       // Saves the changes to the database
+    }
+
+        // Method to add a song
+    public async Task AddUserAsync(Users newUser)
+    {
+        await Users.AddAsync(newUser); // Adds the new user entity to the context
         await SaveChangesAsync();       // Saves the changes to the database
     }
 

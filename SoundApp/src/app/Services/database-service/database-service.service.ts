@@ -23,28 +23,43 @@ export class DatabaseService {
     }
 
     // User Friends
-    getUserFriends(userId: number): Observable<UserFriends[]> {
+    getUserFriends(userId: string): Observable<UserFriends[]> {
         return this.http.get<UserFriends[]>(`${this.baseUrl}/users/${userId}/friends`);
     }
 
     // User History
-    getUserHistory(userId: number): Observable<UserHistory[]> {
+    getUserHistory(userId: string): Observable<UserHistory[]> {
         return this.http.get<UserHistory[]>(`${this.baseUrl}/users/${userId}/history`);
     }
 
     // User Liked Songs
-    getUserLikedSongs(userId: number): Observable<UserLikedSongs[]> {
-        return this.http.get<UserLikedSongs[]>(`${this.baseUrl}/users/${userId}/liked-songs`);
+    getUserLikedSongs(userId: string): Observable<string[]> {
+        return this.http.get<string[]>(`${this.baseUrl}/users/${userId}/liked-songs`);
     }
 
     // User Saved Songs
-    getUserSavedSongs(userId: number): Observable<UserSavedSongs[]> {
+    getUserSavedSongs(userId: string): Observable<UserSavedSongs[]> {
         return this.http.get<UserSavedSongs[]>(`${this.baseUrl}/users/${userId}/saved-songs`);
     }
 
     AddSong(song: Songs): Observable<Songs> {
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
       return this.http.post<Songs>(`${this.baseUrl}/songs`, JSON.stringify(song), { headers });
+    }
+
+    AddUser(user: Users): Observable<Users> {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.post<Users>(`${this.baseUrl}/users`, JSON.stringify(user), { headers });
+    }
+
+    AddFav(userLikedSongs: UserLikedSongs): Observable<UserLikedSongs> {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.post<UserLikedSongs>(`${this.baseUrl}/userLikedSongs`, JSON.stringify(userLikedSongs), { headers });
+    }
+
+    AddHistory(userHistory: UserHistory): Observable<UserHistory> {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.post<UserHistory>(`${this.baseUrl}/userHistory`, JSON.stringify(userHistory), { headers });
     }
 
     // Method to create a new user

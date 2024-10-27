@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import * as bootstrap from 'bootstrap';
 import { CommonModule } from '@angular/common';
 import { updateProfile } from 'firebase/auth';
+import { Users } from '../Models/databaseModel';
 
 
 @Component({

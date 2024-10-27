@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { TrackService } from '../Services/track-service/track-service.service';
 import { Track } from '../Models/track.model';
 import { PreviewTrack } from '../Models/preview-track.model';
-import { Songs } from '../Models/databaseModel';
+import { Songs, UserLikedSongs, UserHistory } from '../Models/databaseModel';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { DatabaseService } from '../Services/database-service/database-service.service';
+import { Auth } from '@angular/fire/auth';
+
 
 @Component({
   selector: 'app-track',
@@ -27,13 +29,21 @@ export class TrackComponent implements OnInit {
   isPlaying: boolean = false;
   isFlipped: boolean = false;
   private audio: HTMLAudioElement | null = null;
+  userId: string = "";
   
   @Output() backgroundImageUrl = new EventEmitter<string>();
   
-  constructor(private trackService: TrackService, private databaseService: DatabaseService) { }
+  constructor(private trackService: TrackService, private databaseService: DatabaseService, private auth: Auth) { }
 
   ngOnInit(): void {
+    this.loadUserId();
     this.loadSongIds();
+  }
+
+  loadUserId(): void {
+    if(this.auth.currentUser != null){
+      this.userId = this.auth.currentUser.uid;
+    }
   }
 
   // Load song IDs from the backend
@@ -53,9 +63,11 @@ export class TrackComponent implements OnInit {
     if (this.songIds.length > 0) {
       const randomIndex = Math.floor(Math.random() * this.songIds.length);
       const randomSongId = this.songIds[randomIndex];
-      this.currentSong = this.songIds[randomIndex];
       this.getTrackDetails(randomSongId);
       this.getTrackPreview(randomSongId);
+      this.currentSong = randomSongId;
+      this.addSongToDB();
+      this.addSongToHistory();
     }
   }
 
@@ -131,6 +143,35 @@ export class TrackComponent implements OnInit {
 
     this.databaseService.AddSong(songToAdd).subscribe({
       error: (error) => console.error('Error adding song:', error)
+    });
+  }
+
+  addSongToFavorite(): void {
+    //console.log(this.userId);
+    //console.log(this.currentSong);
+    const favToAdd: UserLikedSongs = {
+      userId: this.userId,
+      songId: this.currentSong
+    }
+    this.databaseService.AddFav(favToAdd).subscribe({
+      error: (error) => console.error('Error adding favorite song:', error)
+    });
+  }
+
+  addSongToHistory(): void {
+    //console.log(this.userId);
+    //console.log(this.currentSong);
+    const currentDate: Date = new Date();
+    const formattedDate: string = `${currentDate.getFullYear()}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getDate().toString().padStart(2, '0')}${currentDate.getHours().toString().padStart(2, '0')}${currentDate.getMinutes().toString().padStart(2, '0')}${currentDate.getSeconds().toString().padStart(2, '0')}`;
+    //console.log(formattedDate);
+    const historyToAdd: UserHistory = {
+      userId: this.userId,
+      songId: this.currentSong,
+      timestamp: formattedDate
+    }
+
+    this.databaseService.AddHistory(historyToAdd).subscribe({
+      error: (error) => console.error('Error adding favorite song:', error)
     });
   }
 
