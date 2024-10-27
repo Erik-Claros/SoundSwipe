@@ -51,10 +51,28 @@ public class DatabaseController : ControllerBase
 
     // GET api/users/{userId}/history
     [HttpGet("users/{userId}/history")]
-    public async Task<ActionResult<IEnumerable<UserHistory>>> GetUserHistory(string userId)
+    public async Task<ActionResult<IEnumerable<string>>> GetUserHistory(string userId)
     {
         var history = await _applicationDbContext.UserHistory
             .Where(uh => uh.userId == userId)
+            .OrderBy(uh => uh.timestamp)
+            .Select(uh => uh.songId)
+            .ToListAsync();
+
+        if (!history.Any())
+        {
+            return NotFound("No history found for this user.");
+        }
+
+        return Ok(history);
+    }
+
+    public async Task<ActionResult<IEnumerable<string>>> GetUserHistoryTimestamps(string userId)
+    {
+        var history = await _applicationDbContext.UserHistory
+            .Where(uh => uh.userId == userId)
+            .OrderBy(uh => uh.timestamp)
+            .Select(uh => uh.timestamp)
             .ToListAsync();
 
         if (!history.Any())
@@ -144,7 +162,7 @@ public class DatabaseController : ControllerBase
 
         if (existingSong != null)
         {
-            return Conflict("Song with the same ID already exists.");
+            return Ok("Song with the same ID already exists.");
         }
 
         // Insert the new track into the database
@@ -169,7 +187,7 @@ public class DatabaseController : ControllerBase
 
         if (existingUser != null)
         {
-            return Conflict("User with the same ID already exists.");
+            return Ok("User with the same ID already exists.");
         }
 
         // Insert the new user into the database

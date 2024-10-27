@@ -1,3 +1,4 @@
+<app-back-button></app-back-button>
 <div *ngIf="tracks.length > 0; else noSongs">
     <h2>Your Liked Songs</h2>
     <div class="track-list" fxLayout="row" fxLayoutWrap>
@@ -9,7 +10,7 @@
                 </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <img mat-card-image [src]="song.album.images[0]?.url" alt="{{ song.name }} image" class="track-image">
+                <img mat-card-image [src]="song.album.images[0].url" alt="{{ song.name }} image" class="track-image">
                 <div class="track-details">
                     <p><strong>Album:</strong> {{ song.album.name }}</p>
                     <p><strong>Duration:</strong> {{ (song.duration_ms / 60000) | number: '1.0-0' }} minutes</p>
@@ -24,3 +25,5 @@
 <ng-template #noSongs>
     <h2>You have no liked songs.</h2>
 </ng-template>
+
+<app-back-to-top></app-back-to-top>

@@ -3,19 +3,20 @@ import { DatabaseService } from '../Services/database-service/database-service.s
 import { TrackService } from '../Services/track-service/track-service.service';
 import { Track, Image, Album, Artist } from '../Models/track.model';
 import { Auth } from '@angular/fire/auth';  // Ensure the Auth service is imported
-import { UserLikedSongs } from '../Models/databaseModel';  // Adjust the path as needed
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
+import { BackButtonComponent } from '../back-button/back-button.component';
+import { BackToTopComponent } from '../back-to-top/back-to-top.component';
 
 @Component({
   selector: 'app-liked-songs',
   templateUrl: './liked-songs.component.html',
   styleUrls: ['./liked-songs.component.css'],
   standalone: true,
-  imports: [ CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule ]
+  imports: [ CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, BackButtonComponent, BackToTopComponent ]
 })
 
 export class LikedSongsComponent implements OnInit {

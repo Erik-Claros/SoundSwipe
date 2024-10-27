@@ -28,8 +28,8 @@ export class DatabaseService {
     }
 
     // User History
-    getUserHistory(userId: string): Observable<UserHistory[]> {
-        return this.http.get<UserHistory[]>(`${this.baseUrl}/users/${userId}/history`);
+    getUserHistory(userId: string): Observable<string[]> {
+        return this.http.get<string[]>(`${this.baseUrl}/users/${userId}/history`);
     }
 
     // User Liked Songs

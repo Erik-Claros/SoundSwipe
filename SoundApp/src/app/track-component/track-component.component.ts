@@ -171,7 +171,7 @@ export class TrackComponent implements OnInit {
     }
 
     this.databaseService.AddHistory(historyToAdd).subscribe({
-      error: (error) => console.error('Error adding favorite song:', error)
+      error: (error) => console.error('Error adding to history:', error)
     });
   }
 

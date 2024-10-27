@@ -14,8 +14,6 @@
     <li *ngFor="let user of users">
       <p><strong>ID:</strong> {{ user.uID }}</p>
       <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
-      <p><strong>Phone:</strong> {{ user.phone || 'N/A' }}</p>
-      <p><strong>Spotify Link:</strong> <a *ngIf="user.spotify_link" [href]="user.spotify_link" target="_blank">{{ user.spotify_link }}</a></p>
       <p><strong>Profile Picture:</strong> <img *ngIf="user.pfp" [src]="user.pfp" alt="Profile Picture" width="50" height="50" /></p>
       <hr />
     </li>
