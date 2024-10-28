@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -44,6 +45,11 @@ export class NavBarComponent {
   }
   settingClicked() {
     //console.log("Setting button has been clicked");
+    this.router.navigate(['/settings']);
+  }
+  constructor(private router: Router){}
+
+  onSettings(){
     this.router.navigate(['/settings']);
   }
 }
