@@ -1,25 +1,70 @@
-<!-- <h2>Add User</h2>
-<form (ngSubmit)="addUser()">
-  <input [(ngModel)]="newUser.first_name" name="first_name" placeholder="First Name" required>
-  <input [(ngModel)]="newUser.last_name" name="last_name" placeholder="Last Name" required>
-  <input [(ngModel)]="newUser.phone" name="phone" placeholder="Phone">
-  <input [(ngModel)]="newUser.spotify_link" name="spotify_link" placeholder="Spotify Link">
-  <input [(ngModel)]="newUser.pfp" name="pfp" placeholder="Profile Picture URL">
-  <button type="submit">Add User</button>
-</form> -->
+<app-back-button></app-back-button>
+<button mat-raised-button color="" (click)="showInputBox()">Find Friends!</button>
 
-<div *ngIf="users.length > 0; else noUsers">
-  <h2>User List</h2>
-  <ul>
-    <li *ngFor="let user of users">
-      <p><strong>ID:</strong> {{ user.uID }}</p>
-      <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
-      <p><strong>Profile Picture:</strong> <img *ngIf="user.pfp" [src]="user.pfp" alt="Profile Picture" width="50" height="50" /></p>
-      <hr />
-    </li>
-  </ul>
+<div *ngIf="isInputVisible" style="margin-top: 10px;">
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input 
+      matInput 
+      [(ngModel)]="userInput" 
+      (keydown)="handleInput($event)" 
+      placeholder="Type something and press Enter" 
+    />
+    <mat-icon matSuffix *ngIf="userInput" (click)="userInput=''">clear</mat-icon>
+  </mat-form-field>
 </div>
 
-<ng-template #noUsers>
-  <p>No users found.</p>
-</ng-template>
+<div *ngIf="userInput" style="margin-top: 10px;">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>User Information</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ng-container *ngIf="userSearchFriend; else noFriendFound">
+        <p style="margin: 0;">
+          <mat-label><strong>First Name:</strong> {{ userSearchFriend.firstName }}</mat-label>
+        </p>
+        <p style="margin: 0;">
+          <mat-label><strong>Last Name:</strong> {{ userSearchFriend.lastName }}</mat-label>
+        </p>
+        <p style="margin: 0;">
+          <mat-label><strong>Email:</strong> {{ userSearchFriend.email }}</mat-label>
+        </p>
+        
+        <!-- Display already friends section -->
+        <div *ngIf="isAlreadyFriends(userSearchFriend.email)">
+          <p style="margin: 0; color: green;">
+            <strong>This user is already your friend!</strong>
+          </p>
+        </div>
+        
+        <button mat-raised-button color="primary" (click)="addFriend(userSearchFriend)" 
+          *ngIf="!isAlreadyFriends(userSearchFriend.email)">Add Friend</button>
+      </ng-container>
+      <ng-template #noFriendFound>
+        <p>No user found with this email.</p>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Display already friends list -->
+<div style="margin-top: 20px;">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Your Friends</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngFor="let friend of userFriends">
+        <p style="margin: 0;">
+          <mat-label><strong>Name:</strong> {{ friend.firstName }} {{ friend.lastName }}</mat-label>
+        </p>
+      </div>
+      <div *ngIf="userFriends.length === 0">
+        <p>No friends added yet.</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<app-back-to-top></app-back-to-top>

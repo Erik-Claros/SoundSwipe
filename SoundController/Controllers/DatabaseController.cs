@@ -19,10 +19,41 @@ public class DatabaseController : ControllerBase
 
     // GET api/users
     [HttpGet("users")]
-    public async Task<ActionResult<IEnumerable<Users>>> GetUsers()
+    public async Task<ActionResult<IEnumerable<Users>>> GetAllUsers()
     {
         var users = await _applicationDbContext.Users.ToListAsync();
         return Ok(users);
+    }
+
+        // GET api/users/userId
+    [HttpGet("users/{userId}")]
+    public async Task<ActionResult<IEnumerable<Users>>> GetUser(string userId)
+    {
+        var user = await _applicationDbContext.Users
+            .Where(ui => ui.uId == userId)
+            .ToListAsync();
+
+        if (!user.Any())
+        {
+            return NotFound("No user found with this id.");
+        }
+
+        return Ok(user);
+    }
+
+    [HttpGet("users/email/{email}")]
+    public async Task<ActionResult<IEnumerable<Users>>> GetUserByEmail(string email)
+    {
+        var user = await _applicationDbContext.Users
+            .Where(ui => ui.email == email)
+            .ToListAsync();
+
+        if (!user.Any())
+        {
+            return NotFound("No user found with this id.");
+        }
+
+        return Ok(user);
     }
 
     // GET api/songs
@@ -39,6 +70,7 @@ public class DatabaseController : ControllerBase
     {
         var friends = await _applicationDbContext.UserFriends
             .Where(uf => uf.userId == userId)
+            .Select(uf => uf.friendId)
             .ToListAsync();
 
         if (!friends.Any())
@@ -67,21 +99,21 @@ public class DatabaseController : ControllerBase
         return Ok(history);
     }
 
-    public async Task<ActionResult<IEnumerable<string>>> GetUserHistoryTimestamps(string userId)
-    {
-        var history = await _applicationDbContext.UserHistory
-            .Where(uh => uh.userId == userId)
-            .OrderBy(uh => uh.timestamp)
-            .Select(uh => uh.timestamp)
-            .ToListAsync();
+    // public async Task<ActionResult<IEnumerable<string>>> GetUserHistoryTimestamps(string userId)
+    // {
+    //     var history = await _applicationDbContext.UserHistory
+    //         .Where(uh => uh.userId == userId)
+    //         .OrderBy(uh => uh.timestamp)
+    //         .Select(uh => uh.timestamp)
+    //         .ToListAsync();
 
-        if (!history.Any())
-        {
-            return NotFound("No history found for this user.");
-        }
+    //     if (!history.Any())
+    //     {
+    //         return NotFound("No history found for this user.");
+    //     }
 
-        return Ok(history);
-    }
+    //     return Ok(history);
+    // }
 
     // GET api/users/{userId}/liked-songs
     [HttpGet("users/{userId}/liked-songs")]
@@ -245,5 +277,32 @@ public class DatabaseController : ControllerBase
         await _applicationDbContext.SaveChangesAsync();
 
         return CreatedAtAction(nameof(GetHistoryById), new { id = newHistory.songId }, newHistory);
+    }
+
+    // POST api/addFriends
+    [HttpPost("users/addFriends")]
+    public async Task<ActionResult<string[]>> CreateFriendship([FromBody] UserFriends friends)
+    {
+        if (friends == null)
+        {
+            return BadRequest("friend data is null.");
+        }
+        var friendOne = friends.userId;
+        var friendTwo = friends.friendId;
+        // Check if friends already exists based on IDs
+        var existingFriends = await _applicationDbContext.UserFriends
+            .FirstOrDefaultAsync(t => t.userId == friendOne && t.friendId == friendTwo);
+
+        if (existingFriends != null)
+        {
+            return Conflict("Friendship already exists.");
+        }
+
+        // Insert the new user into the database
+        _applicationDbContext.UserFriends.Add(new UserFriends { userId = friendOne, friendId = friendTwo });
+        //_applicationDbContext.UserFriends.Add(new UserFriends { userId = friendTwo, friendId = friendOne });
+        await _applicationDbContext.SaveChangesAsync();
+
+    return CreatedAtAction(nameof(CreateFriendship), new { friendOne, friendTwo }, new { friendOne, friendTwo });
     }
 }

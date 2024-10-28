@@ -42,7 +42,7 @@ export class HistoryComponent implements OnInit {
   }
 
   loadLikedSongs(): void {
-    this.databaseService.getUserHistory(this.userId).subscribe({
+    this.databaseService.GetUserHistory(this.userId).subscribe({
       next: (ids) => {
         console.log(ids);
         this.viewedSongs = ids;

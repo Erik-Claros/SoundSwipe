@@ -13,32 +13,40 @@ export class DatabaseService {
     constructor(private http: HttpClient) {}
 
     // Users
-    getUsers(): Observable<Users[]> {
+    GetAllUsers(): Observable<Users[]> {
         return this.http.get<Users[]>(`${this.baseUrl}/users`);
     }
 
+    GetUser(uid: string): Observable<Users> {
+        return this.http.get<Users>(`${this.baseUrl}/users/${uid}`);
+    }
+
+    GetUserByEmail(email: string): Observable<Users[]> {
+        return this.http.get<Users[]>(`${this.baseUrl}/users/email/${email}`);
+    }
+
     // Songs
-    getSongs(): Observable<Songs[]> {
+    GetSongs(): Observable<Songs[]> {
         return this.http.get<Songs[]>(`${this.baseUrl}/songs`);
     }
 
     // User Friends
-    getUserFriends(userId: string): Observable<UserFriends[]> {
-        return this.http.get<UserFriends[]>(`${this.baseUrl}/users/${userId}/friends`);
+    GetUserFriends(userId: string): Observable<string[]> {
+        return this.http.get<string[]>(`${this.baseUrl}/users/${userId}/friends`);
     }
 
     // User History
-    getUserHistory(userId: string): Observable<string[]> {
+    GetUserHistory(userId: string): Observable<string[]> {
         return this.http.get<string[]>(`${this.baseUrl}/users/${userId}/history`);
     }
 
     // User Liked Songs
-    getUserLikedSongs(userId: string): Observable<string[]> {
+    GetUserLikedSongs(userId: string): Observable<string[]> {
         return this.http.get<string[]>(`${this.baseUrl}/users/${userId}/liked-songs`);
     }
 
     // User Saved Songs
-    getUserSavedSongs(userId: string): Observable<UserSavedSongs[]> {
+    GetUserSavedSongs(userId: string): Observable<UserSavedSongs[]> {
         return this.http.get<UserSavedSongs[]>(`${this.baseUrl}/users/${userId}/saved-songs`);
     }
 
@@ -61,6 +69,14 @@ export class DatabaseService {
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         return this.http.post<UserHistory>(`${this.baseUrl}/userHistory`, JSON.stringify(userHistory), { headers });
     }
+
+    AddFriends(user: string, friend: string): Observable<string[]> {
+        const friends: UserFriends = { userId: user, friendId: friend }; // Correctly define as an array of strings
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    
+        return this.http.post<string[]>(`${this.baseUrl}/users/addFriends`, JSON.stringify(friends), { headers });
+    }
+    
 
     // Method to create a new user
     listenedSong(newSong: string): Observable<string> {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../Services/database-service/database-service.service';  // Adjust the path as needed
 import { TrackService } from '../Services/track-service/track-service.service';
-import { Track, Image, Album, Artist } from '../Models/track.model';
+import { Track, Artist } from '../Models/track.model';
 import { Auth } from '@angular/fire/auth';  // Ensure the Auth service is imported
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -29,10 +29,6 @@ export class LikedSongsComponent implements OnInit {
   ngOnInit(): void {
     this.loadUserId();
     this.loadLikedSongs();
-    //console.log(this.likedSongs);
-    //console.log(this.likedSongs);
-    //this.loadTrackInfo();
-    //console.log(this.tracks);
   }
 
   loadUserId(): void {
@@ -42,22 +38,22 @@ export class LikedSongsComponent implements OnInit {
   }
 
   loadLikedSongs(): void {
-    this.databaseService.getUserLikedSongs(this.userId).subscribe({
-      next: (ids) => {
+    this.databaseService.GetUserLikedSongs(this.userId).subscribe({
+      next: (ids: string[]) => {
         this.likedSongs = ids;
         this.loadTrackInfo();
       },
-      error: (error) => console.error('Error loading liked songs:', error)
+      error: (error: any[]) => console.error('Error loading liked songs:', error)
     });
   }
 
   loadTrackInfo(): void {
     for(let index = 0; index < this.likedSongs.length; index++) {
       this.trackService.getTrack(this.likedSongs[index]).subscribe({
-        next: (track) => {
+        next: (track: Track) => {
           this.tracks.push(track);
         },
-        error: (error) => console.error('Error loading liked songs:', error)
+        error: (error: any[]) => console.error('Error loading liked songs:', error)
       });
     }
   }

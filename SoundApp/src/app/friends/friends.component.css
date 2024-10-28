@@ -1,0 +1,10 @@
+mat-card {
+    background-color: #f5f5f5; /* Light background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  mat-label {
+    display: block; /* Block display for labels */
+    margin-bottom: 5px; /* Space between labels */
+  }
