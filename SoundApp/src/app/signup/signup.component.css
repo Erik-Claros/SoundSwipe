@@ -1,0 +1,97 @@
+
+     
+
+.signup-page {
+    background-image: url('/assets/Applogo.png'); /* Adjust path as needed */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.signup-container {
+
+    max-width: 400px;
+    margin: auto;
+    padding: 50px;
+    background-color: grey;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.signup-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-control {
+    width: 90%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn-block {
+    width: 100%;
+    padding: 10px;
+}
+
+.btn-success {
+    background-color: #1DB954;
+    color: white;
+    border: none;
+    border-radius: 24px;
+    font-size: 20px;
+    width: 100px;
+    margin: auto;
+    cursor: pointer;
+  }
+  .btn-success:disabled {
+    background-color: #cccccc;
+  }
+  
+.error-message {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 5px;
+}
+
+.text-danger {
+    color: #ff0000;
+    font-size: 1rem;
+  }
+
+.text-center {
+    text-align: center;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+.app-logo {
+    display: block;
+    margin: 0 auto 20px;
+    width: 100px;
+    height: auto;
+    border-radius: 50%;
+  }

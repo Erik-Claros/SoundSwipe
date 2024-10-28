@@ -1,21 +1,62 @@
+<div class="login-page">
+<div class="login-container card shadow-lg p-4">
+    <div>
+        <h6 class="text-center">Welcome To</h6>  
+    </div>
+  <img src="/assets/SoundLogo.png" alt="App Logo" class="app-logo">
+  <h6 class="text-center">Login</h6>
+  <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="form-container">
+      
+      <!-- Email Input -->
+      <div class="form-group mb-3">
+          <label for="email">Email</label>
+          <input type="email" id="email" [(ngModel)]="email" name="email" 
+                 class="form-control" placeholder="Email"
+                 required email #emailInput="ngModel" 
+                 [class.is-invalid]="emailInput.invalid && emailInput.touched"
+                 [class.is-valid]="emailInput.valid && emailInput.touched" />
+          <div class="text-danger">
+              <small *ngIf="emailInput.errors?.['required'] && emailInput.touched">
+                  Email is required.
+              </small>
+              <small *ngIf="emailInput.errors?.['email'] && emailInput.touched">
+                  Please enter a valid email address.
+              </small>
+          </div>
+      </div>
 
-<div class="login-container">
-    <div class="login-left">
-        <img src="/assets/SoundLogo.png" alt="App Logo" class="app-logo">
-      <h2>Login!! 👋</h2>
-      <p>How do I get started?</p>
-      <button class="btn btn-spotify" type="button"(click)="onSingin()" >
-        <img src="/assets/Spotify_black.png" alt="Spotify Logo" class="spotify-logo">
-        Sign in with Spotify</button>
-      <p>or Already Have an Account?</p>
-      <form (ngSubmit)= "onLogin()">
-        <label for="username">Username</label>
-        <input type="text" id="username" [(ngModel)]="username" name="username" placeholder="Username" />
-        <label for="password">Password</label>
-        <input type="password" id="password" [(ngModel)]="password" name="password" placeholder="********" required />
-        <button type="submit" class="btn btn-signin">Sign In</button>
-      </form>
-      <p>Don't have an account? <a href="#">Sign Up Now</a></p>
-  </div>
+      <!-- Password Input -->
+      <div class="form-group mb-3">
+          <label for="password">Password</label>
+          <input type="password" id="password" [(ngModel)]="password" name="password" 
+                 class="form-control" placeholder="********" 
+                 required minlength="8" #passwordInput="ngModel" 
+                 [class.is-invalid]="passwordInput.invalid && passwordInput.touched"
+                 [class.is-valid]="passwordInput.valid && passwordInput.touched" />
+          <div class="text-danger">
+              <small *ngIf="passwordInput.errors?.['required'] && passwordInput.touched">
+                  Password is required.
+              </small>
+              <small *ngIf="passwordInput.errors?.['minlength'] && passwordInput.touched">
+                  Password must be at least 8 characters long.
+              </small>
+          </div>
+      </div>
 
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-success w-100" 
+              [disabled]="loginForm.invalid">Login</button>
+  </form>
   
+    <!-- Popup Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3" role="alert">
+        {{ errorMessage }}
+      </div>
+
+
+  <!-- Signup Redirect -->
+  <p class="text-center mt-3">Don't have an account? 
+      <a href="/signup" class="text-decoration-none">Sign Up Now</a>
+  </p>
+</div>
+</div>
