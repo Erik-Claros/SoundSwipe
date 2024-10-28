@@ -1,9 +1,7 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';  // path to DashboardComponent
 import { LoginComponent } from './login/login.component';  // path to LoginComponent
-import { SettingsPageComponent } from './settings-page/settings-page.component';  // path to SettingsPageComponent
 import { SignupComponent } from './signup/signup.component';
-
 import { AccountComponent } from './account/account.component';  // path to AccountComponent
 import { FriendsComponent } from './friends/friends.component';  // path to FriendComponent
 import { LikedSongsComponent } from './liked-songs/liked-songs.component';  // path to LikedSongsComponent
@@ -21,7 +19,6 @@ export const routes: Routes = [
   { path: 'disliked', component: DislikedSongsComponent },  // Route for disliked-songs
   { path: 'history', component: HistoryComponent },  // Route for history
   { path: 'settings', component: SettingsComponent },  // Route for settings
-  { path: 'settings', component: SettingsPageComponent},  // Route for settings
   { path: '', redirectTo: '/login', pathMatch: 'full' }  // Default page
 ];
 
