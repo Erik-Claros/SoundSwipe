@@ -1,11 +1,38 @@
 
+.login-page {
+  position: relative;
+  background-image: url('/assets/Applogo.png'); /* Adjust path as needed */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit; 
+  backdrop-filter: blur(20px); /* Adjust blur intensity as needed */
+  z-index: 1;
+}
+
 .login-container {
+  position: relative;
   max-width: 400px;
   margin: auto;
   padding: 80px 50px;
-  background-color: #f7f7f7;
+  background-color: grey;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  z-index: 2;
 }
 
 .login-container h2 {
@@ -42,8 +69,8 @@
 }
 
 .text-danger {
-  color: #d9534f;
-  font-size: 0.875rem;
+  color: #ff0000;
+  font-size: 1rem;
 }
 
 .text-center {
@@ -73,6 +100,11 @@
   cursor: pointer;
 }
 
+.btn-success:disabled {
+  background-color: #cccccc;
+}
+
+
 .btn-signin:hover {
   background-color: #3b7dc2;
 }
@@ -84,4 +116,13 @@
 .text-decoration-none:hover {
   color: #367bb1;
   text-decoration: underline;
+}
+
+.alert-danger {
+  color: #d9534f;
+  background-color: #f8d7da;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  text-align: center;
 }
