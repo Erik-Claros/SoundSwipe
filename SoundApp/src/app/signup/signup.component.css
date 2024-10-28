@@ -1,9 +1,26 @@
+
+     
+
+.signup-page {
+    background-image: url('/assets/Applogo.png'); /* Adjust path as needed */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
 .signup-container {
 
     max-width: 400px;
     margin: auto;
-    padding: 20px;
-    background-color: #f7f7f7;
+    padding: 50px;
+    background-color: grey;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
@@ -49,12 +66,20 @@
     margin: auto;
     cursor: pointer;
   }
-
+  .btn-success:disabled {
+    background-color: #cccccc;
+  }
+  
 .error-message {
     color: red;
     font-size: 0.875rem;
     margin-top: 5px;
 }
+
+.text-danger {
+    color: #ff0000;
+    font-size: 1rem;
+  }
 
 .text-center {
     text-align: center;
