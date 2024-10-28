@@ -3,6 +3,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,4 +19,9 @@ import { MatMenuModule } from '@angular/material/menu';
   ]
 })
 export class NavBarComponent {
+  constructor(private router: Router){}
+
+  onSettings(){
+    this.router.navigate(['/settings']);
+  }
 }
