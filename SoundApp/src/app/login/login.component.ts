@@ -29,6 +29,7 @@ export class LoginComponent {
 
     signInWithEmailAndPassword(this.auth, this.email, this.password)
       .then(() => {
+        this.errorMessage = '';
         // Redirect to dashboard after successful login
         this.router.navigate(['/dashboard']);
       })
