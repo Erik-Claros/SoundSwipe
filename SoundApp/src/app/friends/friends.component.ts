@@ -69,8 +69,9 @@ export class FriendsComponent implements OnInit {
   loadUserFriends(friends: string[]): void {
     friends.forEach(friendId => {
       this.databaseService.GetUser(friendId).subscribe({
-        next: (user: Users) => {
-          this.userFriends.push(user);
+        next: (user: Users[]) => {
+          this.userFriends.push(user[0]);
+          console.log(this.userFriends);
         },
         error: (error: any[]) => {
           console.error('Error loading friends', error);

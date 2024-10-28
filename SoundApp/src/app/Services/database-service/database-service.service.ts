@@ -17,8 +17,8 @@ export class DatabaseService {
         return this.http.get<Users[]>(`${this.baseUrl}/users`);
     }
 
-    GetUser(uid: string): Observable<Users> {
-        return this.http.get<Users>(`${this.baseUrl}/users/${uid}`);
+    GetUser(uid: string): Observable<Users[]> {
+        return this.http.get<Users[]>(`${this.baseUrl}/users/${uid}`);
     }
 
     GetUserByEmail(email: string): Observable<Users[]> {
