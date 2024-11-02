@@ -52,6 +52,9 @@
     order: 4; 
 }
 
+mat-card {
+  background-color: #1db954;
+}
 
 /* Header and text css */
 /* Styling for the card title and subtitle */
@@ -62,12 +65,17 @@
     width: 100%;
     display: block;
   }
+
+  button {
+    background-color: black;
+  }
   
   /* For the buttons layout */
   .Buttons {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: white;
   }
   
   .left-button {
