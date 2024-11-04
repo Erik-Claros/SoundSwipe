@@ -1,47 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings</title>
-</head>
-<body>
-    <div class="settings-container">
-        <h1>Settings</h1>
-
-        <!-- List of Genres -->
-        <div class="setting-item">
-            <label for="genres">List of Genres</label>
-            <select id="genres">
-                <option value="rock">Rock</option>
-                <option value="pop">Pop</option>
-                <option value="jazz">Jazz</option>
-                <option value="classical">Classical</option>
-                <option value="hiphop">Hip-Hop</option>
-            </select>
-        </div>
-
-        <!-- Music Volume -->
-        <div class="setting-item">
-            <label for="volume">Music Volume</label>
-            <input type="range" id="volume" min="0" max="100" value="50">
-        </div>
-
-        <!-- Privacy -->
-        <div class="setting-item">
-            <label for="privacy">Privacy</label>
-            <select id="privacy">
-                <option value="public">Public</option>
-                <option value="friends">Friends Only</option>
-                <option value="private">Private</option>
-            </select>
-        </div>
-
-        <!-- Dark Mode -->
-        <div class="setting-item dark-mode">
-            <label for="dark-mode-toggle">Dark Mode</label>
-            <input type="checkbox" id="dark-mode-toggle">
-        </div>
-    </div>
-</body>
-</html>
+<div class="language-selector">
+    <mat-form-field appearance="fill">
+        <mat-label>Select Language</mat-label>
+        <mat-select [(value)]="selectedLanguage" (selectionChange)="changeLanguage($event.value)">
+            <mat-option *ngFor="let lang of languages" [value]="lang.code">
+                {{ lang.label }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+  

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SoundController")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fa686968215378422c23043c085068299c69f3a5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0bd90a3c5f02ccc38dde2fd6f1e6843e9a0395e0")]
 [assembly: System.Reflection.AssemblyProductAttribute("SoundController")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SoundController")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
