@@ -7,13 +7,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
+import { HammerModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { HammerGestureConfig } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-track',
   templateUrl: './track-component.component.html',
   styleUrls: ['./track-component.component.css'],
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule]
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, HammerModule]
 })
 export class TrackComponent implements OnInit {
   track!: Track;
@@ -24,6 +26,11 @@ export class TrackComponent implements OnInit {
   isPlaying: boolean = false;
   isFlipped: boolean = false;
   private audio: HTMLAudioElement | null = null;
+  isDragging = false;
+  startX: number | null = null;
+  currentX = 0;
+  swipeThreshold = 100; // Minimum distance for a swipe to be considered valid
+  progress = 0; //holds % of the song
   
   @Output() backgroundImageUrl = new EventEmitter<string>();
   
@@ -94,10 +101,18 @@ export class TrackComponent implements OnInit {
       }).catch((error) => {
         console.error('Error playing audio:', error);  
       });
+
+      this.audio.ontimeupdate = () => {
+        if (this.audio) {
+          this.progress = (this.audio.currentTime / this.audio.duration) * 100;
+      
+        }
+      };
   
       // Reset the flag when the audio ends
       this.audio.onended = () => {
         this.isPlaying = false;
+        this.progress = 0; //reset the progress
       };
     }
   }
@@ -113,10 +128,82 @@ export class TrackComponent implements OnInit {
       this.audio.currentTime = 0;
       this.audio = null;
       this.isPlaying = false;
+      this.progress = 0;
     }
   }
+
+  handleSwipe(direction: 'left' | 'right'): void {
+    if (direction === 'right') {
+      this.currentX = window.innerWidth; // Move the card to the right
+      setTimeout(() => {
+        this.addSongToFavorite();
+        this.resetCardPosition();
+        this.goToNextTrack();
+      }, 300); // Duration of animation
+    } else if (direction === 'left') {
+      this.currentX = -window.innerWidth; // Move the card to the left
+      setTimeout(() => {
+        this.resetCardPosition();
+        this.goToNextTrack();
+      }, 300); // Duration of animation
+    }
+  }
+  
+  // Reset card position to center
+  resetCardPosition(): void {
+    this.currentX = 0;
+  }
+  addSongToFavorite(): void {
+    console.log('Song added to favorites:', this.track.name);
+    // call a method to add the track to favorites
+  }
+
+  swipeDirection: 'left' | 'right' | null=null;
 
   flipCard(): void {
     this.isFlipped = !this.isFlipped; 
   }
+  onDragStart(event: MouseEvent | TouchEvent): void {
+    this.isDragging = true;
+    this.startX = this.getEventX(event);
+  }
+  
+  onDragMove(event: MouseEvent | TouchEvent): void {
+    if (!this.isDragging || this.startX === null) return;
+  
+    const currentX = this.getEventX(event);
+    this.currentX = currentX - this.startX;
+  }
+  
+  onDragEnd(event: MouseEvent | TouchEvent): void {
+    if (!this.isDragging) return;
+  
+    this.isDragging = false;
+    
+    // Check if the swipe distance exceeds the threshold
+    if (this.currentX > this.swipeThreshold) {
+      // Swipe right (like)
+      this.handleSwipe('right');
+    } else if (this.currentX < -this.swipeThreshold) {
+      // Swipe left (dislike)
+      this.handleSwipe('left');
+    } else {
+      // Reset position if swipe wasn't strong enough
+      this.currentX = 0;
+    }
+  
+    this.startX = null;
+  }
+  
+  // Utility function to get the X position from MouseEvent or TouchEvent
+  getEventX(event: MouseEvent | TouchEvent): number {
+    if (event instanceof MouseEvent) {
+      return event.clientX;
+    } else {
+      return event.touches[0].clientX;
+    }
+  }
+  
 }
+
+
