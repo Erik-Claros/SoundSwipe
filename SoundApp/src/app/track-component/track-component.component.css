@@ -56,6 +56,15 @@ mat-card {
   background-color: #1db954;
 }
 
+.track-info mat-card-title,
+.track-info mat-card-subtitle {
+  max-width: 600px;       /* Set a max width */
+  white-space: normal;    /* Allow wrapping */
+  overflow: hidden;       /* Hide overflow content */
+  text-overflow: ellipsis;/* Optional: adds '...' if text is cut off */
+  word-break: break-word; /* Breaks long words to fit the container */
+}
+
 /* Header and text css */
 /* Styling for the card title and subtitle */
 .track-title, .track-subtitle {

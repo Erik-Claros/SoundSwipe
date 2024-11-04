@@ -6,15 +6,16 @@
 <div *ngIf="!isLoading" class="card-container">
     <mat-card>
         <div *ngIf="!isFlipped" class="card-front">
-            <mat-card-header>
-                <mat-card-title>{{ track.name }}</mat-card-title>
-                <mat-card-subtitle>
-                    <ng-container *ngFor="let artist of track.artists; let last = last">
-                        {{ artist.name }}<span *ngIf="!last">, </span>
-                    </ng-container>
-                    - {{ track.album.name }}
-                </mat-card-subtitle>
-            </mat-card-header>
+            <div class="track-info">
+                <mat-card-header>
+                    <mat-card-title>{{ track.name }}</mat-card-title>
+                    <mat-card-subtitle>By: 
+                        <ng-container *ngFor="let artist of track.artists; let last = last">
+                            {{ artist.name }}<span *ngIf="!last">, </span>
+                        </ng-container>
+                    </mat-card-subtitle>
+                </mat-card-header>
+            </div>
             <img mat-card-image [src]="track.album.images[0]?.url" alt="{{ track.name }} image" (click)="flipCard()">
             <mat-card-content>
             </mat-card-content>
