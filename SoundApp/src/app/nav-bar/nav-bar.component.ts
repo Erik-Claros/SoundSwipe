@@ -33,10 +33,6 @@ export class NavBarComponent {
     //console.log("Like button has been clicked");
     this.router.navigate(['/liked']);
   }
-  dislikedSongClicked() {
-    //console.log("Dislike button has been clicked");
-    this.router.navigate(['/disliked']);
-  }
   historyClicked() {
     //console.log("History button has been clicked");
     this.router.navigate(['/history']);

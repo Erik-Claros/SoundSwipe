@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Users, Songs, UserFriends, UserHistory, UserLikedSongs, UserSavedSongs } from '../../Models/databaseModel';
+import { Users, Songs, UserFriends, UserHistory, UserLikedSongs } from '../../Models/databaseModel';
 
 @Injectable({
     providedIn: 'root'
@@ -43,11 +43,6 @@ export class DatabaseService {
     // User Liked Songs
     GetUserLikedSongs(userId: string): Observable<string[]> {
         return this.http.get<string[]>(`${this.baseUrl}/users/${userId}/liked-songs`);
-    }
-
-    // User Saved Songs
-    GetUserSavedSongs(userId: string): Observable<UserSavedSongs[]> {
-        return this.http.get<UserSavedSongs[]>(`${this.baseUrl}/users/${userId}/saved-songs`);
     }
 
     AddSong(song: Songs): Observable<Songs> {

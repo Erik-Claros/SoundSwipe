@@ -26,7 +26,22 @@ export interface UserLikedSongs {
     songId: string;
 }
 
-export interface UserSavedSongs {
-    userId: string;
+export interface sentMessage {
+    fromUser: string;
+    toUser: string;
+    message?: string;
+    songId?: string;
+    timestamp: string;
+}
+
+export interface receivedMessage {
+    fromUser: string;
+    message?: string;
+    songId?: string;
+    timestamp: string;
+}
+
+export interface previewTracks {
     songId: string;
+    genre: string;
 }

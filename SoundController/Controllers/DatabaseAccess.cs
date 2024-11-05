@@ -12,7 +12,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<UserFriends> UserFriends { get; set; }
     public DbSet<UserHistory> UserHistory { get; set; }
     public DbSet<UserLikedSongs> UserLikedSongs { get; set; }
-    public DbSet<UserSavedSongs> UserSavedSongs { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
@@ -29,9 +28,6 @@ public class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<UserLikedSongs>()
             .HasKey(uls => new { uls.userId, uls.songId });
-
-        modelBuilder.Entity<UserSavedSongs>()
-            .HasKey(uss => new { uss.userId, uss.songId });
     }
 
     public List<Users> GetUser()
@@ -57,11 +53,6 @@ public class ApplicationDbContext : DbContext
     public List<UserLikedSongs> GetLikedSongs()
     {
         return UserLikedSongs.FromSqlRaw("SELECT * FROM UserLikedSongs").ToList(); 
-    }
-
-    public List<UserSavedSongs> GetSavedSongs()
-    {
-        return UserSavedSongs.FromSqlRaw("SELECT * FROM UserSavedSongs").ToList(); 
     }
 
     // Method to add a song

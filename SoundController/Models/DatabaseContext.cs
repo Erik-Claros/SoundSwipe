@@ -45,9 +45,4 @@ namespace Database.Models
         public string songId { get; set; }
     }
 
-    public class UserSavedSongs
-    {
-        public string userId { get; set; }
-        public string songId { get; set; }
-    }
 }
