@@ -41,7 +41,7 @@ export class SignupComponent {
         console.log('User profile updated with name:', `${this.firstName} ${this.lastName}`);
         
         // Redirect to dashboard or login after successful signup
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/login']);
       }).catch((error) => {
         console.error('Error updating user profile:', error);
       });
