@@ -4,6 +4,7 @@
   <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-icon" aria-label="menu icon">
     <mat-icon>menu</mat-icon>
   </button>
+
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="accountClicked()">
       <mat-icon>account_circle</mat-icon>
@@ -24,6 +25,25 @@
     <button mat-menu-item (click)="settingClicked()">
       <mat-icon>settings</mat-icon>
       <span>Settings</span>
+    </button>
+
+    <!-- Friend Requests Menu Trigger -->
+    <button mat-menu-item [matMenuTriggerFor]="friendRequestsMenu">
+      <mat-icon>co_present</mat-icon>
+      <span>Friend Requests</span>
+    </button>
+  </mat-menu>
+
+  <!-- Friend Requests Sub-menu -->
+  <mat-menu #friendRequestsMenu="matMenu">
+    <button mat-menu-item (click)="receivedRequestsClicked()">
+      <span>Received Requests</span>
+    </button>
+    <button mat-menu-item (click)="sentRequestsClicked()">
+      <span>Sent Requests</span>
+    </button>
+    <button mat-menu-item (click)="pendingRequestsClicked()">
+      <span>Pending Requests</span>
     </button>
   </mat-menu>
 </mat-toolbar>

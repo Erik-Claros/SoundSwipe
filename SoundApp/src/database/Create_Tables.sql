@@ -18,6 +18,14 @@ CREATE TABLE UserFriends (
     FOREIGN KEY (friendId) REFERENCES Users(uId)
 );
 
+CREATE TABLE FriendRequests (
+    fromId TEXT NOT NULL,
+    toId TEXT NOT NULL,
+    PRIMARY KEY (fromId),
+    FOREIGN KEY (fromId) REFERENCES Users(uId),
+    FOREIGN KEY (toId) REFERENCES Users(uId)
+)
+
 CREATE TABLE UserHistory (
     userId TEXT NOT NULL,
     songId TEXT NOT NULL,
@@ -42,3 +50,24 @@ CREATE TABLE UserSavedSongs (
     FOREIGN KEY (userId) REFERENCES Users(uId),
     FOREIGN KEY (songId) REFERENCES Songs(sId)
 );
+
+CREATE TABLE PreviewTracks (
+    songId TEXT NOT NULL,
+    genre TEXT
+    PRIMARY KEY (songId),
+    FOREIGN KEY (songId) REFERENCES Songs(sId)
+)
+
+-- Table to store songs being sent as messages between users
+CREATE TABLE SongMessages (
+    senderId TEXT NOT NULL,             -- User who sent the song
+    receiverId TEXT NOT NULL,           -- User who receives the song
+    songId TEXT NOT NULL,               -- The song being sent
+    timestamp TEXT NOT NULL,            -- Timestamp when the song was sent
+    FOREIGN KEY (senderId) REFERENCES Users(uId), -- Sender of the song
+    FOREIGN KEY (receiverId) REFERENCES Users(uId), -- Receiver of the song
+    FOREIGN KEY (songId) REFERENCES Songs(sId)     -- The song being sent
+);
+-- Select where senderId = x and receiverId = y and union it with 
+-- senderId = y and receiverId = x to grab whole conversation then
+-- sort by timestamp

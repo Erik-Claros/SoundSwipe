@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
-  styleUrl: './nav-bar.component.css',
+  styleUrls: ['./nav-bar.component.css'],
   standalone: true,
   imports: [
     MatToolbarModule,
@@ -22,23 +22,43 @@ export class NavBarComponent {
   constructor(private router: Router){}
 
   accountClicked() {
-    //console.log("Account button has been clicked");
     this.router.navigate(['/account']);
   }
+
   friendClicked() {
-    //console.log("Friends button has been clicked");
     this.router.navigate(['/friend']);
   }
+
   likedSongClicked() {
-    //console.log("Like button has been clicked");
     this.router.navigate(['/liked']);
   }
+
   historyClicked() {
-    //console.log("History button has been clicked");
     this.router.navigate(['/history']);
   }
+
   settingClicked() {
-    //console.log("Setting button has been clicked");
     this.router.navigate(['/settings']);
+  }
+
+  requestClicked() {
+    console.log("Request button has been clicked");
+    // Navigate to the appropriate page if necessary
+  }
+
+  // These methods handle the specific submenu clicks for Friend Requests
+  receivedRequestsClicked() {
+    console.log('Received Friend Requests clicked');
+    // Handle received requests action
+  }
+
+  sentRequestsClicked() {
+    console.log('Sent Friend Requests clicked');
+    // Handle sent requests action
+  }
+
+  pendingRequestsClicked() {
+    console.log('Pending Friend Requests clicked');
+    // Handle pending requests action
   }
 }

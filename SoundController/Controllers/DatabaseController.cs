@@ -66,18 +66,26 @@ public class DatabaseController : ControllerBase
 
     // GET api/users/{userId}/friends
     [HttpGet("users/{userId}/friends")]
-    public async Task<ActionResult<IEnumerable<UserFriends>>> GetUserFriends(string userId)
+    public async Task<ActionResult<IEnumerable<string>>> GetUserFriends(string userId)
     {
+        // Get all friends where the userId is the given user
         var friends = await _applicationDbContext.UserFriends
-            .Where(uf => uf.userId == userId)
-            .Select(uf => uf.friendId)
-            .ToListAsync();
+            .Where(uf => uf.userId == userId)  // Get friends where userId = user
+            .Select(uf => uf.friendId)         // Select the friendId
+            .Union(                            // Combine with the friends where friendId = userId
+                _applicationDbContext.UserFriends
+                    .Where(uf => uf.friendId == userId)  // Get friends where friendId = user
+                    .Select(uf => uf.userId)             // Select the userId as friend
+            )
+            .ToListAsync();  // Execute the query asynchronously
 
+        // If no friends found, return a NotFound response
         if (!friends.Any())
         {
             return NotFound("No friends found for this user.");
         }
 
+        // Return the list of friends
         return Ok(friends);
     }
 
