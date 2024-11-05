@@ -14,5 +14,17 @@
 }
 
 .mat-toolbar {
-    background-color: rgb(110, 110, 255);
+    background-color: #1db954;
+}
+
+mat-icon {
+    color: black;
+}
+
+button {
+    background-color: black;
+}
+
+span {
+    color: white;
 }
