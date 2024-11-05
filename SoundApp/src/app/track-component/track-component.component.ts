@@ -138,7 +138,8 @@ export class TrackComponent implements OnInit {
 
   addSongToDB(): void {
     const songToAdd: Songs = {
-      sId: this.currentSong
+      sId: this.currentSong,
+      genre: ""
     }
 
     this.databaseService.AddSong(songToAdd).subscribe({
@@ -159,11 +160,11 @@ export class TrackComponent implements OnInit {
   }
 
   addSongToHistory(): void {
-    //console.log(this.userId);
-    //console.log(this.currentSong);
+    console.log(this.userId);
+    console.log(this.currentSong);
     const currentDate: Date = new Date();
     const formattedDate: string = `${currentDate.getFullYear()}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getDate().toString().padStart(2, '0')}${currentDate.getHours().toString().padStart(2, '0')}${currentDate.getMinutes().toString().padStart(2, '0')}${currentDate.getSeconds().toString().padStart(2, '0')}`;
-    //console.log(formattedDate);
+    console.log(formattedDate);
     const historyToAdd: UserHistory = {
       userId: this.userId,
       songId: this.currentSong,

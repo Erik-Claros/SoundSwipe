@@ -6,6 +6,7 @@ import { TrackComponent } from '../track-component/track-component.component';
 import { Auth } from '@angular/fire/auth';
 import { Users } from '../Models/databaseModel';
 import { DatabaseService } from '../Services/database-service/database-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,7 +25,7 @@ export class DashboardComponent implements AfterViewInit {
   userName: string | null = '';  
   userEmail: string | null = '';  
   userUID: string | null = '';
-  constructor(private auth: Auth, private databaseService: DatabaseService) {}
+  constructor(private auth: Auth, private databaseService: DatabaseService, private router: Router) {}
 
   // Method to retrieve user info
   getUserInfo() {
@@ -39,7 +40,7 @@ export class DashboardComponent implements AfterViewInit {
       console.log('User Name:', this.userName);
       console.log('User Email:', this.userEmail);
     } else {
-      console.log('No user is logged in.');
+      this.router.navigate(['/login']);
     }
   }
 
@@ -65,13 +66,9 @@ export class DashboardComponent implements AfterViewInit {
     }
 
     this.databaseService.AddUser(userToAdd).subscribe({
-      error: (error) => console.error('Error adding user:', error)
+      error: (error) => console.error('User already exists', error)
     });
     }
-    
-
-
-
   }
 }
 
