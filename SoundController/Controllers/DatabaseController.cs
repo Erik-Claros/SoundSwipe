@@ -11,7 +11,6 @@ public class DatabaseController : ControllerBase
 {
     private readonly ApplicationDbContext _applicationDbContext;
 
-    // Constructor injection for ApplicationDbContext
     public DatabaseController(ApplicationDbContext applicationDbContext)
     {
         _applicationDbContext = applicationDbContext;
@@ -68,24 +67,21 @@ public class DatabaseController : ControllerBase
     [HttpGet("users/{userId}/friends")]
     public async Task<ActionResult<IEnumerable<string>>> GetUserFriends(string userId)
     {
-        // Get all friends where the userId is the given user
         var friends = await _applicationDbContext.UserFriends
-            .Where(uf => uf.userId == userId)  // Get friends where userId = user
-            .Select(uf => uf.friendId)         // Select the friendId
-            .Union(                            // Combine with the friends where friendId = userId
+            .Where(uf => uf.userId == userId)
+            .Select(uf => uf.friendId)
+            .Union(
                 _applicationDbContext.UserFriends
-                    .Where(uf => uf.friendId == userId)  // Get friends where friendId = user
-                    .Select(uf => uf.userId)             // Select the userId as friend
+                    .Where(uf => uf.friendId == userId)
+                    .Select(uf => uf.userId)
             )
-            .ToListAsync();  // Execute the query asynchronously
+            .ToListAsync();
 
-        // If no friends found, return a NotFound response
         if (!friends.Any())
         {
             return NotFound("No friends found for this user.");
         }
 
-        // Return the list of friends
         return Ok(friends);
     }
 
@@ -106,22 +102,6 @@ public class DatabaseController : ControllerBase
 
         return Ok(history);
     }
-
-    // public async Task<ActionResult<IEnumerable<string>>> GetUserHistoryTimestamps(string userId)
-    // {
-    //     var history = await _applicationDbContext.UserHistory
-    //         .Where(uh => uh.userId == userId)
-    //         .OrderBy(uh => uh.timestamp)
-    //         .Select(uh => uh.timestamp)
-    //         .ToListAsync();
-
-    //     if (!history.Any())
-    //     {
-    //         return NotFound("No history found for this user.");
-    //     }
-
-    //     return Ok(history);
-    // }
 
     // GET api/users/{userId}/liked-songs
     [HttpGet("users/{userId}/liked-songs")]
@@ -187,6 +167,18 @@ public class DatabaseController : ControllerBase
         return Ok(hist);
     }
 
+    // GET api/song/{id}
+    [HttpGet("previewTracks/{id}")]
+    public async Task<ActionResult<PreviewTracks>> GetTrackById(string id)
+    {
+        var track = await _applicationDbContext.PreviewTracks.FindAsync(id);
+        if (track == null)
+        {
+            return NotFound();
+        }
+        return Ok(track);
+    }
+
     // POST api/songs
     [HttpPost("songs")]
     public async Task<ActionResult<Songs>> CreateSong([FromBody] Songs newSong)
@@ -196,7 +188,6 @@ public class DatabaseController : ControllerBase
             return BadRequest("Song data is null.");
         }
 
-        // Check if the song already exists based on its ID
         var existingSong = await _applicationDbContext.Songs
             .FirstOrDefaultAsync(t => t.sId == newSong.sId);
 
@@ -205,11 +196,33 @@ public class DatabaseController : ControllerBase
             return Ok("Song with the same ID already exists.");
         }
 
-        // Insert the new track into the database
         _applicationDbContext.Songs.Add(newSong);
         await _applicationDbContext.SaveChangesAsync();
 
         return CreatedAtAction(nameof(GetSongById), new { id = newSong.sId }, newSong);
+    }
+
+    // POST api/songs
+    [HttpPost("previewTracks")]
+    public async Task<ActionResult<PreviewTracks>> CreatePreviewTrack([FromBody] PreviewTracks newTrack)
+    {
+        if (newTrack == null)
+        {
+            return BadRequest("Track data is null.");
+        }
+
+        var existingSong = await _applicationDbContext.PreviewTracks
+            .FirstOrDefaultAsync(t => t.spotifyId == newTrack.spotifyId);
+
+        if (existingSong != null)
+        {
+            return Ok("Track with the same ID already exists.");
+        }
+
+        _applicationDbContext.PreviewTracks.Add(newTrack);
+        await _applicationDbContext.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetTrackById), new { id = newTrack.spotifyId }, newTrack);
     }
 
     // POST api/users
@@ -221,7 +234,6 @@ public class DatabaseController : ControllerBase
             return BadRequest("User data is null.");
         }
 
-        // Check if the song already exists based on its ID
         var existingUser = await _applicationDbContext.Users
             .FirstOrDefaultAsync(t => t.uId == newUser.uId);
 
@@ -230,7 +242,6 @@ public class DatabaseController : ControllerBase
             return Ok("User with the same ID already exists.");
         }
 
-        // Insert the new user into the database
         _applicationDbContext.Users.Add(newUser);
         await _applicationDbContext.SaveChangesAsync();
 
@@ -246,7 +257,6 @@ public class DatabaseController : ControllerBase
             return BadRequest("liked song data is null.");
         }
 
-        // Check if the song already exists based on its ID
         var existingLiked = await _applicationDbContext.UserLikedSongs
             .FirstOrDefaultAsync(t => t.songId == newLikedSong.songId);
 
@@ -255,7 +265,6 @@ public class DatabaseController : ControllerBase
             return Conflict("User already liked song.");
         }
 
-        // Insert the new user into the database
         _applicationDbContext.UserLikedSongs.Add(newLikedSong);
         await _applicationDbContext.SaveChangesAsync();
 
@@ -271,7 +280,6 @@ public class DatabaseController : ControllerBase
             return BadRequest("history data is null.");
         }
 
-        // Check if the song already exists based on its ID
         var existingHistory = await _applicationDbContext.UserHistory
             .FirstOrDefaultAsync(t => t.songId == newHistory.songId);
 
@@ -280,7 +288,6 @@ public class DatabaseController : ControllerBase
             return Conflict("User already viewed song.");
         }
 
-        // Insert the new user into the database
         _applicationDbContext.UserHistory.Add(newHistory);
         await _applicationDbContext.SaveChangesAsync();
 
@@ -297,7 +304,6 @@ public class DatabaseController : ControllerBase
         }
         var friendOne = friends.userId;
         var friendTwo = friends.friendId;
-        // Check if friends already exists based on IDs
         var existingFriends = await _applicationDbContext.UserFriends
             .FirstOrDefaultAsync(t => t.userId == friendOne && t.friendId == friendTwo);
 
@@ -306,9 +312,7 @@ public class DatabaseController : ControllerBase
             return Conflict("Friendship already exists.");
         }
 
-        // Insert the new user into the database
         _applicationDbContext.UserFriends.Add(new UserFriends { userId = friendOne, friendId = friendTwo });
-        //_applicationDbContext.UserFriends.Add(new UserFriends { userId = friendTwo, friendId = friendOne });
         await _applicationDbContext.SaveChangesAsync();
 
     return CreatedAtAction(nameof(CreateFriendship), new { friendOne, friendTwo }, new { friendOne, friendTwo });

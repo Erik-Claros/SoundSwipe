@@ -7,7 +7,13 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Songs (
-    sId TEXT PRIMARY KEY
+    sId TEXT NOT NULL PRIMARY KEY,
+    genre TEXT
+);
+
+CREATE TABLE PreviewTracks (
+    spotifyId TEXT NOT NULL PRIMARY KEY,
+    genre TEXT
 );
 
 CREATE TABLE UserFriends (
@@ -21,10 +27,10 @@ CREATE TABLE UserFriends (
 CREATE TABLE FriendRequests (
     fromId TEXT NOT NULL,
     toId TEXT NOT NULL,
-    PRIMARY KEY (fromId),
+    PRIMARY KEY (fromId, toId),
     FOREIGN KEY (fromId) REFERENCES Users(uId),
     FOREIGN KEY (toId) REFERENCES Users(uId)
-)
+);
 
 CREATE TABLE UserHistory (
     userId TEXT NOT NULL,
@@ -43,31 +49,23 @@ CREATE TABLE UserLikedSongs (
     FOREIGN KEY (songId) REFERENCES Songs(sId)
 );
 
-CREATE TABLE UserSavedSongs (
-    userId TEXT NOT NULL,
+CREATE TABLE UserMessages (
+    senderId TEXT NOT NULL,
+    receiverId TEXT NOT NULL,
     songId TEXT NOT NULL,
-    PRIMARY KEY (userId, songId),
-    FOREIGN KEY (userId) REFERENCES Users(uId),
+    timestamp TEXT NOT NULL,
+    isRead BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (senderId) REFERENCES Users(uId),
+    FOREIGN KEY (receiverId) REFERENCES Users(uId),
     FOREIGN KEY (songId) REFERENCES Songs(sId)
 );
 
-CREATE TABLE PreviewTracks (
-    songId TEXT NOT NULL,
-    genre TEXT
-    PRIMARY KEY (songId),
-    FOREIGN KEY (songId) REFERENCES Songs(sId)
-)
-
--- Table to store songs being sent as messages between users
-CREATE TABLE SongMessages (
-    senderId TEXT NOT NULL,             -- User who sent the song
-    receiverId TEXT NOT NULL,           -- User who receives the song
-    songId TEXT NOT NULL,               -- The song being sent
-    timestamp TEXT NOT NULL,            -- Timestamp when the song was sent
-    FOREIGN KEY (senderId) REFERENCES Users(uId), -- Sender of the song
-    FOREIGN KEY (receiverId) REFERENCES Users(uId), -- Receiver of the song
-    FOREIGN KEY (songId) REFERENCES Songs(sId)     -- The song being sent
-);
 -- Select where senderId = x and receiverId = y and union it with 
 -- senderId = y and receiverId = x to grab whole conversation then
 -- sort by timestamp
+
+CREATE TABLE Inbox (
+    userId TEXT NOT NULL,
+    mail TEXT NOT NULL,
+    FOREIGN KEY (userId) REFERENCES User(uId)
+)
