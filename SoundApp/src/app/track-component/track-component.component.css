@@ -152,7 +152,7 @@ mat-card {
   }
 
   .card {
-    transition: transform 0.5s ease;
+    transition: transform 0.3s ease;
     cursor: grab;
   }
   
