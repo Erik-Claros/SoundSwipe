@@ -12,7 +12,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },  // Route for login
   {path: 'signup', component: SignupComponent},
   { path: 'dashboard', component: DashboardComponent },  // Route for dashboard
-  { path: 'account', component: AccountComponent },  // Route for account
   { path: 'friend', component: FriendsComponent },  // Route for friends
   { path: 'liked', component: LikedSongsComponent },  // Route for liked  
   { path: 'history', component: HistoryComponent },  // Route for history
