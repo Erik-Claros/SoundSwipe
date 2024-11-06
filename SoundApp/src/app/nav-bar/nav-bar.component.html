@@ -4,30 +4,55 @@
   <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-icon" aria-label="menu icon">
     <mat-icon>menu</mat-icon>
   </button>
+
   <mat-menu #menu="matMenu">
-    <button mat-menu-item>
+    <!-- Account Button -->
+    <button mat-menu-item (click)="accountClicked()">
       <mat-icon style="background-color: transparent; color: #1db954">account_circle</mat-icon>
       <span>Account</span>
     </button>
-    <button mat-menu-item>
+
+    <!-- Friends Button -->
+    <button mat-menu-item (click)="friendClicked()">
       <mat-icon style="color: #1db954">groups</mat-icon>
       <span>Friends</span>
     </button>
-    <button mat-menu-item>
+
+    <!-- Liked Songs Button -->
+    <button mat-menu-item (click)="likedSongClicked()">
       <mat-icon style="color: #1db954">favorite</mat-icon>
       <span>Liked Songs</span>
     </button>
-    <button mat-menu-item>
-      <mat-icon style="color: #1db954">thumb_down</mat-icon>
-      <span>Disliked Songs</span>
-    </button>
-    <button mat-menu-item>
+
+    <!-- Song History Button -->
+    <button mat-menu-item (click)="historyClicked()">
       <mat-icon style="color: #1db954">history</mat-icon>
       <span>Song History</span>
     </button>
-    <button mat-menu-item (click)="onSettings()">
+
+    <!-- Settings Button -->
+    <button mat-menu-item (click)="settingClicked()">
       <mat-icon style="color: #1db954">settings</mat-icon>
       <span>Settings</span>
+    </button>
+
+    <!-- Friend Requests Menu Trigger -->
+    <button mat-menu-item [matMenuTriggerFor]="friendRequestsMenu">
+      <mat-icon>co_present</mat-icon>
+      <span>Friend Requests</span>
+    </button>
+  </mat-menu>
+
+  <!-- Friend Requests Sub-menu -->
+  <mat-menu #friendRequestsMenu="matMenu">
+    <button mat-menu-item (click)="receivedRequestsClicked()">
+      <span>Received Requests</span>
+    </button>
+    <button mat-menu-item (click)="sentRequestsClicked()">
+      <span>Sent Requests</span>
+    </button>
+    <button mat-menu-item (click)="pendingRequestsClicked()">
+      <span>Pending Requests</span>
     </button>
   </mat-menu>
 </mat-toolbar>

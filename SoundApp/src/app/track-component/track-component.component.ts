@@ -3,12 +3,16 @@ import { CommonModule } from '@angular/common';
 import { TrackService } from '../Services/track-service/track-service.service';
 import { Track } from '../Models/track.model';
 import { PreviewTrack } from '../Models/preview-track.model';
+import { Songs, UserLikedSongs, UserHistory } from '../Models/databaseModel';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { HammerModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { HammerGestureConfig } from '@angular/platform-browser';
+import { DatabaseService } from '../Services/database-service/database-service.service';
+import { Auth } from '@angular/fire/auth';
+
 
 @Component({
   selector: 'app-track',
@@ -21,6 +25,7 @@ export class TrackComponent implements OnInit {
   track!: Track;
   previewTrack!: PreviewTrack;
   songIds: string[] = [];
+  currentSong: string = "";
   isLoading: boolean = true;
   data: any;
   isPlaying: boolean = false;
@@ -31,13 +36,21 @@ export class TrackComponent implements OnInit {
   currentX = 0;
   swipeThreshold = 100; // Minimum distance for a swipe to be considered valid
   progress = 0; //holds % of the song
+  userId: string = "";
   
   @Output() backgroundImageUrl = new EventEmitter<string>();
   
-  constructor(private trackService: TrackService) { }
+  constructor(private trackService: TrackService, private databaseService: DatabaseService, private auth: Auth) { }
 
   ngOnInit(): void {
+    this.loadUserId();
     this.loadSongIds();
+  }
+
+  loadUserId(): void {
+    if(this.auth.currentUser != null){
+      this.userId = this.auth.currentUser.uid;
+    }
   }
 
   // Load song IDs from the backend
@@ -59,6 +72,9 @@ export class TrackComponent implements OnInit {
       const randomSongId = this.songIds[randomIndex];
       this.getTrackDetails(randomSongId);
       this.getTrackPreview(randomSongId);
+      this.currentSong = randomSongId;
+      this.addSongToDB();
+      this.addSongToHistory();
     }
   }
 
@@ -153,10 +169,6 @@ export class TrackComponent implements OnInit {
   resetCardPosition(): void {
     this.currentX = 0;
   }
-  addSongToFavorite(): void {
-    console.log('Song added to favorites:', this.track.name);
-    // call a method to add the track to favorites
-  }
 
   swipeDirection: 'left' | 'right' | null=null;
 
@@ -203,7 +215,45 @@ export class TrackComponent implements OnInit {
       return event.touches[0].clientX;
     }
   }
-  
+
+  addSongToDB(): void {
+    const songToAdd: Songs = {
+      sId: this.currentSong,
+      genre: ""
+    }
+
+    this.databaseService.AddSong(songToAdd).subscribe({
+      error: (error) => console.error('Error adding song:', error)
+    });
+  }
+
+  addSongToFavorite(): void {
+    //console.log(this.userId);
+    //console.log(this.currentSong);
+    const favToAdd: UserLikedSongs = {
+      userId: this.userId,
+      songId: this.currentSong
+    }
+    this.databaseService.AddFav(favToAdd).subscribe({
+      error: (error) => console.error('Error adding favorite song:', error)
+    });
+  }
+
+  addSongToHistory(): void {
+    console.log(this.userId);
+    console.log(this.currentSong);
+    const currentDate: Date = new Date();
+    const formattedDate: string = `${currentDate.getFullYear()}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getDate().toString().padStart(2, '0')}${currentDate.getHours().toString().padStart(2, '0')}${currentDate.getMinutes().toString().padStart(2, '0')}${currentDate.getSeconds().toString().padStart(2, '0')}`;
+    console.log(formattedDate);
+    const historyToAdd: UserHistory = {
+      userId: this.userId,
+      songId: this.currentSong,
+      timestamp: formattedDate
+    }
+
+    this.databaseService.AddHistory(historyToAdd).subscribe({
+      error: (error) => console.error('Error adding to history:', error)
+    });
+  }
+
 }
-
-

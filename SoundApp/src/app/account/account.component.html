@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Account Details</h2>
+<mat-dialog-content>
+  <form>
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput placeholder="Enter your username">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Enter your email">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" placeholder="Enter your password">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button cdkFocusInitial>Save Changes</button>
+</mat-dialog-actions>

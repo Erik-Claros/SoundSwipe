@@ -1,0 +1,92 @@
+<app-back-button></app-back-button>
+
+<button mat-raised-button color="primary" (click)="showInputBox()">Find Friends!</button>
+
+<!-- Input Box for Searching Friends -->
+<div *ngIf="isInputVisible" style="margin-top: 10px;">
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input 
+      matInput 
+      [(ngModel)]="userInput" 
+      (keydown)="handleInput($event)" 
+      placeholder="Type something and press Enter" 
+    />
+    <mat-icon matSuffix *ngIf="userInput" (click)="userInput=''">clear</mat-icon>
+  </mat-form-field>
+</div>
+
+<!-- Display User Info when Found -->
+<div *ngIf="userInput" style="margin-top: 10px;">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>User Information</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ng-container *ngIf="userSearchFriend; else noFriendFound">
+        <p><strong>First Name:</strong> {{ userSearchFriend.firstName }}</p>
+        <p><strong>Last Name:</strong> {{ userSearchFriend.lastName }}</p>
+        <p><strong>Email:</strong> {{ userSearchFriend.email }}</p>
+
+        <!-- Already friends section -->
+        <div *ngIf="isAlreadyFriends(userSearchFriend.email)">
+          <p style="color: green;">
+            <strong>This user is already your friend!</strong>
+          </p>
+        </div>
+
+        <button mat-raised-button color="primary" (click)="addFriend(userSearchFriend)" 
+          *ngIf="!isAlreadyFriends(userSearchFriend.email)">
+          Add Friend
+        </button>
+      </ng-container>
+      <ng-template #noFriendFound>
+        <p>No user found with this email.</p>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Displaying Your Friends in Cards -->
+<div *ngIf="userFriends.length > 0" style="margin-top: 20px;">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Your Friends</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="friends-container">
+        <div *ngFor="let friend of userFriends" class="friend-card">
+          <mat-card class="friend-card-item">
+            <mat-card-header>
+              <mat-card-title>{{ friend.firstName }} {{ friend.lastName }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p><strong>Email:</strong> {{ friend.email }}</p>
+            </mat-card-content>
+
+            <!-- Add Share Button to Friend Card -->
+            <mat-card-actions>
+              <button mat-icon-button ><!--(click)="shareFriendInfo(friend)"> -->
+                <mat-icon color="primary">send</mat-icon>
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- If No Friends Added Yet -->
+<div *ngIf="userFriends.length === 0" style="margin-top: 20px;">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Your Friends</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>No friends added yet.</p>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<app-back-to-top></app-back-to-top>

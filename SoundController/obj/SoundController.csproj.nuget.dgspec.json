@@ -1,20 +1,22 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\banic\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\SoundController.csproj": {}
+    "C:\\Users\\ethan\\Documents\\Software-Design-Projects\\SoundSwipe\\SoundController\\SoundController.csproj": {}
   },
   "projects": {
-    "C:\\Users\\banic\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\SoundController.csproj": {
+    "C:\\Users\\ethan\\Documents\\Software-Design-Projects\\SoundSwipe\\SoundController\\SoundController.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\banic\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\SoundController.csproj",
+        "projectUniqueName": "C:\\Users\\ethan\\Documents\\Software-Design-Projects\\SoundSwipe\\SoundController\\SoundController.csproj",
         "projectName": "SoundController",
-        "projectPath": "C:\\Users\\banic\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\SoundController.csproj",
-        "packagesPath": "C:\\Users\\banic\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\banic\\Documents\\Software-Design-Project\\SoundSwipe\\SoundController\\obj\\",
+        "projectPath": "C:\\Users\\ethan\\Documents\\Software-Design-Projects\\SoundSwipe\\SoundController\\SoundController.csproj",
+        "packagesPath": "C:\\Users\\ethan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ethan\\Documents\\Software-Design-Projects\\SoundSwipe\\SoundController\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\banic\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\ethan\\Documents\\Software-Design-Projects\\SoundSwipe\\SoundController\\NuGet.Config",
+          "C:\\Users\\ethan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -46,6 +48,14 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.6, )"
+            },
+            "Microsoft.Data.Sqlite": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[8.0.10, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
@@ -79,7 +89,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.402/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
