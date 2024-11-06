@@ -169,10 +169,6 @@ export class TrackComponent implements OnInit {
   resetCardPosition(): void {
     this.currentX = 0;
   }
-  addSongToFavorite(): void {
-    console.log('Song added to favorites:', this.track.name);
-    // call a method to add the track to favorites
-  }
 
   swipeDirection: 'left' | 'right' | null=null;
 
@@ -219,10 +215,6 @@ export class TrackComponent implements OnInit {
       return event.touches[0].clientX;
     }
   }
-  
-}
-
-
 
   addSongToDB(): void {
     const songToAdd: Songs = {

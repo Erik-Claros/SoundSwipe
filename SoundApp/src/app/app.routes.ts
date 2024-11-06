@@ -11,6 +11,7 @@ import { SettingsComponent } from './settings/settings.component';  // path to S
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },  // Route for login
   {path: 'signup', component: SignupComponent},
+  {path: 'account', component: AccountComponent},
   { path: 'dashboard', component: DashboardComponent },  // Route for dashboard
   { path: 'friend', component: FriendsComponent },  // Route for friends
   { path: 'liked', component: LikedSongsComponent },  // Route for liked  
