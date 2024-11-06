@@ -135,4 +135,44 @@ mat-card {
     font-size: 0.875rem; 
     color: rgba(0, 0, 0, 0.6);
   }
+
+
+  .card {
+    transition: transform 2.8s ease, opacity 0.3s ease;
+  }
+  
+  .card.swipe-left {
+    transform: translateX(-100%) rotate(-10deg);
+    opacity: 0;
+  }
+  
+  .card.swipe-right {
+    transform: translateX(100%) rotate(10deg);
+    opacity: 0;
+  }
+
+  .card {
+    transition: transform 0.3s ease;
+    cursor: grab;
+  }
+  
+  .card:active {
+    cursor: grabbing;
+    transition: none; /* Disable transition while dragging */
+  }
+  
+  .timer-bar {
+    width: 100%;
+    height: 6px;
+    background-color: #000000;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+  
+  .timer-progress {
+    height: 100%;
+    background-color: #1DB954;
+    transition: width 0.1s linear;
+  }
   

@@ -9,7 +9,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },  // Route for login
   {path: 'signup', component: SignupComponent},
   { path: 'dashboard', component: DashboardComponent },  // Route for dashboard
-  { path: 'settings', component: SettingsPageComponent},  // Route for settings
+//{ path: 'settings', component: SettingsPageComponent},  // Route for settings
   { path: '', redirectTo: '/login', pathMatch: 'full' }  // Default page
 ];
 
