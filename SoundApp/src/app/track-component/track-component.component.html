@@ -4,49 +4,65 @@
 </div>
 
 <div *ngIf="!isLoading" class="card-container">
+    <div class="card" 
+    (swipeleft)="handleSwipe('left')" 
+    (swiperight)="handleSwipe('right')"
+    [ngClass]="{ 'swipe-left': swipeDirection === 'left', 'swipe-right': swipeDirection === 'right' }"
+       [ngStyle]="{ transform: 'translateX(' + currentX + 'px) rotate(' + (currentX / 10) + 'deg)' }"
+       (mousedown)="onDragStart($event)" 
+       (mousemove)="onDragMove($event)" 
+       (mouseup)="onDragEnd($event)"
+       (mouseleave)="onDragEnd($event)"
+       (touchstart)="onDragStart($event)"
+       (touchmove)="onDragMove($event)"
+       (touchend)="onDragEnd($event)">
     <mat-card>
         <div *ngIf="!isFlipped" class="card-front">
             <div class="track-info">
                 <mat-card-header>
                     <mat-card-title>{{ track.name }}</mat-card-title>
-                    <mat-card-subtitle>By: 
+                    <mat-card-subtitle>
                         <ng-container *ngFor="let artist of track.artists; let last = last">
                             {{ artist.name }}<span *ngIf="!last">, </span>
                         </ng-container>
+                    - {{ track.album.name }}
                     </mat-card-subtitle>
                 </mat-card-header>
+            </div> 
+            <div *ngIf="isPlaying" class="timer-bar">
+                <div class="timer-progress" [ngStyle]="{width: progress + '%'}"></div>
             </div>
             <img mat-card-image [src]="track.album.images[0].url" alt="{{ track.name }} image" (click)="flipCard()">
             <mat-card-content>
             </mat-card-content>
             <mat-card-actions class="buttons">
-                <button mat-fab aria-label="Example icon button with a delete icon" class="delete-button">
+                <button mat-fab class="delete-button" (click)="handleSwipe('left')">
                     <mat-icon>delete</mat-icon>
                 </button>
                 <button mat-button (click)="playPreview()" class="play-button" style="color: white">Play</button>
-                <button mat-fab aria-label="Example icon button with a heart icon" class="favorite-button">
+                <button mat-fab class="favorite-button" (click)="handleSwipe('right')">
                     <mat-icon>favorite</mat-icon>
                 </button>
-                <button mat-button (click)="goToNextTrack()" class="next-button" style="color: white">Next Track</button>
             </mat-card-actions>
 
         </div>
-
         <div *ngIf="isFlipped" class="card-back">
-            <mat-card-header>
-                <mat-card-title>Album Details</mat-card-title>
-            </mat-card-header>
-            <img mat-card-image [src]="track.album.images[0].url" alt="{{ track.name }} image" (click)="flipCard()">
-            <mat-card-content>
+          <mat-card-header>
+            <mat-card-title>Album Details</mat-card-title>
+          </mat-card-header>
+            <img mat-card-image [src]="track.album.images[0]?.url" alt="{{ track.name }} image" (click)="flipCard()">
+          <mat-card-content>
                 <p>
                     <strong>Album:</strong> {{ track.album.name }}<br>
                     <strong>Artists:</strong>
-                    <ng-container *ngFor="let artist of track.artists; let last = last">
-                        {{ artist.name }}<span *ngIf="!last">, </span>
+              <ng-container *ngFor="let artist of track.artists; let last = last">
+                {{ artist.name }}<span *ngIf="!last">, </span>
                     </ng-container><br>
                     <strong>Release Date:</strong> {{ track.album.release_date }}<br>
-                </p>
-            </mat-card-content>
+            </p>
+          </mat-card-content>
         </div>
-    </mat-card>
-</div>
+      </mat-card>
+    </div>
+  </div>
+  
