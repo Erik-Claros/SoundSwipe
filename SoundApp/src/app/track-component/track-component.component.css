@@ -53,8 +53,9 @@
 }
 
 mat-card {
-  background-color: #1db954;
+  background-color: black;
 }
+
 
 .track-info mat-card-title,
 .track-info mat-card-subtitle {
@@ -63,6 +64,7 @@ mat-card {
   overflow: hidden;       /* Hide overflow content */
   text-overflow: ellipsis;/* Optional: adds '...' if text is cut off */
   word-break: break-word; /* Breaks long words to fit the container */
+  color: white;
 }
 
 /* Header and text css */
@@ -84,7 +86,6 @@ mat-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: white;
   }
   
   .left-button {
