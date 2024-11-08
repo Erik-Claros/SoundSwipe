@@ -202,7 +202,7 @@ public class DatabaseController : ControllerBase
         return CreatedAtAction(nameof(GetSongById), new { id = newSong.sId }, newSong);
     }
 
-    // POST api/songs
+    // POST api/previewTrack
     [HttpPost("previewTracks")]
     public async Task<ActionResult<PreviewTracks>> CreatePreviewTrack([FromBody] PreviewTracks newTrack)
     {
