@@ -84,12 +84,12 @@ export class TrackComponent implements OnInit {
       const randomIndex = Math.floor(Math.random() * this.songIds.length);
       const randomSongId = this.songIds[randomIndex];
       this.getTrackDetails(randomSongId);
-      this.getTrackPreview(randomSongId);
       this.currentSong = randomSongId;
       this.addSongToDB();
       this.addSongToHistory();
     }
   }
+  
 
   getTrackDetails(id: string): void {
     this.trackService.getTrack(id).subscribe({
