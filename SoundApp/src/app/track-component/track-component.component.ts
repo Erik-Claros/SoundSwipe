@@ -2,17 +2,16 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TrackService } from '../Services/track-service/track-service.service';
 import { Track } from '../Models/track.model';
-import { PreviewTrack } from '../Models/preview-track.model';
+import { AllPreviewTracks, PreviewTrack } from '../Models/preview-track.model';
 import { Songs, UserLikedSongs, UserHistory } from '../Models/databaseModel';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
-import { HammerModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { HammerGestureConfig } from '@angular/platform-browser';
+import { HammerModule } from '@angular/platform-browser';
 import { DatabaseService } from '../Services/database-service/database-service.service';
 import { Auth } from '@angular/fire/auth';
-
+import { NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-track',
@@ -37,46 +36,60 @@ export class TrackComponent implements OnInit {
   swipeThreshold = 100; // Minimum distance for a swipe to be considered valid
   progress = 0; //holds % of the song
   userId: string = "";
-  
+
   @Output() backgroundImageUrl = new EventEmitter<string>();
-  
-  constructor(private trackService: TrackService, private databaseService: DatabaseService, private auth: Auth) { }
+
+  constructor(private trackService: TrackService, private databaseService: DatabaseService, private auth: Auth, private router: Router) { }
 
   ngOnInit(): void {
     this.loadUserId();
     this.loadSongIds();
+    this.stopPreview(); 
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.stopPreview();  // Stop audio on route change
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.stopPreview(); 
   }
 
   loadUserId(): void {
-    if(this.auth.currentUser != null){
+    if (this.auth.currentUser != null) {
       this.userId = this.auth.currentUser.uid;
     }
   }
 
-  // Load song IDs from the backend
   loadSongIds(): void {
-    this.trackService.getAllPreviewTracks().subscribe({
-      next: (data: string[]) => {
-        this.songIds = data;
+    this.databaseService.getAllPreviewTracks().subscribe({
+      next: (data: AllPreviewTracks) => {
+        if (Array.isArray(data)) {
+          this.songIds = data.map(track => track.spotifyId);
+        } else if (data && data.previewTracks && Array.isArray(data.previewTracks)) {
+          this.songIds = data.previewTracks.map(track => track.spotifyId);
+        }
         this.selectRandomSongId();
         this.isLoading = false;
-      },
-      error: (error) => console.error('Error loading song IDs:', error)
+      }
     });
   }
 
   // Select a random song ID from the array
   selectRandomSongId(): void {
+    this.stopPreview();
     if (this.songIds.length > 0) {
       const randomIndex = Math.floor(Math.random() * this.songIds.length);
       const randomSongId = this.songIds[randomIndex];
       this.getTrackDetails(randomSongId);
-      this.getTrackPreview(randomSongId);
       this.currentSong = randomSongId;
       this.addSongToDB();
       this.addSongToHistory();
     }
   }
+  
 
   getTrackDetails(id: string): void {
     this.trackService.getTrack(id).subscribe({
@@ -104,27 +117,27 @@ export class TrackComponent implements OnInit {
   }
 
   playPreview(): void {
-    if (this.previewTrack) {  
+    if (this.previewTrack) {
       if (this.audio) {
-        this.audio.pause(); 
-        this.audio.currentTime = 0;  
+        this.audio.pause();
+        this.audio.currentTime = 0;
       }
-  
+
       // Create a new audio instance and play it
       this.audio = new Audio(this.previewTrack.previewUrl);
       this.audio.play().then(() => {
-        this.isPlaying = true;  
+        this.isPlaying = true;
       }).catch((error) => {
-        console.error('Error playing audio:', error);  
+        console.error('Error playing audio:', error);
       });
 
       this.audio.ontimeupdate = () => {
         if (this.audio) {
           this.progress = (this.audio.currentTime / this.audio.duration) * 100;
-      
+
         }
       };
-  
+
       // Reset the flag when the audio ends
       this.audio.onended = () => {
         this.isPlaying = false;
@@ -164,34 +177,34 @@ export class TrackComponent implements OnInit {
       }, 300); // Duration of animation
     }
   }
-  
+
   // Reset card position to center
   resetCardPosition(): void {
     this.currentX = 0;
   }
 
-  swipeDirection: 'left' | 'right' | null=null;
+  swipeDirection: 'left' | 'right' | null = null;
 
   flipCard(): void {
-    this.isFlipped = !this.isFlipped; 
+    this.isFlipped = !this.isFlipped;
   }
   onDragStart(event: MouseEvent | TouchEvent): void {
     this.isDragging = true;
     this.startX = this.getEventX(event);
   }
-  
+
   onDragMove(event: MouseEvent | TouchEvent): void {
     if (!this.isDragging || this.startX === null) return;
-  
+
     const currentX = this.getEventX(event);
     this.currentX = currentX - this.startX;
   }
-  
+
   onDragEnd(event: MouseEvent | TouchEvent): void {
     if (!this.isDragging) return;
-  
+
     this.isDragging = false;
-    
+
     // Check if the swipe distance exceeds the threshold
     if (this.currentX > this.swipeThreshold) {
       // Swipe right (like)
@@ -203,10 +216,10 @@ export class TrackComponent implements OnInit {
       // Reset position if swipe wasn't strong enough
       this.currentX = 0;
     }
-  
+
     this.startX = null;
   }
-  
+
   // Utility function to get the X position from MouseEvent or TouchEvent
   getEventX(event: MouseEvent | TouchEvent): number {
     if (event instanceof MouseEvent) {
@@ -255,5 +268,4 @@ export class TrackComponent implements OnInit {
       error: (error) => console.error('Error adding to history:', error)
     });
   }
-
 }

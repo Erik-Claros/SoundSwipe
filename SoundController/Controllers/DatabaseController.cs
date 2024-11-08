@@ -24,7 +24,7 @@ public class DatabaseController : ControllerBase
         return Ok(users);
     }
 
-        // GET api/users/userId
+    // GET api/users/userId
     [HttpGet("users/{userId}")]
     public async Task<ActionResult<IEnumerable<Users>>> GetUser(string userId)
     {
@@ -225,6 +225,21 @@ public class DatabaseController : ControllerBase
         return CreatedAtAction(nameof(GetTrackById), new { id = newTrack.spotifyId }, newTrack);
     }
 
+    [HttpGet("GetPreviewTracks")]
+    public async Task<ActionResult<IEnumerable<PreviewTracks>>> GetAllPreviewTracks()
+    {
+        var tracks = await _applicationDbContext.PreviewTracks.ToListAsync();
+
+        if (tracks == null || tracks.Count == 0)
+        {
+            return NotFound("No preview tracks found.");
+        }
+
+        return Ok(tracks);
+    }
+
+
+
     // POST api/users
     [HttpPost("users")]
     public async Task<ActionResult<Users>> CreateUser([FromBody] Users newUser)
@@ -315,6 +330,6 @@ public class DatabaseController : ControllerBase
         _applicationDbContext.UserFriends.Add(new UserFriends { userId = friendOne, friendId = friendTwo });
         await _applicationDbContext.SaveChangesAsync();
 
-    return CreatedAtAction(nameof(CreateFriendship), new { friendOne, friendTwo }, new { friendOne, friendTwo });
+        return CreatedAtAction(nameof(CreateFriendship), new { friendOne, friendTwo }, new { friendOne, friendTwo });
     }
 }
