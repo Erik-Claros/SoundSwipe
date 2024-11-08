@@ -14,17 +14,10 @@
 }
 
 .mat-toolbar {
-    background-color: #1db954;
-}
-
-mat-icon {
-    color: black;
-}
-
-button {
     background-color: black;
 }
 
-span {
-    color: white;
+mat-icon {
+    color: #1db954;
 }
+
