@@ -31,7 +31,7 @@ namespace Database.Models
     {
         [Key]
         public string spotifyId { get; set; }
-        public string genre { get; set; }
+        public string? genre { get; set; }
     }
 
     public class UserFriends

@@ -1,8 +1,12 @@
 export interface PreviewTrack {
-    previewUrl: string;
-  }
+  previewUrl: string;
+}
 
 export interface AllPreviewTracks {
-  trackIds: string[];
+  previewTracks: PreviewTrackAttributes[];
 }
-  
+
+export interface PreviewTrackAttributes {
+  spotifyId: string;
+  genre?: string;
+}

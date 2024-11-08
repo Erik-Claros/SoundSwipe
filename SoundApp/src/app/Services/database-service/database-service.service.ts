@@ -1,16 +1,17 @@
-// api.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Users, Songs, UserFriends, UserHistory, UserLikedSongs } from '../../Models/databaseModel';
+import { TrackService } from '../track-service/track-service.service';
+import { AllPreviewTracks } from '../../Models/preview-track.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DatabaseService {
-    private baseUrl = 'http://localhost:5062/api/Database'; // Replace with your actual API URL
+    private baseUrl = 'http://localhost:5062/api/Database';
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private trackService: TrackService) { }
 
     // Users
     GetAllUsers(): Observable<Users[]> {
@@ -46,8 +47,8 @@ export class DatabaseService {
     }
 
     AddSong(song: Songs): Observable<Songs> {
-      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      return this.http.post<Songs>(`${this.baseUrl}/songs`, JSON.stringify(song), { headers });
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        return this.http.post<Songs>(`${this.baseUrl}/songs`, JSON.stringify(song), { headers });
     }
 
     AddUser(user: Users): Observable<Users> {
@@ -68,14 +69,17 @@ export class DatabaseService {
     AddFriends(user: string, friend: string): Observable<string[]> {
         const friends: UserFriends = { userId: user, friendId: friend }; // Correctly define as an array of strings
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    
+
         return this.http.post<string[]>(`${this.baseUrl}/users/addFriends`, JSON.stringify(friends), { headers });
     }
-    
 
-    // Method to create a new user
     listenedSong(newSong: string): Observable<string> {
         return this.http.post<string>(`${this.baseUrl}/songs`, newSong);
     }
 
+    // Add this method in your TrackService to fetch all preview tracks
+    getAllPreviewTracks(): Observable<AllPreviewTracks> {
+        return this.http.get<AllPreviewTracks>(`${this.baseUrl}/GetPreviewTracks`);
+      }
+      
 }
