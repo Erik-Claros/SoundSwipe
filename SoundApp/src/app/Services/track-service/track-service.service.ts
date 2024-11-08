@@ -26,20 +26,22 @@ export class TrackService {
     return this.http.get(url, { responseType: 'text' });
   }
 
-  getAllPreviewTracks(): Observable<string[]> {
-    // Return cached track IDs if available
-    if (this.cachedTrackIds) {
-      return of(this.cachedTrackIds); 
-    }
+  // TODO: This code will stay here for the case we want to revise this for a genere select feature
+  
+  // getAllPreviewTracks(): Observable<string[]> {
+  //   // Return cached track IDs if available
+  //   if (this.cachedTrackIds) {
+  //     return of(this.cachedTrackIds); 
+  //   }
 
-    const url = `${this.baseUrl}/GetAllPreviewTracks`;
-    return this.http.get<string[]>(url).pipe(
-      catchError((error) => {
-        console.error('Error fetching track IDs:', error);
-        return of([]); 
-      })
-    );
-  }
+  //   const url = `${this.baseUrl}/GetAllPreviewTracks`;
+  //   return this.http.get<string[]>(url).pipe(
+  //     catchError((error) => {
+  //       console.error('Error fetching track IDs:', error);
+  //       return of([]); 
+  //     })
+  //   );
+  // }
 
   // Call this method to update the cached track IDs after fetching
   setCachedTrackIds(trackIds: string[]): void {
