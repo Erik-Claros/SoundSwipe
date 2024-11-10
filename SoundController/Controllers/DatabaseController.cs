@@ -143,6 +143,18 @@ public class DatabaseController : ControllerBase
         return Ok(user);
     }
 
+    // GET api/user/friendRequests/{uId}
+    [HttpGet("user/friendRequests/{uId}")]
+    public async Task<ActionResult<FriendRequests>> GetFriendRequestsById(string id)
+    {
+        var user = await _applicationDbContext.FriendRequests.FindAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        return Ok(user);
+    }
+
     // GET api/userLikedSongs/{id}
     [HttpGet("userLikedSongs/{id}")]
     public async Task<ActionResult<UserLikedSongs>> GetLikedSongById(string id)
@@ -238,7 +250,35 @@ public class DatabaseController : ControllerBase
         return Ok(tracks);
     }
 
+    [HttpGet("checkFromFriendRequests/{userId}")]
+    public async Task<ActionResult<IEnumerable<string>>> CheckFromFriendRequests(string userId)
+    {
+        var requests = await _applicationDbContext.FriendRequests
+            .Where(r => r.toId == userId)
+            .Select(r => r.fromId)
+            .ToListAsync();
 
+        if (requests == null)
+        {
+            return NotFound();
+        }
+        return Ok(requests);
+    }
+
+    [HttpGet("checkToFriendRequests/{userId}")]
+    public async Task<ActionResult<IEnumerable<string>>> CheckToFriendRequests(string userId)
+    {
+        var requests = await _applicationDbContext.FriendRequests
+            .Where(r => r.fromId == userId)
+            .Select(r => r.toId)
+            .ToListAsync();
+
+        if (requests == null)
+        {
+            return NotFound();
+        }
+        return Ok(requests);
+    }
 
     // POST api/users
     [HttpPost("users")]
@@ -332,4 +372,54 @@ public class DatabaseController : ControllerBase
 
         return CreatedAtAction(nameof(CreateFriendship), new { friendOne, friendTwo }, new { friendOne, friendTwo });
     }
+
+    // POST api/addFriendRequests
+    [HttpPost("users/addFriendRequests")]
+    public async Task<ActionResult<string[]>> CreatePendingFriendship([FromBody] FriendRequests newPending)
+    {
+        if (newPending == null)
+        {
+            return BadRequest("friend request data is null.");
+        }
+
+        var existingPending = await _applicationDbContext.FriendRequests
+            .FirstOrDefaultAsync(t => t.fromId == newPending.fromId && t.toId == newPending.toId);
+
+        if (existingPending != null)
+        {
+            return Conflict("Friendship already exists.");
+        }
+
+        _applicationDbContext.FriendRequests.Add(newPending);
+        await _applicationDbContext.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(CreatePendingFriendship), new { newPending.fromId }, newPending);
+    }
+
+    // DELETE api/users/deleteFriendRequest
+    [HttpDelete("users/deleteFriendRequest")]
+    public async Task<ActionResult> DeleteFriendRequest([FromBody] FriendRequests requestToDelete)
+    {
+        if (requestToDelete == null)
+        {
+            return BadRequest("Request data is null.");
+        }
+
+        // Find the friend request based on fromId and toId
+        var existingRequest = await _applicationDbContext.FriendRequests
+            .FirstOrDefaultAsync(t => t.fromId == requestToDelete.fromId && t.toId == requestToDelete.toId);
+
+        if (existingRequest == null)
+        {
+            return NotFound("Friend request not found.");
+        }
+
+        // Remove the request
+        _applicationDbContext.FriendRequests.Remove(existingRequest);
+        await _applicationDbContext.SaveChangesAsync();
+
+        // Return a success response
+        return NoContent(); // HTTP 204 No Content indicates successful deletion with no return data
+    }
+
 }

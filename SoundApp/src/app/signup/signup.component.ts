@@ -68,4 +68,8 @@ export class SignupComponent {
       console.error("Modal element with ID 'errorModal' not found.");  // Log error if modal is not found
     }
   }
+
+  onLastNameChange(value: string) {
+    this.lastName = value.trim(); // Remove leading/trailing whitespaces
+}
 }

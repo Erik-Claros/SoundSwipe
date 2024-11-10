@@ -40,4 +40,6 @@ public class ApplicationDbContext : DbContext
             modelBuilder.Entity<UserMessages>()
                 .HasKey(um => new { um.senderId, um.receiverId, um.songId });
     }
+
+    
 }

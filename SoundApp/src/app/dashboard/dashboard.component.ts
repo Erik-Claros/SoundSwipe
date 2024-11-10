@@ -63,6 +63,7 @@ export class DashboardComponent implements AfterViewInit {
       firstName: this.userName.split(" ")[0],
       lastName: this.userName.split(" ")[1],
       pfp: ''
+      
     }
 
     this.databaseService.AddUser(userToAdd).subscribe({

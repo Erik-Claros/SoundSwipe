@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Users, Songs, UserFriends, UserHistory, UserLikedSongs } from '../../Models/databaseModel';
+import { Users, Songs, UserFriends, UserHistory, UserLikedSongs, FriendRequests } from '../../Models/databaseModel';
 import { TrackService } from '../track-service/track-service.service';
 import { AllPreviewTracks } from '../../Models/preview-track.model';
 
@@ -18,8 +18,8 @@ export class DatabaseService {
         return this.http.get<Users[]>(`${this.baseUrl}/users`);
     }
 
-    GetUser(uid: string): Observable<Users[]> {
-        return this.http.get<Users[]>(`${this.baseUrl}/users/${uid}`);
+    GetUser(uid: string): Observable<Users> {
+        return this.http.get<Users>(`${this.baseUrl}/users/${uid}`);
     }
 
     GetUserByEmail(email: string): Observable<Users[]> {
@@ -73,13 +73,34 @@ export class DatabaseService {
         return this.http.post<string[]>(`${this.baseUrl}/users/addFriends`, JSON.stringify(friends), { headers });
     }
 
+    AddFriendRequest(user: string, friend: string): Observable<string[]> {
+        const friendRequest: FriendRequests = { fromId: user, toId: friend };
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+        return this.http.post<string[]>(`${this.baseUrl}/users/addFriendRequests`, JSON.stringify(friendRequest), { headers });
+    }
+
     listenedSong(newSong: string): Observable<string> {
         return this.http.post<string>(`${this.baseUrl}/songs`, newSong);
     }
 
     // Add this method in your TrackService to fetch all preview tracks
     getAllPreviewTracks(): Observable<AllPreviewTracks> {
-        return this.http.get<AllPreviewTracks>(`${this.baseUrl}/GetPreviewTracks`);
+        return this.http.get<AllPreviewTracks>(`${this.baseUrl}/getPreviewTracks`);
       }
       
+
+    checkFromFriendRequests(userId: string): Observable<string[]> {
+        return this.http.get<string[]>(`${this.baseUrl}/checkFromFriendRequests/${userId}`)
+    }
+
+    checkToFriendRequests(userId: string): Observable<string[]> {
+        return this.http.get<string[]>(`${this.baseUrl}/checkToFriendRequests/${userId}`)
+    }
+
+    removeFriendRequest(request: FriendRequests): Observable<void> {
+        return this.http.delete<void>(`${this.baseUrl}/deleteFriendRequest`, {
+            body: request
+        });
+    }
 }

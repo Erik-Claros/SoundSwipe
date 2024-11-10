@@ -69,8 +69,8 @@ export class FriendsComponent implements OnInit {
   loadUserFriends(friends: string[]): void {
     friends.forEach(friendId => {
       this.databaseService.GetUser(friendId).subscribe({
-        next: (user: Users[]) => {
-          this.userFriends.push(user[0]);
+        next: (user: Users) => {
+          this.userFriends.push(user);
           console.log(this.userFriends);
         },
         error: (error: any[]) => {
@@ -102,18 +102,18 @@ export class FriendsComponent implements OnInit {
     }
   }
 
-  addFriend(friend: Users): void {
+  addFriendRequest(friend: Users): void {
     // Logic to add the friend, e.g., updating the database
     console.log(`Adding friend: ${friend.firstName} ${friend.lastName}`);
     
     // Example service call to add the friend
-    this.databaseService.AddFriends(this.userId, friend.uId).subscribe({
+    this.databaseService.AddFriendRequest(this.userId, friend.uId).subscribe({
       next: () => {
         console.log('Friend added successfully!');
         // Optionally, show a success message or update the UI
       },
       error: (error) => {
-        console.error('Error adding friend:', error);
+        console.error('Error adding friend request:', error);
       }
     });
   }

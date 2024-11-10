@@ -19,14 +19,14 @@
             </div>
         </div>
 
-        <!-- Last Name Input -->
         <div class="form-group mb-3">
             <label for="lastName">Last Name</label>
-            <input type="text" id="lastName" [(ngModel)]="lastName" name="lastName" 
+            <input type="text" id="lastName" [(ngModel)]="lastName" name="lastName"
                    class="form-control" placeholder="Last Name"
-                   required #lastNameInput="ngModel" 
+                   required #lastNameInput="ngModel"
                    [class.is-invalid]="lastNameInput.invalid && lastNameInput.touched"
-                   [class.is-valid]="lastNameInput.valid && lastNameInput.touched" />
+                   [class.is-valid]="lastNameInput.valid && lastNameInput.touched"
+                   (ngModelChange)="onLastNameChange($event)" />
             <div class="text-danger">
                 <small *ngIf="lastNameInput.errors?.['required'] && lastNameInput.touched">
                     Last Name is required.
