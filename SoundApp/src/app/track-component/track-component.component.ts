@@ -241,8 +241,6 @@ export class TrackComponent implements OnInit {
   }
 
   addSongToFavorite(): void {
-    //console.log(this.userId);
-    //console.log(this.currentSong);
     const favToAdd: UserLikedSongs = {
       userId: this.userId,
       songId: this.currentSong

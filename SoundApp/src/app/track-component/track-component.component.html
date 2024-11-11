@@ -37,21 +37,21 @@
             </mat-card-content>
             <mat-card-actions class="buttons">
                 <button mat-fab class="delete-button" (click)="handleSwipe('left')">
-                    <mat-icon style="color: grey">delete</mat-icon>
+                    <mat-icon style="color: rgb(255, 255, 255)">delete</mat-icon>
                 </button>
                 <button mat-button (click)="getTrackPreview(currentSong)" class="play-button" style="color: white">Play</button>
                 <button mat-fab class="favorite-button" (click)="handleSwipe('right')">
-                    <mat-icon style="color: red">favorite</mat-icon>
+                    <mat-icon style="color: rgb(255, 255, 255)">favorite</mat-icon>
                 </button>
             </mat-card-actions>
 
         </div>
         <div *ngIf="isFlipped" class="card-back">
           <mat-card-header>
-            <mat-card-title>Album Details</mat-card-title>
+            <mat-card-title style="color: #fff;">Album Details</mat-card-title>
           </mat-card-header>
             <img mat-card-image [src]="track.album.images[0].url" alt="{{ track.name }} image" (click)="flipCard()">
-          <mat-card-content>
+          <mat-card-content style="color: #fff;">
                 <p>
                     <strong>Album:</strong> {{ track.album.name }}<br>
                     <strong>Artists:</strong>

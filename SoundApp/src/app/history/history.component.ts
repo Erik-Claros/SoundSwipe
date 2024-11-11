@@ -10,13 +10,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { BackButtonComponent } from '../back-button/back-button.component';
 import { BackToTopComponent } from '../back-to-top/back-to-top.component';
+import { NavBarComponent } from '../nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.css'],
   standalone: true,
-  imports: [ CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, BackButtonComponent, BackToTopComponent ]
+  imports: [ CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, BackButtonComponent, BackToTopComponent, NavBarComponent ]
 })
 
 export class HistoryComponent implements OnInit {

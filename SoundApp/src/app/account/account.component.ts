@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { NavBarComponent } from '../nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-account-window',
@@ -10,16 +11,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   standalone: true,
   imports: [
     MatDialogModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    NavBarComponent
   ]
 })
 export class AccountComponent {
 
   constructor(private dialog: MatDialog) {}
 
-  openAccountDialog() {
-    const dialogRef = this.dialog.open(AccountComponent, {
-      width: '400px',
-    });
-  }
+  // openAccountDialog() {
+  //   const dialogRef = this.dialog.open(AccountComponent, {
+  //     width: '400px',
+  //   });
+  // }
 }

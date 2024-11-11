@@ -21,6 +21,9 @@ import { CommonModule } from '@angular/common';
 export class NavBarComponent {
   
   constructor(private router: Router){}
+  navigateToDashboard(): void {
+    this.router.navigate(['/dashboard']);
+  }
 
   accountClicked() {
     this.router.navigate(['/account']);

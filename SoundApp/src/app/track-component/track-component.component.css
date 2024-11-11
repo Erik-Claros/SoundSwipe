@@ -75,6 +75,7 @@ mat-card {
     text-overflow: ellipsis;
     width: 100%;
     display: block;
+    color: white;
   }
 
   button {
