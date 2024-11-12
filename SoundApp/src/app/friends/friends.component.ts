@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatabaseService } from '../Services/database-service/database-service.service';
 import { TrackService } from '../Services/track-service/track-service.service';
 import { CommonModule } from '@angular/common';
@@ -18,6 +18,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { ChangeDetectorRef } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-friends',
@@ -60,7 +62,8 @@ export class FriendsComponent implements OnInit {
     // Dummy chat logs for demonstration
     chatLog: any[] = [];
 
-  constructor(private databaseService: DatabaseService, private trackService: TrackService, private auth: Auth, private cdRef: ChangeDetectorRef) {}
+  @ViewChild('addFriendDialog') addFriendDialogTemplate: any;
+  constructor(private databaseService: DatabaseService, private trackService: TrackService, private auth: Auth, private cdRef: ChangeDetectorRef, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.loadUserInfo();
@@ -187,5 +190,25 @@ export class FriendsComponent implements OnInit {
 
   getArtistNames(artists: Artist[]): string {
     return artists.map(artist => artist.name).join(', ');
+  }
+
+  // Open the Add Friend dialog
+  openAddFriendDialog(): void {
+    const dialogRef = this.dialog.open(this.addFriendDialogTemplate);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Friend added with email: ', result);
+        // Call a method to handle adding the friend based on the email
+      }
+    });
+  }
+
+  // Add Friend logic (This can be your existing add friend functionality)
+  addFriend(dialogRef: MatDialogRef<any>): void {
+    if (this.userEmail) {
+      console.log('Email to add friend: ', this.userEmail);
+      dialogRef.close(this.userEmail); // Close dialog and pass the email back
+    }
   }
 }

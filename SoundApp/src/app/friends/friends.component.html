@@ -1,7 +1,9 @@
 <app-back-button></app-back-button>
 
-<!-- Button to show input box -->
-<button mat-raised-button color="primary" (click)="showInputBox()">Find Friends!</button>
+<!-- Add Friend button at the top-right corner -->
+<button mat-raised-button color="primary" (click)="openAddFriendDialog()" class="add-friend-button">
+  Add Friend
+</button>
 
 <!-- Input Box for Searching Friends -->
 <div *ngIf="isInputVisible" style="margin-top: 10px;">
@@ -160,3 +162,18 @@
 </div>
 
 <app-back-to-top></app-back-to-top>
+
+<!-- Dialog for Add Friend -->
+<ng-template #addFriendDialog let-dialogRef="dialogRef">
+  <h2 mat-dialog-title>Add Friend</h2>
+  <mat-dialog-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter Friend's Email</mat-label>
+      <input matInput [(ngModel)]="userEmail" placeholder="Email">
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="dialogRef.close()">Cancel</button>
+    <button mat-button (click)="addFriend(dialogRef)">Add Friend</button>
+  </mat-dialog-actions>
+</ng-template>

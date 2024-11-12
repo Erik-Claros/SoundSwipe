@@ -56,7 +56,7 @@ mat-label {
 /* Sent message styles (aligned to the right) */
 .sent-message {
     align-self: flex-end;  /* Align to the right */
-    background-color: #cfe9c5; /* Light green background for sent messages */
+    background-color: #f2f2f2; /* Light gray background for sent messages */
     padding: 8px;
     border-radius: 12px;
     margin-bottom: 5px;
@@ -67,7 +67,7 @@ mat-label {
 /* Received message styles (aligned to the left) */
 .received-message {
     align-self: flex-start;  /* Align to the left */
-    background-color: #f2f2f2; /* Light gray background for received messages */
+    background-color: #cfe9c5; /* Light green background for received messages */
     padding: 8px;
     border-radius: 12px;
     margin-bottom: 5px;
@@ -88,6 +88,34 @@ strong {
     height: 100%;
     display: flex;
     flex-direction: column;
+}
+
+
+/* Webkit-based browsers (Chrome, Edge, Safari) */
+.chat-card::-webkit-scrollbar {
+    width: 8px; /* Set the width of the scrollbar */
+}
+
+/* Track (the background of the scrollbar) */
+.chat-card::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Light background for the scrollbar track */
+    border-radius: 10px; /* Optional: rounded corners */
+}
+
+/* Handle (the draggable part of the scrollbar) */
+.chat-card::-webkit-scrollbar-thumb {
+    background: #888; /* Darker color for the scrollbar handle */
+    border-radius: 10px; /* Rounded handle */
+}
+
+/* Handle on hover */
+.chat-card::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darken the handle when hovered */
+}
+
+/* Optional: Adding a border around the scrollbar for contrast */
+.chat-card::-webkit-scrollbar {
+    border: 1px solid #ddd; /* Light border around the scrollbar */
 }
 
 /* Ensure the message card is full width */
@@ -139,3 +167,12 @@ strong {
         height: auto;  /* Adjust height for smaller screens */
     }
 }
+
+/* Position the Add Friend button in the top-right corner */
+.add-friend-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000; /* Ensure it appears on top */
+  }
+  
