@@ -422,4 +422,37 @@ public class DatabaseController : ControllerBase
         return NoContent(); // HTTP 204 No Content indicates successful deletion with no return data
     }
 
+    // POST api/addFriendRequests
+    [HttpPost("users/messages")]
+    public async Task<ActionResult<string[]>> SendMessage([FromBody] UserMessages message)
+    {
+        if (message == null)
+        {
+            return BadRequest("friend request data is null.");
+        }
+
+        _applicationDbContext.UserMessages.Add(message);
+        await _applicationDbContext.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(SendMessage), new { message.senderId }, message);
+    }
+
+    [HttpGet("conversation/{toId}/{fromId}")]
+    public async Task<ActionResult<IEnumerable<UserMessages>>> GetConversation(string toId, string fromId)
+    {
+        var conversation = await _applicationDbContext.UserMessages
+            .Where(m => m.senderId == fromId && m.receiverId == toId)
+            .Union(
+                _applicationDbContext.UserMessages
+                    .Where(m => m.senderId == toId && m.receiverId == fromId)
+            )
+            .OrderBy(m => m.timestamp)
+            .ToListAsync();
+
+        if (conversation == null)
+        {
+            return NotFound();
+        }
+        return Ok(conversation);
+    }
 }

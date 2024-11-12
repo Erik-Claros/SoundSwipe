@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Users, Songs, UserFriends, UserHistory, UserLikedSongs, FriendRequests } from '../../Models/databaseModel';
+import { Users, Songs, UserFriends, UserHistory, UserLikedSongs, FriendRequests, UserMessages } from '../../Models/databaseModel';
 import { TrackService } from '../track-service/track-service.service';
 import { AllPreviewTracks } from '../../Models/preview-track.model';
 
@@ -102,5 +102,13 @@ export class DatabaseService {
         return this.http.delete<void>(`${this.baseUrl}/deleteFriendRequest`, {
             body: request
         });
+    }
+
+    createMessage(message: UserMessages): Observable<UserMessages> {
+        return this.http.post<UserMessages>(`${this.baseUrl}/users/messages`, message)
+    }
+
+    getConversation(sender: string, receiver: string): Observable<UserMessages[]> {
+        return this.http.get<UserMessages[]>(`${this.baseUrl}/conversation/${receiver}/${sender}`)
     }
 }

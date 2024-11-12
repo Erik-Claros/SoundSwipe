@@ -2,22 +2,105 @@
     width: 96px;
     height: 64px;
     transform: translateX(-17%);
-}
-
-.spacer {
+  }
+  
+  .spacer {
     flex-grow: 1;
-}
-
-.menu-icon {
+  }
+  
+  .menu-icon {
     border: none;
     background-color: transparent;
-}
-
-.mat-toolbar {
+  }
+  
+  .mat-toolbar {
     background-color: black;
-}
-
-mat-icon {
+  }
+  
+  mat-icon {
     color: #1db954;
-}
-
+  }
+  
+  .mat-menu-item {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    padding: 12px 20px;
+    background-color: black;
+    color: white;
+    transition: background-color 0.3s;
+  }
+  
+  .mat-menu-item:hover {
+    background-color: #333;
+  }
+  
+  .mat-menu-item span {
+    margin-left: 10px;
+  }
+  
+  .mat-menu-item mat-icon {
+    font-size: 20px;
+  }
+  
+  .mat-list-item {
+    padding: 16px 20px;  /* Adjust padding */
+    background-color: #121212;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .mat-list-item:hover {
+    background-color: #333;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2px;
+  }
+  
+  .user-name {
+    font-weight: bold;
+    color: black;
+    font-size: 1.2em;
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+  
+  .user-email {
+    font-size: 0.9em;
+    color: #aaa;
+  }
+  
+  .user-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 3px;
+  }
+  
+  .action-button {
+    background-color: #1db954;
+    color: white;
+    border-radius: 4px;
+    padding: 3px 6px;
+    text-transform: none;
+    font-size: 0.9em;
+  }
+  
+  .action-button:hover {
+    background-color: #17a34a;
+  }
+  
+  /* Adjust the width of the menu */
+  .expanded-menu {
+    min-width: 300px; /* Width of the submenu */
+    max-width: 400px;
+  }
+  
+  .mat-menu-panel {
+    background-color: #121212;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }

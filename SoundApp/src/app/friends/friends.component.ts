@@ -3,7 +3,7 @@ import { DatabaseService } from '../Services/database-service/database-service.s
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Auth } from '@angular/fire/auth';
-import { Users } from '../Models/databaseModel';
+import { UserMessages, Users } from '../Models/databaseModel';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -11,6 +11,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { BackButtonComponent } from '../back-button/back-button.component';
 import { BackToTopComponent } from '../back-to-top/back-to-top.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-friends',
@@ -24,19 +28,32 @@ import { BackToTopComponent } from '../back-to-top/back-to-top.component';
     MatCardModule,
     MatIconModule,
     BackToTopComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    MatDialogModule,
+    MatCheckboxModule,
+    MatToolbarModule,
+    MatTableModule
   ],
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.css']
 })
 export class FriendsComponent implements OnInit {
   
+  displayedColumns: string[] = ['name', 'email', 'chat'];
   isInputVisible: boolean = false;
+  //test: Users = { firstName: "test", lastName: "test", email: "test@", pfp: "", uId: "test" }
   userFriends: Users[] = [];
   userSearchFriend?: Users; // Change this to hold the user object
   userId: string = "";
   userEmail?: string | null;
   userInput: string = "";
+  input: string = ""
+
+    // To track the selected friend for chat
+    selectedFriend?: Users;
+  
+    // Dummy chat logs for demonstration
+    chatLog: any[] = [];
 
   constructor(private databaseService: DatabaseService, private auth: Auth) {}
 
@@ -67,10 +84,12 @@ export class FriendsComponent implements OnInit {
   }
 
   loadUserFriends(friends: string[]): void {
+    //console.log("friends", friends);
     friends.forEach(friendId => {
       this.databaseService.GetUser(friendId).subscribe({
         next: (user: Users) => {
           this.userFriends.push(user);
+          this.userFriends = this.userFriends.flat();
           console.log(this.userFriends);
         },
         error: (error: any[]) => {
@@ -120,6 +139,25 @@ export class FriendsComponent implements OnInit {
 
   isAlreadyFriends(email: string): boolean {
     return this.userFriends.some(friend => friend.email === email);
-}
+  }
+
+  sendMessage() {
+    console.log("Sending message");
+  }
+
+  // Dummy chat log loading (Replace with actual API call later)
+  loadChatLog(friend: Users) {
+    this.selectedFriend = friend;
+    this.databaseService.getConversation(this.userId, friend.uId).subscribe({
+      next: (conversation: UserMessages[]) => {
+        this.chatLog = conversation;
+        this.chatLog = this.chatLog.flat();
+        console.log("log", this.chatLog);
+      },
+      error: (error) => {
+        console.error("Error fetching user conversations", error)
+      }
+    })
+  }
 
 }

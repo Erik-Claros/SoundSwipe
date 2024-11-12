@@ -8,7 +8,7 @@
   <mat-menu #menu="matMenu">
     <!-- Account Button -->
     <button mat-menu-item (click)="accountClicked()">
-      <mat-icon style="background-color: transparent; color: #1db954">account_circle</mat-icon>
+      <mat-icon style="color: #1db954">account_circle</mat-icon>
       <span>Account</span>
     </button>
 
@@ -38,44 +38,32 @@
 
     <!-- Friend Requests Menu Trigger -->
     <button mat-menu-item [matMenuTriggerFor]="friendRequestsMenu">
-      <mat-icon>co_present</mat-icon>
+      <mat-icon style="color: #1db954">co_present</mat-icon>
       <span>Friend Requests</span>
-      <mat-icon *ngIf="fromIds.length > 0" color="warn" style="font-size: 20px; margin-left: 8px;">notifications</mat-icon>
+
+      <!-- Show notification icon only if there are incoming requests -->
+      <mat-icon *ngIf="fromUsers.length > 0" color="warn" style="font-size: 20px; margin-right: auto;">notifications</mat-icon>
     </button>
-  </mat-menu>
 
-  <!-- Friend Requests Sub-menu -->
-  <mat-menu #friendRequestsMenu="matMenu">
-      <span>Received Requests</span>
-      <mat-icon *ngIf="fromIds.length > 0" color="warn" style="font-size: 18px; margin-left: 8px;">notifications</mat-icon>
+    <!-- Friend Requests Sub-menu -->
+    <mat-menu #friendRequestsMenu="matMenu" class="expanded-menu">
+      <button mat-menu-item disabled>Received Requests</button>
 
-    <!-- Display Incoming Friend Requests -->
-    <div *ngIf="fromIds.length > 0">
-      <div *ngFor="let user of fromUsers">
-        <mat-menu-item>
-          <div class="user-info">
-            <span class="user-name">{{ user.firstName }} {{ user.lastName }}</span>
-            <span class="user-email">{{ user.email }}</span>
-            <button mat-button (click)="acceptRequest(user.uId)">Accept</button>
-            <button mat-button (click)="declineRequest(user.uId)">Decline</button>
-          </div>
-        </mat-menu-item>
+      <div *ngIf="fromUsers.length > 0">
+        <mat-list>
+          <mat-list-item *ngFor="let user of fromUsers">
+            <div class="user-info">
+              <span class="user-name">{{ user.firstName }} {{ user.lastName }}</span>
+              <span class="user-email">{{ user.email }}</span>
+              
+              <div class="user-actions">
+                <button mat-button (click)="acceptRequest(user.uId)" class="action-button">Accept</button>
+                <button mat-button (click)="removeRequest(user.uId)" class="action-button">Decline</button>
+              </div>
+            </div>
+          </mat-list-item>
+        </mat-list>
       </div>
-    </div>
-
-    <!-- Sent Requests
-    <button mat-menu-item (click)="sentRequestsClicked()">
-      <span>Sent Requests</span>
-    </button>
-    <div *ngIf="toIds.length > 0">
-      <div *ngFor="let userId of toIds">
-        <mat-menu-item>
-          <div class="user-info">
-            <span class="user-name">{{ userId }}</span>
-            <button mat-button (click)="cancelSentRequest(userId)">Cancel</button>
-          </div>
-        </mat-menu-item>
-      </div>
-    </div> -->
+    </mat-menu>
   </mat-menu>
 </mat-toolbar>

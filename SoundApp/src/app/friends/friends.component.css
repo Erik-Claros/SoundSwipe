@@ -19,3 +19,62 @@ mat-label {
 .card-actions button {
     margin-top: 10px;  /* Optional: add spacing above the button */
   }
+
+  .users-table-container {
+    display: flex;
+    flex-direction: row; /* Arrange elements side by side (friends table + chat card) */
+    height: 100vh; /* Makes the container take up the full height of the screen */
+    width: 100%; /* Ensures it spans the entire width */
+  }
+  
+  .friends-table {
+    flex-shrink: 0; /* Prevents shrinking */
+    width: 300px; /* Fixed width for the friends table */
+    margin-top: 20px;
+    overflow-y: auto;
+  }
+
+  .chat-card {
+    margin-top: 20px;
+    overflow-y: auto; /* Adds vertical scroll if content exceeds available space */
+    max-height: calc(100vh - 40px); /* Ensures chat card doesn't take up more than the screen height */
+    padding: 10px; /* Optional: Adds padding inside the card */
+    width: 100px;
+}
+  
+/* Chat Log Container */
+.chat-log {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Add a small gap between messages */
+  }
+  
+  /* Sent message styles (aligned to the right) */
+  .sent-message {
+    align-self: flex-end;  /* Align to the right */
+    background-color: #cfe9c5; /* Light green background for sent messages */
+    padding: 8px;
+    border-radius: 12px;
+    margin-bottom: 5px;
+    max-width: 70%;  /* Adjust the maximum width */
+    text-align: right;
+  }
+  
+  /* Received message styles (aligned to the left) */
+  .received-message {
+    align-self: flex-start;  /* Align to the left */
+    background-color: #f2f2f2; /* Light gray background for received messages */
+    padding: 8px;
+    border-radius: 12px;
+    margin-bottom: 5px;
+    max-width: 70%;  /* Adjust the maximum width */
+    text-align: left;
+  }
+  
+  /* Optional: Styling for the sender's name */
+  strong {
+    font-weight: bold;
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 5px;
+  }

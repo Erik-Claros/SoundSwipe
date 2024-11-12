@@ -3,11 +3,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DatabaseService } from '../Services/database-service/database-service.service';
 import { Auth } from '@angular/fire/auth';
-import { Users } from '../Models/databaseModel';
+import { Users, FriendRequests } from '../Models/databaseModel';
 
 @Component({
   selector: 'app-nav-bar',
@@ -19,27 +20,27 @@ import { Users } from '../Models/databaseModel';
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
+    MatListModule,
     CommonModule
   ]
 })
 export class NavBarComponent implements OnInit {
   userId: string = '';
-  fromIds: string[] = [];  // Incoming requests (from users)
-  fromUsers: Users[] = []
-  //toIds: string[] = [];    // Sent requests (to users)
+  //test: Users = { firstName: "test", lastName: "test", email: "test@", pfp: "", uId: "test" }
+  fromUsers: Users[] = []//this.test]
 
   constructor(private router: Router, private databaseService: DatabaseService, private auth: Auth) {}
 
   ngOnInit(): void {
     this.loadUserInfo();
     this.checkIncomingRequests();
-    //console.log("UserIds: ", this.fromIds)
   }
 
   loadUserInfo(): void {
-    if (this.auth.currentUser) {
-      this.userId = this.auth.currentUser.uid;
-    }
+    // if (this.auth.currentUser) {
+    //   this.userId = this.auth.currentUser.uid;
+    // }
+    this.userId = "lJvLmgfcHXZoOYUF7odNBAZ41Af1"
   }
 
   accountClicked() {
@@ -77,35 +78,66 @@ export class NavBarComponent implements OnInit {
     // Service call to check incoming requests (from users)
     this.databaseService.checkFromFriendRequests(this.userId).subscribe({
       next: (ids: string[]) => {
-        this.fromIds.concat(ids);
+        this.loadUsers(ids);
+        //console.log("ids: ", ids);
+        //console.log("fromIds: ", this.fromIds.concat(ids));
       },
       error: (error) => {
         console.error('Error checking incoming requests:', error);
       }
     });
+    }
 
-    this.fromIds.forEach(id => {
+  loadUsers(ids: string[]) {
+    ids.forEach(id => {
+      console.log("id", id);
       this.databaseService.GetUser(id).subscribe({
         next: (user: Users) => {  // Expecting a single 'user' here
           this.fromUsers.push(user);  // Push each individual user to the array
+          
+        // Flatten the array to avoid nested structures
+        this.fromUsers = this.fromUsers.flat();
+
+        // Now, log the flattened structure
+        //console.log("Users", this.fromUsers);
+        //console.log("Users[0]", this.fromUsers[0]);
+        //console.log("firstName", this.fromUsers[0].firstName);  // Access the first name correctly
         },
         error: (error) => {
           console.error('Error fetching user:', error);
         }
       });
     });
-
-    }
-
-  // Methods for handling actions on Friend Requests
-  acceptRequest(userId: string): void {
-    console.log('Accepted request from', userId);
-    // Call service to accept the request (you would need to implement this in your service)
   }
 
-  declineRequest(userId: string): void {
-    console.log('Declined request from', userId);
-    // Call service to decline the request (you would need to implement this in your service)
+  // Methods for handling actions on Friend Requests
+  acceptRequest(senderId: string): void {
+    console.log('Accepted request from', senderId);
+    // Example service call to add the friend
+    this.databaseService.AddFriends(this.userId, senderId).subscribe({
+      next: () => {
+        console.log('Friend added successfully!');
+        // Optionally, show a success message or update the UI
+        this.removeRequest(senderId);
+      },
+      error: (error) => {
+        console.error('Error adding friend request:', error);
+      }
+    });
+  }
+
+  removeRequest(senderId: string): void {
+    //console.log('Declined request from', userId);
+    var request: FriendRequests = { fromId: senderId, toId: this.userId }
+
+    this.databaseService.removeFriendRequest(request).subscribe({
+      next: (response) => {
+        console.log('Friend request removed successfully', response);
+      },
+      error: (error) => {
+        console.error('Error removing friend request', error);
+      }
+    });
   }
 
   // This is for if we want to cancel friend request in the future

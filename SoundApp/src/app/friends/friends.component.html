@@ -1,5 +1,6 @@
 <app-back-button></app-back-button>
 
+<!-- Button to show input box -->
 <button mat-raised-button color="primary" (click)="showInputBox()">Find Friends!</button>
 
 <!-- Input Box for Searching Friends -->
@@ -47,34 +48,75 @@
   </mat-card>
 </div>
 
-<!-- Displaying Your Friends in Cards -->
-<div *ngIf="userFriends.length > 0" style="margin-top: 20px;">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Your Friends</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="friends-container">
-        <div *ngFor="let friend of userFriends" class="friend-card">
-          <mat-card class="friend-card-item">
-            <mat-card-header>
-              <mat-card-title>{{ friend.firstName }} {{ friend.lastName }}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <p><strong>Email:</strong> {{ friend.email }}</p>
-            </mat-card-content>
+<!-- Users Table Layout (Left Side of the Screen) -->
+<div class="users-table-container">
 
-            <!-- Add Share Button to Friend Card -->
-            <mat-card-actions>
-              <button mat-icon-button ><!--(click)="shareFriendInfo(friend)"> -->
-                <mat-icon color="primary">send</mat-icon>
+  <!-- Table of Friends on the Left -->
+  <div class="friends-table">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Your Friends</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table mat-table [dataSource]="userFriends">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let friend">
+              {{ friend.firstName }} {{ friend.lastName }}
+            </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let friend">
+              {{ friend.email }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="chat">
+            <th mat-header-cell *matHeaderCellDef> Chat </th>
+            <td mat-cell *matCellDef="let friend">
+              <button mat-icon-button (click)="loadChatLog(friend)">
+                <mat-icon color="primary">chat</mat-icon>
               </button>
-            </mat-card-actions>
-          </mat-card>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Chat Card on the Right (Displayed When a Chat is Opened) -->
+  <div *ngIf="selectedFriend" class="chat-card">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ selectedFriend.firstName }} {{ selectedFriend.lastName }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <!-- Chat Log -->
+        <div class="chat-log">
+          <div *ngFor="let message of chatLog" [ngClass]="{
+            'sent-message': message.senderId === 'userId', 
+            'received-message': message.senderId !== 'userId'
+          }">
+          <strong>{{ message.senderId }}:</strong> {{ message.songId }}
+          </div>
         </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
+        
+        <!-- Message Input Area -->
+        <!-- Commented out as per your code structure, but you can re-enable it as needed -->
+        <!-- <mat-form-field appearance="fill" style="width: 100%; margin-top: 10px;">
+          <mat-label>Type a message</mat-label>
+          <textarea matInput [(ngModel)]="input" rows="2"></textarea>
+        </mat-form-field>
+        
+        <button mat-raised-button color="primary" (click)="sendMessage()" [disabled]="!input">Send</button> -->
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
 
 <!-- If No Friends Added Yet -->
