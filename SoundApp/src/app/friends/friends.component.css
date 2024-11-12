@@ -1,56 +1,60 @@
+/* Card Styling */
 mat-card {
     background-color: #f5f5f5; /* Light background color */
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  }
-  
+}
+
+/* Label Styling */
 mat-label {
     display: block; /* Block display for labels */
     margin-bottom: 5px; /* Space between labels */
-  }
+}
 
-  /* Ensure the mat-card-actions uses flexbox to align its content */
+/* Button Actions in mat-card */
 .card-actions {
     display: flex;
     justify-content: flex-end;  /* Align button to the right */
     width: 100%;  /* Ensure it takes up the full width of the card */
-  }
-  
+}
+
 .card-actions button {
     margin-top: 10px;  /* Optional: add spacing above the button */
-  }
+}
 
-  .users-table-container {
+/* Flex container for user and chat card layout */
+.users-table-container {
     display: flex;
     flex-direction: row; /* Arrange elements side by side (friends table + chat card) */
     height: 100vh; /* Makes the container take up the full height of the screen */
     width: 100%; /* Ensures it spans the entire width */
-  }
-  
-  .friends-table {
+}
+
+/* Styling for Friends Table */
+.friends-table {
     flex-shrink: 0; /* Prevents shrinking */
-    width: 300px; /* Fixed width for the friends table */
+    width: 500px; /* Fixed width for the friends table */
     margin-top: 20px;
     overflow-y: auto;
-  }
+}
 
-  .chat-card {
+/* Styling for Chat Card */
+.chat-card {
     margin-top: 20px;
     overflow-y: auto; /* Adds vertical scroll if content exceeds available space */
-    max-height: calc(100vh - 40px); /* Ensures chat card doesn't take up more than the screen height */
+    height: calc(100vh - 40px); /* Ensures chat card doesn't take up more than the screen height */
     padding: 10px; /* Optional: Adds padding inside the card */
-    width: 100px;
 }
-  
-/* Chat Log Container */
+
+/* Flexbox layout for chat log */
 .chat-log {
     display: flex;
     flex-direction: column;
     gap: 5px; /* Add a small gap between messages */
-  }
-  
-  /* Sent message styles (aligned to the right) */
-  .sent-message {
+}
+
+/* Sent message styles (aligned to the right) */
+.sent-message {
     align-self: flex-end;  /* Align to the right */
     background-color: #cfe9c5; /* Light green background for sent messages */
     padding: 8px;
@@ -58,10 +62,10 @@ mat-label {
     margin-bottom: 5px;
     max-width: 70%;  /* Adjust the maximum width */
     text-align: right;
-  }
-  
-  /* Received message styles (aligned to the left) */
-  .received-message {
+}
+
+/* Received message styles (aligned to the left) */
+.received-message {
     align-self: flex-start;  /* Align to the left */
     background-color: #f2f2f2; /* Light gray background for received messages */
     padding: 8px;
@@ -69,12 +73,69 @@ mat-label {
     margin-bottom: 5px;
     max-width: 70%;  /* Adjust the maximum width */
     text-align: left;
-  }
-  
-  /* Optional: Styling for the sender's name */
-  strong {
+}
+
+/* Optional: Styling for the sender's name */
+strong {
     font-weight: bold;
     font-size: 14px;
     display: inline-block;
     margin-right: 5px;
-  }
+}
+
+/* Flex container for chat card, enabling responsiveness */
+.chat-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ensure the message card is full width */
+.message-card {
+    width: 100%;
+}
+
+/* Styling for track image */
+.track-image {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    display: block;
+}
+
+/* Padding for track details */
+.track-details {
+    padding: 10px;
+}
+
+/* Center the chat card horizontally and vertically */
+.chat-card-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh;  /* Full screen height */
+    width: 100%; /* Full width */
+}
+
+/* Ensure chat-card doesn't exceed a max width and remains centered */
+.chat-card {
+    width: 100%; /* Take full width of the container */
+    max-width: 800px; /* Limit to max width for large screens */
+    margin: 0 auto;  /* Auto margin to center the card horizontally */
+    padding: 20px; /* Optional padding for visual appeal */
+}
+
+/* Responsive Design: Stack elements vertically on small screens */
+@media screen and (max-width: 768px) {
+    .users-table-container {
+        flex-direction: column;  /* Stack the chat and friends table vertically */
+        height: auto;  /* Remove full height for small screens */
+    }
+    .friends-table {
+        width: 100%;  /* Make friends table take up full width */
+    }
+    .chat-card {
+        width: 100%;  /* Ensure the chat card takes up full width */
+        height: auto;  /* Adjust height for smaller screens */
+    }
+}

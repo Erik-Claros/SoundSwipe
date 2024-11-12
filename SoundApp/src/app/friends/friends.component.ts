@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../Services/database-service/database-service.service';
+import { TrackService } from '../Services/track-service/track-service.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Auth } from '@angular/fire/auth';
-import { UserMessages, Users } from '../Models/databaseModel';
+import { Songs, UserMessages, Users } from '../Models/databaseModel';
+import { Track, Artist } from '../Models/track.model';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -15,6 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-friends',
@@ -47,7 +50,9 @@ export class FriendsComponent implements OnInit {
   userId: string = "";
   userEmail?: string | null;
   userInput: string = "";
-  input: string = ""
+  input: string = "";
+  tracks: Track[] = [];
+  currentTrack?: Track;
 
     // To track the selected friend for chat
     selectedFriend?: Users;
@@ -55,7 +60,7 @@ export class FriendsComponent implements OnInit {
     // Dummy chat logs for demonstration
     chatLog: any[] = [];
 
-  constructor(private databaseService: DatabaseService, private auth: Auth) {}
+  constructor(private databaseService: DatabaseService, private trackService: TrackService, private auth: Auth, private cdRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.loadUserInfo();
@@ -152,7 +157,10 @@ export class FriendsComponent implements OnInit {
       next: (conversation: UserMessages[]) => {
         this.chatLog = conversation;
         this.chatLog = this.chatLog.flat();
-        console.log("log", this.chatLog);
+        this.chatLog.forEach(message => {
+          this.loadTrackInfo(message.songId);
+        })
+        //console.log("log", this.chatLog);
       },
       error: (error) => {
         console.error("Error fetching user conversations", error)
@@ -160,4 +168,24 @@ export class FriendsComponent implements OnInit {
     })
   }
 
+  loadTrackInfo(songId: string): void {
+    this.trackService.getTrack(songId).subscribe({
+      next: (song: Track) => {
+        this.tracks.push(song);
+        this.tracks = this.tracks.flat();
+        this.cdRef.detectChanges();  // Trigger change detection manually
+      },
+      error: (error: any[]) => {
+        console.error('Error loading liked songs:', error);
+      }
+    });
+  }
+
+  updateCurrentTrack(tId: string): void {
+    this.currentTrack = this.tracks.find(track => track.id === tId);
+  }
+
+  getArtistNames(artists: Artist[]): string {
+    return artists.map(artist => artist.name).join(', ');
+  }
 }

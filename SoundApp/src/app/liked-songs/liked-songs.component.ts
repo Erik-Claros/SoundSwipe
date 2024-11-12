@@ -48,17 +48,19 @@ export class LikedSongsComponent implements OnInit {
   }
 
   loadTrackInfo(): void {
-    for(let index = 0; index < this.likedSongs.length; index++) {
-      this.trackService.getTrack(this.likedSongs[index]).subscribe({
+    this.likedSongs.forEach(song => {
+      this.trackService.getTrack(song).subscribe({
         next: (track: Track) => {
           this.tracks.push(track);
         },
         error: (error: any[]) => console.error('Error loading liked songs:', error)
       });
+    });
+
     }
-  }
 
   getArtistNames(artists: Artist[]): string {
     return artists.map(artist => artist.name).join(', ');
   }
+  
 }

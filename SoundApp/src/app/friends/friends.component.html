@@ -99,13 +99,41 @@
         <!-- Chat Log -->
         <div class="chat-log">
           <div *ngFor="let message of chatLog" [ngClass]="{
-            'sent-message': message.senderId === 'userId', 
-            'received-message': message.senderId !== 'userId'
+            'sent-message': message.senderId === userId, 
+            'received-message': message.senderId !== userId
           }">
-          <strong>{{ message.senderId }}:</strong> {{ message.songId }}
+            <!-- Display Song Info if songId is available -->
+            <div *ngIf="message.songId">
+              <div *ngIf="!currentTrack || currentTrack.id !== message.songId">
+                <!-- Update track if not already loaded -->
+                <ng-container *ngIf="message.songId">
+                  <div>{{ updateCurrentTrack(message.songId) }}</div>
+                </ng-container>
+              </div>
+
+              <div *ngIf="currentTrack">
+                <!-- Song Information Card -->
+                <mat-card class="message-card">
+                  <mat-card-header>
+                    <mat-card-title>{{ currentTrack.name }}</mat-card-title>
+                    <mat-card-subtitle>{{ currentTrack.album.name }}</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <img mat-card-image [src]="currentTrack.album.images[0].url" alt="{{ currentTrack.name }} image" class="track-image">
+                    <div class="track-details">
+                      <p><strong>Album:</strong> {{ currentTrack.album.name }}</p>
+                      <p><strong>Artists:</strong> {{ getArtistNames(currentTrack.artists) }}</p>
+                      <p><strong>Duration:</strong> {{ (currentTrack.duration_ms / 60000) | number: '1.0-0' }} minutes</p>
+                      <p><a [href]="currentTrack.external_urls.spotify" target="_blank">Listen on Spotify</a></p>
+                      <audio *ngIf="currentTrack.preview_url" [src]="currentTrack.preview_url" controls></audio>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
           </div>
         </div>
-        
+
         <!-- Message Input Area -->
         <!-- Commented out as per your code structure, but you can re-enable it as needed -->
         <!-- <mat-form-field appearance="fill" style="width: 100%; margin-top: 10px;">
