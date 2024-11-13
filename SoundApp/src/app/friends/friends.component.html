@@ -1,179 +1,146 @@
-<app-back-button></app-back-button>
+<!-- Blurred Background -->
+<!-- <div class="blurred-background" [ngStyle]="{'background-image': 'url(' + getBackgroundImage() + ')'}"></div> -->
+<!-- Blurred background div placed at the top level in your component -->
+<div class="blurred-background" [ngStyle]="{'background-image': 'url(' + getBackgroundImage() + ')'}"></div>
 
-<!-- Add Friend button at the top-right corner -->
-<button mat-raised-button color="primary" (click)="openAddFriendDialog()" class="add-friend-button">
-  Add Friend
-</button>
 
-<!-- Input Box for Searching Friends -->
-<div *ngIf="isInputVisible" style="margin-top: 10px;">
-  <mat-form-field appearance="fill">
-    <mat-label>Email</mat-label>
-    <input 
-      matInput 
-      [(ngModel)]="userInput" 
-      (keydown)="handleInput($event)" 
-      placeholder="Type something and press Enter" 
-    />
-    <mat-icon matSuffix *ngIf="userInput" (click)="userInput=''">clear</mat-icon>
-  </mat-form-field>
-</div>
+<!-- Main content of your component -->
+<div class="content-container">
+  <app-nav-bar></app-nav-bar>
+  <!-- Input Box for Searching Friends -->
+  <div *ngIf="isInputVisible" style="margin-top: 10px;">
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input 
+        matInput 
+        [(ngModel)]="userInput" 
+        (keydown)="handleInput($event)" 
+        placeholder="Type something and press Enter" 
+      />
+      <mat-icon matSuffix *ngIf="userInput" (click)="userInput=''">clear</mat-icon>
+    </mat-form-field>
+  </div>
 
-<!-- Display User Info when Found -->
-<div *ngIf="userInput" style="margin-top: 10px;">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>User Information</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <ng-container *ngIf="userSearchFriend; else noFriendFound">
-        <p><strong>First Name:</strong> {{ userSearchFriend.firstName }}</p>
-        <p><strong>Last Name:</strong> {{ userSearchFriend.lastName }}</p>
-        <p><strong>Email:</strong> {{ userSearchFriend.email }}</p>
-
-        <!-- Already friends section -->
-        <div *ngIf="isAlreadyFriends(userSearchFriend.email)">
-          <p style="color: green;">
-            <strong>This user is already your friend!</strong>
-          </p>
-        </div>
-
-        <button mat-raised-button color="primary" (click)="addFriendRequest(userSearchFriend)" 
-          *ngIf="!isAlreadyFriends(userSearchFriend.email)">
-          Add Friend
-        </button>
-      </ng-container>
-      <ng-template #noFriendFound>
-        <p>No user found with this email.</p>
-      </ng-template>
-    </mat-card-content>
-  </mat-card>
-</div>
-
-<!-- Users Table Layout (Left Side of the Screen) -->
-<div class="users-table-container">
-
-  <!-- Table of Friends on the Left -->
-  <div class="friends-table">
+  <!-- Display User Info when Found -->
+  <div *ngIf="userInput" style="margin-top: 10px;">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>Your Friends</mat-card-title>
+        <mat-card-title>User Information</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <table mat-table [dataSource]="userFriends">
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let friend">
-              {{ friend.firstName }} {{ friend.lastName }}
-            </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef> Email </th>
-            <td mat-cell *matCellDef="let friend">
-              {{ friend.email }}
-            </td>
-          </ng-container>
+        <ng-container *ngIf="userSearchFriend; else noFriendFound">
+          <p><strong>First Name:</strong> {{ userSearchFriend.firstName }}</p>
+          <p><strong>Last Name:</strong> {{ userSearchFriend.lastName }}</p>
+          <p><strong>Email:</strong> {{ userSearchFriend.email }}</p>
 
-          <ng-container matColumnDef="chat">
-            <th mat-header-cell *matHeaderCellDef> Chat </th>
-            <td mat-cell *matCellDef="let friend">
-              <button mat-icon-button (click)="loadChatLog(friend)">
-                <mat-icon color="primary">chat</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+          <!-- Already friends section -->
+          <div *ngIf="isAlreadyFriends(userSearchFriend.email)">
+            <p style="color: green;">
+              <strong>This user is already your friend!</strong>
+            </p>
+          </div>
+        </ng-container>
+        <ng-template #noFriendFound>
+          <p>No user found with this email.</p>
+        </ng-template>
       </mat-card-content>
     </mat-card>
   </div>
 
-  <!-- Chat Card on the Right (Displayed When a Chat is Opened) -->
-  <div *ngIf="selectedFriend" class="chat-card">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>{{ selectedFriend.firstName }} {{ selectedFriend.lastName }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <!-- Chat Log -->
-        <div class="chat-log">
-          <div *ngFor="let message of chatLog" [ngClass]="{
-            'sent-message': message.senderId === userId, 
-            'received-message': message.senderId !== userId
-          }">
-            <!-- Display Song Info if songId is available -->
-            <div *ngIf="message.songId">
-              <div *ngIf="!currentTrack || currentTrack.id !== message.songId">
-                <!-- Update track if not already loaded -->
-                <ng-container *ngIf="message.songId">
-                  <div>{{ updateCurrentTrack(message.songId) }}</div>
-                </ng-container>
-              </div>
+  <!-- Users Table Layout (Left Side of the Screen) -->
+  <div class="users-table-container">
 
-              <div *ngIf="currentTrack">
-                <!-- Song Information Card -->
-                <mat-card class="message-card">
-                  <mat-card-header>
-                    <mat-card-title>{{ currentTrack.name }}</mat-card-title>
-                    <mat-card-subtitle>{{ currentTrack.album.name }}</mat-card-subtitle>
-                  </mat-card-header>
-                  <mat-card-content>
-                    <img mat-card-image [src]="currentTrack.album.images[0].url" alt="{{ currentTrack.name }} image" class="track-image">
-                    <div class="track-details">
-                      <p><strong>Album:</strong> {{ currentTrack.album.name }}</p>
-                      <p><strong>Artists:</strong> {{ getArtistNames(currentTrack.artists) }}</p>
-                      <p><strong>Duration:</strong> {{ (currentTrack.duration_ms / 60000) | number: '1.0-0' }} minutes</p>
-                      <p><a [href]="currentTrack.external_urls.spotify" target="_blank">Listen on Spotify</a></p>
-                      <audio *ngIf="currentTrack.preview_url" [src]="currentTrack.preview_url" controls></audio>
-                    </div>
-                  </mat-card-content>
-                </mat-card>
+    <!-- Table of Friends on the Left -->
+    <div class="friends-table">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Your Friends</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <table mat-table [dataSource]="userFriends">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let friend">
+                {{ friend.firstName }} {{ friend.lastName }}
+              </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef> Email </th>
+              <td mat-cell *matCellDef="let friend">
+                {{ friend.email }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="chat">
+              <th mat-header-cell *matHeaderCellDef> Chat </th>
+              <td mat-cell *matCellDef="let friend">
+                <button mat-icon-button (click)="loadChatLog(friend)">
+                  <mat-icon color="primary">chat</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            
+            <!-- Add Friend Button Row -->
+            <tr mat-footer-row>
+              <td colspan="3" style="text-align: center;">
+                <button mat-raised-button color="primary" (click)="openAddFriendDialog()">Add Friend</button>
+              </td>
+            </tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Chat Card on the Right (Displayed When a Chat is Opened) -->
+    <div *ngIf="selectedFriend" class="chat-card">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{ selectedFriend.firstName }} {{ selectedFriend.lastName }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <!-- Chat Log -->
+          <div class="chat-log">
+            <div *ngFor="let message of chatLog" [ngClass]="{
+              'sent-message': message.senderId === userId, 
+              'received-message': message.senderId !== userId
+            }">
+              <!-- Display Song Info if songId is available -->
+              <div *ngIf="message.songId">
+                <div *ngIf="!currentTrack || currentTrack.id !== message.songId">
+                  <!-- Update track if not already loaded -->
+                  <ng-container *ngIf="message.songId">
+                    <div>{{ updateCurrentTrack(message.songId) }}</div>
+                  </ng-container>
+                </div>
+
+                <div *ngIf="currentTrack">
+                  <!-- Song Information Card -->
+                  <mat-card class="message-card">
+                    <mat-card-header>
+                      <mat-card-title>{{ currentTrack.name }}</mat-card-title>
+                      <mat-card-subtitle>{{ currentTrack.album.name }}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                      <img mat-card-image [src]="currentTrack.album.images[0].url" alt="{{ currentTrack.name }} image" class="track-image">
+                      <div class="track-details">
+                        <p><strong>Album:</strong> {{ currentTrack.album.name }}</p>
+                        <p><strong>Artists:</strong> {{ getArtistNames(currentTrack.artists) }}</p>
+                        <p><strong>Duration:</strong> {{ (currentTrack.duration_ms / 60000) | number: '1.0-0' }} minutes</p>
+                        <p><a [href]="currentTrack.external_urls.spotify" target="_blank">Listen on Spotify</a></p>
+                        <audio *ngIf="currentTrack.preview_url" [src]="currentTrack.preview_url" controls></audio>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- Message Input Area -->
-        <!-- Commented out as per your code structure, but you can re-enable it as needed -->
-        <!-- <mat-form-field appearance="fill" style="width: 100%; margin-top: 10px;">
-          <mat-label>Type a message</mat-label>
-          <textarea matInput [(ngModel)]="input" rows="2"></textarea>
-        </mat-form-field>
-        
-        <button mat-raised-button color="primary" (click)="sendMessage()" [disabled]="!input">Send</button> -->
-      </mat-card-content>
-    </mat-card>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 </div>
-
-<!-- If No Friends Added Yet -->
-<div *ngIf="userFriends.length === 0" style="margin-top: 20px;">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Your Friends</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>No friends added yet.</p>
-    </mat-card-content>
-  </mat-card>
-</div>
-
-<app-back-to-top></app-back-to-top>
-
-<!-- Dialog for Add Friend -->
-<ng-template #addFriendDialog let-dialogRef="dialogRef">
-  <h2 mat-dialog-title>Add Friend</h2>
-  <mat-dialog-content>
-    <mat-form-field appearance="fill">
-      <mat-label>Enter Friend's Email</mat-label>
-      <input matInput [(ngModel)]="userEmail" placeholder="Email">
-    </mat-form-field>
-  </mat-dialog-content>
-  <mat-dialog-actions>
-    <button mat-button (click)="dialogRef.close()">Cancel</button>
-    <button mat-button (click)="addFriend(dialogRef)">Add Friend</button>
-  </mat-dialog-actions>
-</ng-template>

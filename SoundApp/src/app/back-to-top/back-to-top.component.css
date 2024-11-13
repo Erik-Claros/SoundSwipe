@@ -2,8 +2,8 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #007bff;
-    color: white;
+    background-color: #1db954;
+    color: black;
     border: none;
     border-radius: 5px;
     padding: 10px;
@@ -12,6 +12,6 @@
   }
   
   .back-to-top:hover {
-    background-color: #0056b3;
+    background-color: #1db954;
   }
   

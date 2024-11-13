@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, Renderer2 } from '@angular/core';
 import { DatabaseService } from '../Services/database-service/database-service.service';
 import { TrackService } from '../Services/track-service/track-service.service';
 import { CommonModule } from '@angular/common';
@@ -17,9 +17,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
-import { ChangeDetectorRef } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-
+import { NavBarComponent } from '../nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-friends',
@@ -37,7 +36,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
     MatDialogModule,
     MatCheckboxModule,
     MatToolbarModule,
-    MatTableModule
+    MatTableModule,
+    NavBarComponent
   ],
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.css']
@@ -46,31 +46,32 @@ export class FriendsComponent implements OnInit {
   
   displayedColumns: string[] = ['name', 'email', 'chat'];
   isInputVisible: boolean = false;
-  //test: Users = { firstName: "test", lastName: "test", email: "test@", pfp: "", uId: "test" }
   userFriends: Users[] = [];
-  userSearchFriend?: Users; // Change this to hold the user object
+  userSearchFriend?: Users;
   userId: string = "";
   userEmail?: string | null;
   userInput: string = "";
   input: string = "";
   tracks: Track[] = [];
   currentTrack?: Track;
-
-    // To track the selected friend for chat
-    selectedFriend?: Users;
-  
-    // Dummy chat logs for demonstration
-    chatLog: any[] = [];
+  selectedFriend?: Users;
+  chatLog: any[] = [];
+  backgroundImageUrl: string = "";
 
   @ViewChild('addFriendDialog') addFriendDialogTemplate: any;
-  constructor(private databaseService: DatabaseService, private trackService: TrackService, private auth: Auth, private cdRef: ChangeDetectorRef, private dialog: MatDialog) {}
+
+  constructor(
+    private databaseService: DatabaseService, 
+    private trackService: TrackService, 
+    private auth: Auth, 
+    private cdRef: ChangeDetectorRef, 
+    private dialog: MatDialog,
+    private renderer: Renderer2
+  ) {}
 
   ngOnInit(): void {
     this.loadUserInfo();
     this.loadUserFriendsIds();
-    //console.log(this.userSearchFriend);
-    //this.userSearchFriend = {firstName: "test", lastName: "test", uId: "test", email: "ete005@latech.edu", pfp: "test"};
-
   }
 
   loadUserInfo(): void {
@@ -92,13 +93,11 @@ export class FriendsComponent implements OnInit {
   }
 
   loadUserFriends(friends: string[]): void {
-    //console.log("friends", friends);
     friends.forEach(friendId => {
       this.databaseService.GetUser(friendId).subscribe({
         next: (user: Users) => {
           this.userFriends.push(user);
           this.userFriends = this.userFriends.flat();
-          console.log(this.userFriends);
         },
         error: (error: any[]) => {
           console.error('Error loading friends', error);
@@ -113,31 +112,24 @@ export class FriendsComponent implements OnInit {
 
   handleInput(event: KeyboardEvent): void {
     if (event.key === 'Enter' && this.userInput.trim() !== '') {
-      this.isInputVisible = false; // Hide input box
+      this.isInputVisible = false; 
       if (this.userEmail !== this.userInput) {
         this.databaseService.GetUserByEmail(this.userInput).subscribe({
           next: (friendEmail: Users[]) => {
-            this.userSearchFriend = friendEmail[0]; // Store the entire user object
-            console.log(friendEmail[0]);
+            this.userSearchFriend = friendEmail[0]; 
           },
           error: (error: any[]) => {
             console.error('Error fetching data', error);
           }
         });
       }
-      
     }
   }
 
   addFriendRequest(friend: Users): void {
-    // Logic to add the friend, e.g., updating the database
-    console.log(`Adding friend: ${friend.firstName} ${friend.lastName}`);
-    
-    // Example service call to add the friend
     this.databaseService.AddFriendRequest(this.userId, friend.uId).subscribe({
       next: () => {
         console.log('Friend added successfully!');
-        // Optionally, show a success message or update the UI
       },
       error: (error) => {
         console.error('Error adding friend request:', error);
@@ -153,7 +145,6 @@ export class FriendsComponent implements OnInit {
     console.log("Sending message");
   }
 
-  // Dummy chat log loading (Replace with actual API call later)
   loadChatLog(friend: Users) {
     this.selectedFriend = friend;
     this.databaseService.getConversation(this.userId, friend.uId).subscribe({
@@ -162,13 +153,12 @@ export class FriendsComponent implements OnInit {
         this.chatLog = this.chatLog.flat();
         this.chatLog.forEach(message => {
           this.loadTrackInfo(message.songId);
-        })
-        //console.log("log", this.chatLog);
+        });
       },
       error: (error) => {
         console.error("Error fetching user conversations", error)
       }
-    })
+    });
   }
 
   loadTrackInfo(songId: string): void {
@@ -177,6 +167,12 @@ export class FriendsComponent implements OnInit {
         this.tracks.push(song);
         this.tracks = this.tracks.flat();
         this.cdRef.detectChanges();  // Trigger change detection manually
+        
+        // Emit the album image URL when the track is loaded
+        if (song.album?.images.length > 0) {
+          //this.backgroundImageUrl = song.album.images[0].url;
+          this.setBackgroundImage(song.album?.images[0].url);
+        }
       },
       error: (error: any[]) => {
         console.error('Error loading liked songs:', error);
@@ -192,23 +188,43 @@ export class FriendsComponent implements OnInit {
     return artists.map(artist => artist.name).join(', ');
   }
 
-  // Open the Add Friend dialog
   openAddFriendDialog(): void {
     const dialogRef = this.dialog.open(this.addFriendDialogTemplate);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('Friend added with email: ', result);
-        // Call a method to handle adding the friend based on the email
       }
     });
   }
 
-  // Add Friend logic (This can be your existing add friend functionality)
   addFriend(dialogRef: MatDialogRef<any>): void {
     if (this.userEmail) {
-      console.log('Email to add friend: ', this.userEmail);
       dialogRef.close(this.userEmail); // Close dialog and pass the email back
     }
+  }
+
+  // Example function to change background when a track is selected
+  selectTrack(track: any): void {
+    this.currentTrack = track;
+    this.setBackgroundImage(track.album.images[0].url);
+  }
+
+  getBackgroundImage() {
+    // Check if currentTrack, currentTrack.album, or currentTrack.album.images[0] is null or undefined
+    if (this.currentTrack && this.currentTrack.album && this.currentTrack.album.images && this.currentTrack.album.images[0]) {
+      return this.currentTrack.album.images[0].url;
+    }
+    return null; // Return null if the background image URL is not available
+  }
+
+  setBackgroundImage(imageUrl: string): void {
+    // Apply the background image to the body dynamically
+    this.renderer.setStyle(document.body, 'background-image', `url(${imageUrl})`);
+    this.renderer.setStyle(document.body, 'background-size', 'cover');
+    this.renderer.setStyle(document.body, 'background-position', 'center');
+    this.renderer.setStyle(document.body, 'background-attachment', 'fixed'); // Optional: Keeps the background fixed while scrolling
+    this.renderer.setStyle(document.body, 'background-repeat', 'no-repeat');
+    this.renderer.setStyle(document.body, 'filter', 'none'); // Optional: If you want to blur the background
   }
 }
