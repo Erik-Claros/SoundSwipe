@@ -1,23 +1,35 @@
-<h2 mat-dialog-title>Account Details</h2>
-<mat-dialog-content>
-  <form>
-    <mat-form-field>
-      <mat-label>Username</mat-label>
-      <input matInput placeholder="Enter your username">
-    </mat-form-field>
+<div class="nav-bar">
+  <app-nav-bar>
+  </app-nav-bar>
+      <mat-toolbar>
+      <app-back-button class= "back-bar"></app-back-button>
+    </mat-toolbar>
+</div>
+<div class="account-page">
+<div class="account-container">
+  <h2>Account Settings</h2>
+  <form [formGroup]="accountForm" (ngSubmit)="updateAccount()">
+    <div>
+      <label for="displayName">Display Name</label>
+      <input id="displayName" formControlName="displayName" type="text" />
+    </div>
 
-    <mat-form-field>
-      <mat-label>Email</mat-label>
-      <input matInput placeholder="Enter your email">
-    </mat-form-field>
+    <div>
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email" />
+    </div>
 
-    <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input matInput type="password" placeholder="Enter your password">
-    </mat-form-field>
+    <div>
+      <label for="password">New Password</label>
+      <input id="password" formControlName="password" type="password" />
+      <small>Leave blank if you don't want to change your password</small>
+    </div>
+
+    <button type="submit" [disabled]="!accountForm.valid">Update</button>
   </form>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button cdkFocusInitial>Save Changes</button>
-</mat-dialog-actions>
+  <div *ngIf="showSuccessMessage" class="success-message">
+    Account successfully updated!
+  </div>
+  <button class="logout-button" (click)="logout()">Logout</button> 
+</div>
+</div>
