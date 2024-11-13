@@ -43,6 +43,10 @@ export class NavBarComponent implements OnInit {
     this.userId = "lJvLmgfcHXZoOYUF7odNBAZ41Af1"
   }
 
+  navigateToDashboard() {
+    this.router.navigate(['/dashboard']);
+  }
+
   accountClicked() {
     this.router.navigate(['/account']);
   }

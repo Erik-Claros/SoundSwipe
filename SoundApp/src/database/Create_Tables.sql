@@ -60,10 +60,6 @@ CREATE TABLE UserMessages (
     FOREIGN KEY (songId) REFERENCES Songs(sId)
 );
 
--- Select where senderId = x and receiverId = y and union it with 
--- senderId = y and receiverId = x to grab whole conversation then
--- sort by timestamp
-
 CREATE TABLE Inbox (
     userId TEXT NOT NULL,
     mail TEXT NOT NULL,
