@@ -41,8 +41,8 @@ export class NavBarComponent {
     this.router.navigate(['/history']);
   }
 
-  settingClicked() {
-    this.router.navigate(['/settings']);
+  logoutClicked() {
+    this.router.navigate(['/login']);
   }
 
   requestClicked() {

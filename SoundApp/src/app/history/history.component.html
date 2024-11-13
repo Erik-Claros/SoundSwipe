@@ -1,23 +1,63 @@
-<div class="nav-bar">
-    <app-nav-bar></app-nav-bar>
-</div>
+<app-nav-bar></app-nav-bar>
 <div *ngIf="tracks.length > 0; else noSongs">
     <h2>Your Recently Viewed Songs</h2>
-    <div class="track-list" fxLayout="row" fxLayoutWrap>
-        <mat-card *ngFor="let song of tracks" class="track-card" fxFlex="25" fxFlex.xs="100">
+    <div class="track-list">
+        <table mat-table [dataSource]="tracks" class="song-table" fxFlex="40" fxFlex.xs="100">
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Song Name</th>
+                <td mat-cell *matCellDef="let song">{{ song.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="artists">
+                <th mat-header-cell *matHeaderCellDef>Artists</th>
+                <td mat-cell *matCellDef="let song">{{ getArtistNames(song.artists) }}</td>
+            </ng-container>
+            <ng-container matColumnDef="album">
+                <th mat-header-cell *matHeaderCellDef>Album</th>
+                <td mat-cell *matCellDef="let song">{{ song.album.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="spotify">
+                <th mat-header-cell *matHeaderCellDef>Link</th>
+                <td mat-cell *matCellDef="let song">
+                    <a [href]="song.external_urls.spotify" target="_blank">
+                        <img src="/assets/spotify_icon.png" class="spotify-icon">
+                    </a>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="extra">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let song">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-icon" aria-label="menu icon">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item  (click)="addToFavorite(song)">
+                            <mat-icon style="background-color: transparent; color: #1db954">favorite</mat-icon>
+                            <span>Add to Liked Songs</span>
+                        </button>
+                        <button mat-menu-item  (click)="showTrackCard(song)">
+                            <mat-icon style="color: #1db954">open_in_full</mat-icon>
+                            <span>See Card</span>
+                        </button>
+                    </mat-menu>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['name', 'artists', 'album', 'spotify', 'extra']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['name', 'artists', 'album', 'spotify', 'extra']"></tr>
+        </table>
+    </div>
+    <div class="cards">
+        <mat-card class="track-card" *ngIf="selectedTrack" fxFlex="60" fxFlex.xs="100">
             <mat-card-header>
-                <mat-card-title>{{ song.name }}</mat-card-title>
+                <mat-card-title>{{ selectedTrack.name }}</mat-card-title>
                 <mat-card-subtitle>
-                    <strong>Artists:</strong> {{ getArtistNames(song.artists) }}
+                    <strong>Artists:</strong> {{ getArtistNames(selectedTrack.artists) }}
                 </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <img mat-card-image [src]="song.album.images[0].url" alt="{{ song.name }} image" class="track-image">
+                <img mat-card-image [src]="selectedTrack.album.images[0].url" alt="{{ selectedTrack.name }} image" class="track-image">
                 <div class="track-details">
-                    <p><strong>Album:</strong> {{ song.album.name }}</p>
-                    <p><strong>Duration:</strong> {{ (song.duration_ms / 60000) | number: '1.0-0' }} minutes</p>
-                    <p><a [href]="song.external_urls.spotify" target="_blank">Listen on Spotify</a></p>
-                    <audio *ngIf="song.preview_url" [src]="song.preview_url" controls></audio>
+                    <button mat-button (click)="playPreview(selectedTrack)" class="play-button" style="color: white">Play</button>
                 </div>
             </mat-card-content>
         </mat-card>
@@ -25,7 +65,7 @@
 </div>
 
 <ng-template #noSongs>
-    <h2>You have no previously viewed songs.</h2>
+    <h2>You have no previously viewed songs</h2>
 </ng-template>
 
 <app-back-to-top></app-back-to-top>
