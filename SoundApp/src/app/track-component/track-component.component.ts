@@ -78,9 +78,6 @@ export class TrackComponent implements OnInit {
     });
   }
   
-  openShareDialog(): void {
-    console.log("opened dialog");
-  }
   // Select a random song ID from the array
   selectRandomSongId(): void {
     this.stopPreview();
