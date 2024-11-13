@@ -36,6 +36,7 @@ export class TrackComponent implements OnInit {
   swipeThreshold = 100; // Minimum distance for a swipe to be considered valid
   progress = 0; //holds % of the song
   userId: string = "";
+  
 
   @Output() backgroundImageUrl = new EventEmitter<string>();
 
@@ -76,7 +77,7 @@ export class TrackComponent implements OnInit {
       }
     });
   }
-
+  
   // Select a random song ID from the array
   selectRandomSongId(): void {
     this.stopPreview();
@@ -241,8 +242,6 @@ export class TrackComponent implements OnInit {
   }
 
   addSongToFavorite(): void {
-    //console.log(this.userId);
-    //console.log(this.currentSong);
     const favToAdd: UserLikedSongs = {
       userId: this.userId,
       songId: this.currentSong

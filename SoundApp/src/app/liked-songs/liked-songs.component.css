@@ -1,19 +1,89 @@
+.liked-songs-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px);
+    z-index: 1;
+    transition: background-image 1s ease-in-out;
+}
+
+.nav-bar {
+    position: relative;
+    z-index: 10;
+}
+
 .track-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px; /* Space between cards */
+    gap: 16px;
+    position: relative;
+    z-index: 2;
+    padding: 20px;
 }
 
 .track-card {
-    width: 100%; /* Take full width on small screens */
-    max-width: 300px; /* Set a max width for larger screens */
+    width: 100%;
+    max-width: 300px;
+    height: 400px;
+    background-color: #000;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #fff;
+}
+
+.mat-card-title,
+.mat-card-subtitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #fff;
 }
 
 .track-image {
-    width: 100%; /* Make image responsive */
-    height: auto; /* Maintain aspect ratio */
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
 .track-details {
-    margin-top: 10px; /* Space between image and details */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    flex-grow: 1;
+    overflow: hidden;
+    max-height: 160px;
+}
+
+.track-details>p {
+    margin: 0;
+    color: #fff;
+}
+
+.spotify-icon {
+    display: inline-flex;           
+    align-items: center;            
+    justify-content: center;        
+    margin-right: 8px;             
+  }
+  
+  .spotify-icon img {
+    width: 24px;                   
+    height: 24px;                   
+  }
+
+audio {
+    width: 100%;
+    max-height: 20px;
+    margin-top: 8px;
+    align-self: flex-end;
+    color: #fff;
 }

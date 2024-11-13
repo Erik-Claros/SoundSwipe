@@ -7,7 +7,7 @@ import { Auth } from '@angular/fire/auth';
 import { Users } from '../Models/databaseModel';
 import { DatabaseService } from '../Services/database-service/database-service.service';
 import { Router } from '@angular/router';
-
+import { ShareSongComponent } from '../share-song/share-song.component';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
     NavBarComponent,
     MatButtonModule, 
     TrackComponent,
+    ShareSongComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],

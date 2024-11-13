@@ -59,8 +59,8 @@ export class NavBarComponent implements OnInit {
     this.router.navigate(['/history']);
   }
 
-  settingClicked() {
-    this.router.navigate(['/settings']);
+  logoutClicked() {
+    this.router.navigate(['/login']);
   }
 
   // These methods handle the specific submenu clicks for Friend Requests
