@@ -12,15 +12,13 @@ import { HammerModule } from '@angular/platform-browser';
 import { DatabaseService } from '../Services/database-service/database-service.service';
 import { Auth } from '@angular/fire/auth';
 import { NavigationStart, Router } from '@angular/router';
-import { ShareSongComponent } from '../share-song/share-song.component';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-track',
   templateUrl: './track-component.component.html',
   styleUrls: ['./track-component.component.css'],
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, HammerModule, ShareSongComponent]
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, HammerModule]
 })
 export class TrackComponent implements OnInit {
   track!: Track;
@@ -42,7 +40,7 @@ export class TrackComponent implements OnInit {
 
   @Output() backgroundImageUrl = new EventEmitter<string>();
 
-  constructor(private trackService: TrackService, private databaseService: DatabaseService, private auth: Auth, private router: Router, public dialog: MatDialog) { }
+  constructor(private trackService: TrackService, private databaseService: DatabaseService, private auth: Auth, private router: Router) { }
 
   ngOnInit(): void {
     this.loadUserId();
