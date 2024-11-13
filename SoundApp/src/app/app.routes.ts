@@ -16,7 +16,6 @@ export const routes: Routes = [
   { path: 'friend', component: FriendsComponent },  // Route for friends
   { path: 'liked', component: LikedSongsComponent },  // Route for liked  
   { path: 'history', component: HistoryComponent },  // Route for history
-  { path: 'settings', component: SettingsComponent },  // Route for settings
   { path: '', redirectTo: '/login', pathMatch: 'full' }  // Default page
 ];
 

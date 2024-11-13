@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatabaseService } from '../Services/database-service/database-service.service';  // Adjust the path as needed
 import { TrackService } from '../Services/track-service/track-service.service';
 import { Track, Artist } from '../Models/track.model';
@@ -10,19 +10,41 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { BackButtonComponent } from '../back-button/back-button.component';
 import { BackToTopComponent } from '../back-to-top/back-to-top.component';
+import { MatTableModule } from '@angular/material/table';
+import { NavBarComponent } from "../nav-bar/nav-bar.component";
+import { MatTable } from '@angular/material/table';
+import { MatMenuModule } from '@angular/material/menu';
+import { UserLikedSongs } from '../Models/databaseModel';
 
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.css'],
   standalone: true,
-  imports: [ CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, BackButtonComponent, BackToTopComponent ]
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    BackButtonComponent,
+    BackToTopComponent,
+    MatTableModule,
+    NavBarComponent,
+    MatMenuModule
+  ]
 })
 
 export class HistoryComponent implements OnInit {
   viewedSongs: string[] = [];
   tracks: Track[] = [];
   userId: string = "";
+  audio: HTMLAudioElement | null = null;
+  previewTrack: Track | null = null;
+  isPlaying: boolean = false;
+  progress: number = 0;
+  currentSong: string = "";
+  selectedTrack: Track | null = null;
 
   constructor(private databaseService: DatabaseService, private trackService: TrackService, private auth: Auth) {}
 
@@ -41,6 +63,8 @@ export class HistoryComponent implements OnInit {
     }
   }
 
+  @ViewChild(MatTable) table!: MatTable<any>;
+
   loadLikedSongs(): void {
     this.databaseService.GetUserHistory(this.userId).subscribe({
       next: (ids) => {
@@ -57,6 +81,7 @@ export class HistoryComponent implements OnInit {
       this.trackService.getTrack(this.viewedSongs[index]).subscribe({
         next: (track) => {
           this.tracks.push(track);
+          this.table.renderRows();
         },
         error: (error) => console.error('Error loading liked songs:', error)
       });
@@ -65,5 +90,61 @@ export class HistoryComponent implements OnInit {
 
   getArtistNames(artists: Artist[]): string {
     return artists.map(artist => artist.name).join(', ');
+  }
+
+  playPreview(track: Track): void {
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.currentTime = 0;
+    }
+
+    if (track.preview_url) {
+      this.previewTrack = track;
+      this.audio = new Audio(track.preview_url);
+      this.audio.play().then(() => {
+        this.isPlaying = true;
+      }).catch((error) => {
+        console.error('Error playing audio:', error);
+      });
+
+      this.audio.ontimeupdate = () => {
+        if (this.audio) {
+          this.progress = (this.audio.currentTime / this.audio.duration) * 100;
+        }
+      };
+
+      this.audio.onended = () => {
+        this.isPlaying = false;
+        this.progress = 0;
+      };
+    }
+  }
+
+  stopPreview(): void {
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.currentTime = 0;
+      this.audio = null;
+      this.isPlaying = false;
+      this.progress = 0;
+    }
+  }
+
+  addToFavorite(track: Track): void {
+    const favToAdd: UserLikedSongs = {
+      userId: this.userId,
+      songId: track.id
+    }
+    this.databaseService.AddFav(favToAdd).subscribe({
+      next: () => {
+        console.log('Favorite song added:');
+      },
+      error: (error) => console.error('Error adding favorite song:', error)
+    });
+  }
+
+  // Update the method for setting the selected track when the "See Card" option is clicked
+  showTrackCard(song: Track): void {
+    this.selectedTrack = song;
   }
 }
