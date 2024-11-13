@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DatabaseService } from '../Services/database-service/database-service.service';  // Adjust the path as needed
 import { TrackService } from '../Services/track-service/track-service.service';
 import { Track, Artist } from '../Models/track.model';
@@ -35,7 +35,7 @@ import { UserLikedSongs } from '../Models/databaseModel';
   ]
 })
 
-export class HistoryComponent implements OnInit {
+export class HistoryComponent implements OnInit, OnDestroy {
   viewedSongs: string[] = [];
   tracks: Track[] = [];
   userId: string = "";
@@ -55,6 +55,17 @@ export class HistoryComponent implements OnInit {
     //console.log(this.likedSongs);
     //this.loadTrackInfo();
     //console.log(this.tracks);
+  }
+
+  ngOnDestroy(): void {
+    // Check if there's any audio playing and stop it
+    if (this.audio) {
+      this.audio.pause();   // Pause the audio
+      this.audio.currentTime = 0; // Reset the audio to the beginning
+      this.audio = null;    // Remove the reference to the audio element
+      this.isPlaying = false;  // Update the playing state
+      this.progress = 0;     // Reset the progress
+    }
   }
 
   loadUserId(): void {
