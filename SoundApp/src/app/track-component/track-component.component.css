@@ -1,55 +1,60 @@
 .mat-card {
-    margin: 20px;
-  }
+  margin: 20px;
+}
 
 
 .loading-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .spinner {
-    border: 8px solid rgba(0, 0, 0, 0.1);
-    border-left-color: #3498db;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
+  border: 8px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Button CSS */
 .buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .delete-button {
-    order: 1; 
+  order: 1;
 }
 
 .play-button {
-    order: 2; 
-    flex-grow: 1;
-    margin: 0 10px;
+  order: 2;
+  flex-grow: 1;
+  margin: 0 10px;
 }
 
 .next-button {
-    order: 3;
-    flex-grow: 1;
-    margin: 0 10px; 
+  order: 3;
+  flex-grow: 1;
+  margin: 0 10px;
 }
 
 .favorite-button {
-    order: 4; 
+  order: 4;
 }
 
 mat-card {
@@ -59,121 +64,138 @@ mat-card {
 
 .track-info mat-card-title,
 .track-info mat-card-subtitle {
-  max-width: 600px;       /* Set a max width */
-  white-space: normal;    /* Allow wrapping */
-  overflow: hidden;       /* Hide overflow content */
-  text-overflow: ellipsis;/* Optional: adds '...' if text is cut off */
-  word-break: break-word; /* Breaks long words to fit the container */
+  max-width: 600px;
+  /* Set a max width */
+  white-space: normal;
+  /* Allow wrapping */
+  overflow: hidden;
+  /* Hide overflow content */
+  text-overflow: ellipsis;
+  /* Optional: adds '...' if text is cut off */
+  word-break: break-word;
+  /* Breaks long words to fit the container */
   color: white;
 }
 
 /* Header and text css */
 /* Styling for the card title and subtitle */
-.track-title, .track-subtitle {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
-    display: block;
-  }
+.track-title,
+.track-subtitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: block;
+  color: white;
+}
 
-  button {
-    background-color: black;
-  }
-  
-  /* For the buttons layout */
-  .Buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .left-button {
-    margin-right: auto; 
-  }
-  
-  .center-left-button {
-    margin-left: auto;
-    margin-right: 10px;
-  }
-  
-  .center-right-button {
-    margin-left: 10px; 
-    margin-right: auto;
-  }
-  
-  .right-button {
-    margin-left: auto;
-  }
-  
-  .mat-card-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%; 
-  }
-  
-  .mat-card-subtitle {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
-  
-  .mat-card-header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .mat-card-header-title {
-    font-size: 1.25rem; 
-  }
-  
-  .mat-card-header-subtitle {
-    font-size: 0.875rem; 
-    color: rgba(0, 0, 0, 0.6);
-  }
+button {
+  background-color: black;
+}
+
+/* For the buttons layout */
+.Buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-button {
+  margin-right: auto;
+}
+
+.center-left-button {
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.center-right-button {
+  margin-left: 10px;
+  margin-right: auto;
+}
+
+.right-button {
+  margin-left: auto;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.share-button {
+  margin-left: auto;
+}
+
+.mat-card-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.mat-card-subtitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.mat-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mat-card-header-title {
+  font-size: 1.25rem;
+}
+
+.mat-card-header-subtitle {
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.6);
+}
 
 
-  .card {
-    transition: transform 2.8s ease, opacity 0.3s ease;
-  }
-  
-  .card.swipe-left {
-    transform: translateX(-100%) rotate(-10deg);
-    opacity: 0;
-  }
-  
-  .card.swipe-right {
-    transform: translateX(100%) rotate(10deg);
-    opacity: 0;
-  }
+.card {
+  transition: transform 2.8s ease, opacity 0.3s ease;
+}
 
-  .card {
-    transition: transform 0.3s ease;
-    cursor: grab;
-  }
-  
-  .card:active {
-    cursor: grabbing;
-    transition: none; /* Disable transition while dragging */
-  }
-  
-  .timer-bar {
-    width: 100%;
-    height: 6px;
-    background-color: #000000;
-    border-radius: 3px;
-    overflow: hidden;
-    margin-top: 10px;
-  }
-  
-  .timer-progress {
-    height: 100%;
-    background-color: #1DB954;
-    transition: width 0.1s linear;
-  }
-  
+.card.swipe-left {
+  transform: translateX(-100%) rotate(-10deg);
+  opacity: 0;
+}
+
+.card.swipe-right {
+  transform: translateX(100%) rotate(10deg);
+  opacity: 0;
+}
+
+.card {
+  transition: transform 0.3s ease;
+  cursor: grab;
+}
+
+.card:active {
+  cursor: grabbing;
+  transition: none;
+  /* Disable transition while dragging */
+}
+
+.timer-bar {
+  width: 100%;
+  height: 6px;
+  background-color: #000000;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.timer-progress {
+  height: 100%;
+  background-color: #1DB954;
+  transition: width 0.1s linear;
+}

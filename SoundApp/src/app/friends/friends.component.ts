@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { BackButtonComponent } from '../back-button/back-button.component';
 import { BackToTopComponent } from '../back-to-top/back-to-top.component';
+import { NavBarComponent } from '../nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-friends',
@@ -24,7 +25,8 @@ import { BackToTopComponent } from '../back-to-top/back-to-top.component';
     MatCardModule,
     MatIconModule,
     BackToTopComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    NavBarComponent,
   ],
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.css']
