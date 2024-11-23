@@ -24,7 +24,7 @@
     "bootstrap": "^5.3.3",
     "firebase": "^11.0.1",
     "hammerjs": "^2.0.8",
-    "materials": "^1.1.3",
+    "materials": "^1.0.0",
     "node": "^20.18.0",
     "rxjs": "~7.8.0",
     "sqlite3": "^5.1.7",
